@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Masala Kitchen — Learn Indian Cooking</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Mukta:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --turmeric:#e8a93a;
+    --turmeric-light:#f4cb7c;
+    --maroon:#6b1e23;
+    --maroon-dark:#4a1418;
+    --ember:#2a1810;
+    --leaf:#5b7b4f;
+    --leaf-dark:#3f5836;
+    --cream:#fbf3e3;
+    --cream-2:#f3e6cc;
+    --chili:#c0392b;
+    --white:#fffdf8;
+    --font-display:'Baloo 2', sans-serif;
+    --font-body:'Mukta', sans-serif;
+    --font-utility:'Inter', sans-serif;
+    --radius:16px;
+    --radius-sm:10px;
+    --shadow: 0 6px 20px rgba(42,24,16,0.18);
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+  *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family: var(--font-body);
+    background: var(--cream);
+    color: var(--ember);
+    min-height:100vh;
+    background-image:
+      radial-gradient(circle at 10% 15%, rgba(232,169,58,0.10) 0, transparent 45%),
+      radial-gradient(circle at 90% 85%, rgba(91,123,79,0.10) 0, transparent 45%);
+  }
+  #app{ max-width: 880px; margin:0 auto; padding: 0 0 3rem; }
+
+  /* HEADER */
+  .topbar{
+    background: linear-gradient(135deg, var(--maroon), var(--maroon-dark));
+    padding: 1.1rem 1.25rem 0.9rem;
+    border-radius: 0 0 22px 22px;
+    box-shadow: var(--shadow);
+    animation: dropIn 0.6s cubic-bezier(.2,.8,.2,1) both;
+  }
+  @keyframes dropIn{ from{ transform: translateY(-16px); opacity:0; } to{ transform:none; opacity:1; } }
+  .brand{
+    font-family: var(--font-display); font-weight:800; color: var(--white);
+    font-size: 1.5rem; letter-spacing:0.01em; display:flex; align-items:center; gap:0.5rem;
+    margin-bottom: 0.9rem;
+  }
+  .brand span{ background: linear-gradient(90deg, var(--turmeric-light), var(--turmeric)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .tabs{ display:flex; gap:0.4rem; overflow-x:auto; }
+  .tab-btn{
+    font-family: var(--font-display); font-weight:600; font-size:0.95rem;
+    background: rgba(255,255,255,0.08); color: rgba(255,253,248,0.75);
+    border:1px solid rgba(255,255,255,0.14); padding:0.55rem 1.1rem;
+    border-radius: 100px 100px 4px 4px; cursor:pointer; white-space:nowrap;
+    transition: all 0.25s ease;
+    position:relative;
+  }
+  .tab-btn:hover{ background: rgba(255,255,255,0.14); color:#fff; }
+  .tab-btn.active{ background: var(--turmeric); color: var(--ember); border-color: var(--turmeric); }
+  .tab-btn.active::after{
+    content:''; position:absolute; bottom:-7px; left:50%; transform:translateX(-50%);
+    width:8px; height:8px; background:var(--turmeric); border-radius:50%;
+  }
+
+  /* TADKA STRIP — signature animation */
+  .tadka-strip{
+    display:flex; align-items:center; gap:1rem;
+    background: var(--white); margin: 1rem 1.25rem 0; padding: 0.85rem 1.1rem;
+    border-radius: var(--radius); box-shadow: var(--shadow);
+    border: 1px solid rgba(107,30,35,0.08);
+  }
+  #tadkaSvg{ width:64px; height:52px; flex-shrink:0; overflow:visible; }
+  .oil{ animation: simmer 2.6s ease-in-out infinite; }
+  @keyframes simmer{ 0%,100%{ opacity:0.55; } 50%{ opacity:0.85; } }
+  .seed{ transform-box: fill-box; transform-origin:center; }
+  .seed.idle1{ animation: jiggle 3.1s ease-in-out infinite; }
+  .seed.idle2{ animation: jiggle 2.4s ease-in-out infinite 0.4s; }
+  @keyframes jiggle{ 0%,100%{ transform:translateY(0) rotate(0deg); } 50%{ transform:translateY(-1.5px) rotate(6deg); } }
+  .pop-seed{ position:absolute; border-radius:50%; background:var(--ember); pointer-events:none; animation: popSeed 0.9s ease-out forwards; }
+  @keyframes popSeed{
+    0%{ transform:translate(0,0) scale(1); opacity:1; }
+    100%{ transform: translate(var(--dx,10px), -42px) scale(0.5); opacity:0; }
+  }
+  .steam{ position:absolute; width:10px; height:10px; border-radius:50%; background: rgba(255,255,255,0.55); pointer-events:none; animation: steamRise 1.3s ease-out forwards; filter:blur(2px); }
+  @keyframes steamRise{ 0%{ transform: translateY(0) scale(1); opacity:0.55; } 100%{ transform: translateY(-34px) scale(2.2); opacity:0; } }
+  .tadka-caption{ font-size:0.95rem; color: var(--maroon-dark); font-weight:500; }
+  .tadka-caption b{ color: var(--chili); }
+  .tadka-strip-wrap{ position:relative; }
+
+  main{ padding: 0 1.25rem; }
+  .tab-panel{ display:none; animation: fadeUp 0.4s ease both; }
+  .tab-panel.active{ display:block; }
+  @keyframes fadeUp{ from{ opacity:0; transform: translateY(10px); } to{ opacity:1; transform:none; } }
+
+  .section-title{ font-family: var(--font-display); font-weight:700; font-size:1.3rem; margin: 1.4rem 0 0.3rem; color: var(--maroon); }
+  .section-sub{ font-size:0.9rem; color: rgba(42,24,16,0.6); margin-bottom:1rem; }
+
+  /* CARD GRID */
+  .card-grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap:0.9rem; }
+  @media (max-width:560px){ .card-grid{ grid-template-columns: 1fr; } }
+
+  .item-card{
+    background: var(--white); border-radius: var(--radius); padding:1.1rem;
+    box-shadow: var(--shadow); border:1px solid rgba(107,30,35,0.06);
+    cursor:pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; position:relative; overflow:hidden;
+  }
+  .item-card:hover{ transform: translateY(-3px); box-shadow: 0 10px 26px rgba(42,24,16,0.22); }
+  .item-card .emoji{ font-size:1.6rem; margin-bottom:0.4rem; display:block; }
+  .item-card h3{ font-family: var(--font-display); font-size:1.02rem; color: var(--maroon); margin-bottom:0.3rem; }
+  .item-card p{ font-size:0.85rem; color: rgba(42,24,16,0.65); line-height:1.45; }
+  .item-card .check{
+    position:absolute; top:0.7rem; right:0.7rem; width:22px; height:22px; border-radius:50%;
+    background: var(--leaf); color:#fff; font-size:0.75rem; display:none; align-items:center; justify-content:center;
+  }
+  .item-card.learned .check{ display:flex; }
+  .item-card.locked{ cursor:pointer; }
+  .item-card.locked::after{
+    content:'🔒 Premium'; position:absolute; top:0.7rem; right:0.7rem;
+    background: var(--chili); color:#fff; font-size:0.68rem; font-weight:600;
+    padding:0.2rem 0.55rem; border-radius:100px;
+  }
+  .item-card.locked .emoji, .item-card.locked h3, .item-card.locked p{ opacity:0.45; filter: grayscale(0.3); }
+
+  .btn{
+    font-family: var(--font-display); font-weight:600; font-size:0.9rem; border:none;
+    padding:0.65rem 1.3rem; border-radius: 100px; cursor:pointer; transition: transform 0.15s ease, background 0.2s ease;
+  }
+  .btn:active{ transform: scale(0.96); }
+  .btn-primary{ background: var(--turmeric); color: var(--ember); }
+  .btn-primary:hover{ background: var(--turmeric-light); }
+  .btn-ghost{ background: transparent; color: var(--maroon); border:1.5px solid var(--maroon); }
+  .btn-ghost:hover{ background: rgba(107,30,35,0.06); }
+  .btn-block{ width:100%; margin-top:0.75rem; }
+
+  /* RECIPE LIST */
+  .recipe-row{
+    display:flex; align-items:center; gap:1rem; background: var(--white); border-radius: var(--radius);
+    padding: 0.9rem 1.1rem; margin-bottom:0.8rem; box-shadow: var(--shadow); cursor:pointer;
+    border:1px solid rgba(107,30,35,0.06); transition: transform 0.2s ease;
+  }
+  .recipe-row:hover{ transform: translateX(3px); }
+  .recipe-row .emoji{ font-size:1.8rem; }
+  .recipe-row .info{ flex:1; }
+  .recipe-row h3{ font-family: var(--font-display); font-size:1.02rem; color:var(--maroon); }
+  .recipe-row .meta{ font-size:0.8rem; color: rgba(42,24,16,0.55); margin-top:0.15rem; }
+  .recipe-row .badge-lock{ background: var(--chili); color:#fff; font-size:0.68rem; font-weight:600; padding:0.2rem 0.6rem; border-radius:100px; }
+  .recipe-row .badge-cooked{ background: var(--leaf); color:#fff; font-size:0.68rem; font-weight:600; padding:0.2rem 0.6rem; border-radius:100px; }
+
+  /* QUIZ */
+  .quiz-card{ background: var(--white); border-radius: var(--radius); padding:1.5rem; box-shadow: var(--shadow); text-align:center; }
+  .quiz-emoji{ font-size:2.6rem; margin-bottom:0.6rem; }
+  .quiz-question{ font-family: var(--font-display); font-weight:600; font-size:1.05rem; color: var(--maroon); margin-bottom:1.2rem; }
+  .quiz-options{ display:grid; grid-template-columns: 1fr 1fr; gap:0.7rem; }
+  @media (max-width:480px){ .quiz-options{ grid-template-columns:1fr; } }
+  .quiz-opt{
+    font-family: var(--font-body); font-weight:600; font-size:0.95rem;
+    background: var(--cream-2); border:2px solid transparent; border-radius: var(--radius-sm);
+    padding:0.75rem 0.6rem; cursor:pointer; transition: all 0.2s ease;
+  }
+  .quiz-opt:hover{ border-color: var(--turmeric); }
+  .quiz-opt.correct{ background: var(--leaf); color:#fff; }
+  .quiz-opt.wrong{ background: var(--chili); color:#fff; animation: shake 0.4s ease; }
+  @keyframes shake{ 0%,100%{ transform: translateX(0); } 25%{ transform: translateX(-6px); } 75%{ transform: translateX(6px); } }
+  .quiz-footer{ display:flex; justify-content:space-between; align-items:center; margin-top:1.1rem; font-size:0.85rem; color: rgba(42,24,16,0.6); }
+  .streak-pill{ background: var(--maroon); color:#fff; padding:0.3rem 0.8rem; border-radius:100px; font-weight:600; }
+
+  /* PROGRESS */
+  .xp-jar-wrap{ background: var(--white); border-radius: var(--radius); padding:1.3rem; box-shadow: var(--shadow); margin-bottom:1rem; }
+  .xp-jar-label{ display:flex; justify-content:space-between; font-family: var(--font-display); font-weight:600; color: var(--maroon); margin-bottom:0.5rem; }
+  .xp-track{ height:22px; background: var(--cream-2); border-radius:100px; overflow:hidden; border:1px solid rgba(107,30,35,0.08); }
+  .xp-fill{ height:100%; background: linear-gradient(90deg, var(--turmeric), var(--chili)); border-radius:100px; transition: width 0.8s cubic-bezier(.2,.8,.2,1); width:0%; }
+  .badge-grid{ display:grid; grid-template-columns: repeat(4,1fr); gap:0.8rem; }
+  @media (max-width:480px){ .badge-grid{ grid-template-columns: repeat(2,1fr); } }
+  .badge{
+    background: var(--white); border-radius: var(--radius-sm); padding:0.9rem 0.5rem; text-align:center;
+    box-shadow: var(--shadow); opacity:0.35; filter:grayscale(1); transition: all 0.4s ease;
+  }
+  .badge.unlocked{ opacity:1; filter:none; animation: badgePop 0.5s cubic-bezier(.2,.9,.3,1.3); }
+  @keyframes badgePop{ 0%{ transform: scale(0.5) rotate(-8deg); opacity:0; } 100%{ transform:none; opacity:1; } }
+  .badge .emoji{ font-size:1.6rem; display:block; margin-bottom:0.3rem; }
+  .badge .name{ font-size:0.72rem; font-weight:600; color: var(--maroon-dark); }
+  .streak-card{
+    display:flex; align-items:center; gap:0.9rem; background: linear-gradient(135deg, var(--maroon), var(--maroon-dark));
+    color:#fff; border-radius: var(--radius); padding:1.1rem; margin-bottom:1rem; box-shadow: var(--shadow);
+  }
+  .streak-flame{ font-size:2rem; animation: flamePulse 1.6s ease-in-out infinite; }
+  @keyframes flamePulse{ 0%,100%{ transform: scale(1); } 50%{ transform: scale(1.15); } }
+  .streak-card .num{ font-family: var(--font-display); font-size:1.4rem; font-weight:800; }
+  .streak-card .lbl{ font-size:0.8rem; opacity:0.85; }
+
+  /* MODAL */
+  .modal-overlay{ position:fixed; inset:0; background: rgba(42,24,16,0.55); display:flex; align-items:center; justify-content:center; padding:1rem; z-index:50; }
+  .modal-overlay.hidden{ display:none; }
+  .modal{
+    background: var(--cream); border-radius: 20px; max-width:460px; width:100%; max-height:85vh; overflow-y:auto;
+    padding:1.6rem; box-shadow: 0 20px 50px rgba(0,0,0,0.35); animation: modalIn 0.3s cubic-bezier(.2,.8,.2,1);
+  }
+  @keyframes modalIn{ from{ transform: scale(0.92) translateY(10px); opacity:0; } to{ transform:none; opacity:1; } }
+  .modal h2{ font-family: var(--font-display); color: var(--maroon); font-size:1.25rem; margin-bottom:0.6rem; }
+  .modal .modal-meta{ font-size:0.85rem; color: rgba(42,24,16,0.6); margin-bottom:1rem; }
+  .modal-close{ float:right; background:none; border:none; font-size:1.1rem; cursor:pointer; color: var(--maroon); }
+  .ingredient-list{ list-style:none; margin: 0.6rem 0 1.2rem; }
+  .ingredient-list li{ padding:0.4rem 0; border-bottom:1px dashed rgba(107,30,35,0.15); font-size:0.92rem; display:flex; gap:0.5rem; align-items:center; }
+  .ingredient-list li::before{ content:'🌿'; font-size:0.8rem; }
+  .step-box{ background: var(--white); border-radius: var(--radius-sm); padding:1rem; margin-bottom:0.8rem; border-left:4px solid var(--turmeric); }
+  .step-box .step-num{ font-family: var(--font-display); font-weight:700; color: var(--chili); font-size:0.85rem; margin-bottom:0.2rem; }
+  .step-nav{ display:flex; justify-content:space-between; gap:0.6rem; margin-top:1rem; }
+  .lock-note{ font-size:0.9rem; color: rgba(42,24,16,0.7); line-height:1.5; margin-bottom:1rem; }
+
+  footer{ text-align:center; font-size:0.8rem; color: rgba(42,24,16,0.5); padding: 1.5rem 1rem 0; font-family: var(--font-utility); }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <header class="topbar">
+    <div class="brand">🌶️ <span>Masala Kitchen</span></div>
+    <nav class="tabs">
+      <button class="tab-btn active" data-tab="learn">Learn</button>
+      <button class="tab-btn" data-tab="recipes">Recipes</button>
+      <button class="tab-btn" data-tab="quiz">Quiz</button>
+      <button class="tab-btn" data-tab="progress">Progress</button>
+    </nav>
+  </header>
+
+  <div class="tadka-strip-wrap">
+    <div class="tadka-strip">
+      <svg id="tadkaSvg" viewBox="0 0 64 52">
+        <ellipse cx="32" cy="40" rx="28" ry="8" fill="#2a1810"/>
+        <path d="M4 40 Q4 14 32 14 Q60 14 60 40 Z" fill="#3a241a"/>
+        <ellipse class="oil" cx="32" cy="30" rx="22" ry="7" fill="#e8a93a"/>
+        <circle class="seed idle1" cx="24" cy="29" r="2" fill="#2a1810"/>
+        <circle class="seed idle2" cx="34" cy="27" r="2" fill="#2a1810"/>
+        <circle class="seed idle1" cx="41" cy="30" r="2" fill="#2a1810"/>
+        <rect x="56" y="20" width="16" height="4" rx="2" fill="#6b1e23"/>
+      </svg>
+      <div class="tadka-caption" id="tadkaCaption">Tap a lesson, recipe, or quiz answer to hear the tadka pop 🔥</div>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- LEARN TAB -->
+    <section id="tab-learn" class="tab-panel active">
+      <h2 class="section-title">Essential Spices</h2>
+      <p class="section-sub">Tap each one to learn it — the first 3 are free.</p>
+      <div class="card-grid" id="spiceGrid"></div>
+
+      <h2 class="section-title">Core Techniques</h2>
+      <p class="section-sub">The methods behind almost every Indian dish.</p>
+      <div class="card-grid" id="techniqueGrid"></div>
+    </section>
+
+    <!-- RECIPES TAB -->
+    <section id="tab-recipes" class="tab-panel">
+      <h2 class="section-title">Cook Along</h2>
+      <p class="section-sub">Step-by-step guides with ingredients and timers.</p>
+      <div id="recipeList"></div>
+    </section>
+
+    <!-- QUIZ TAB -->
+    <section id="tab-quiz" class="tab-panel">
+      <h2 class="section-title">Spice Detective</h2>
+      <p class="section-sub">Identify the spice or technique from the clue.</p>
+      <div class="quiz-card">
+        <div class="quiz-emoji" id="quizEmoji">🔍</div>
+        <div class="quiz-question" id="quizQuestion">Loading...</div>
+        <div class="quiz-options" id="quizOptions"></div>
+        <div class="quiz-footer">
+          <span id="quizProgress">Question 1</span>
+          <span class="streak-pill" id="quizStreak">🔥 0</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROGRESS TAB -->
+    <section id="tab-progress" class="tab-panel">
+      <h2 class="section-title">Your Progress</h2>
+      <div class="streak-card">
+        <div class="streak-flame">🔥</div>
+        <div>
+          <div class="num" id="streakNum">0 day streak</div>
+          <div class="lbl">Come back daily to keep it going</div>
+        </div>
+      </div>
+      <div class="xp-jar-wrap">
+        <div class="xp-jar-label"><span>Spice Jar</span><span id="xpNum">0 XP</span></div>
+        <div class="xp-track"><div class="xp-fill" id="xpFill"></div></div>
+      </div>
+      <h2 class="section-title">Badges</h2>
+      <div class="badge-grid" id="badgeGrid"></div>
+    </section>
+
+  </main>
+
+  <footer>Made for home cooks learning Indian food, one tadka at a time 🌶️</footer>
+</div>
+
+<div class="modal-overlay hidden" id="modalOverlay">
+  <div class="modal" id="modalContent"></div>
+</div>
+
+<script>
+/* ---------------- DATA ---------------- */
+const SPICES = [
+  { id:'turmeric', emoji:'🟡', name:'Turmeric (Haldi)', desc:'Earthy and slightly bitter. Gives dishes their golden color and is almost always added early in cooking.' },
+  { id:'cumin', emoji:'🌰', name:'Cumin Seeds (Jeera)', desc:'Nutty and warm. Usually the first thing to hit hot oil at the start of a tadka.' },
+  { id:'mustard', emoji:'⚫', name:'Mustard Seeds (Rai)', desc:'Pop and crackle loudly in hot oil, releasing a sharp nutty flavor — the classic sound of tadka starting.' },
+  { id:'coriander', emoji:'🌿', name:'Coriander Powder (Dhania)', desc:'Mild and citrusy. The quiet workhorse behind most North Indian curry bases.' },
+  { id:'garammasala', emoji:'🟤', name:'Garam Masala', desc:'A warm ground spice blend added near the end of cooking to round out the flavor.' },
+  { id:'hing', emoji:'✨', name:'Asafoetida (Hing)', desc:'Pungent raw, but mellow and savory once it touches hot oil. A pinch goes a very long way.' },
+  { id:'cardamom', emoji:'💚', name:'Cardamom (Elaichi)', desc:'Sweet and floral. Shows up in both savory curries and chai or dessert.' },
+  { id:'chilipowder', emoji:'🔴', name:'Red Chili Powder', desc:'Brings heat and deep red color. Adjust the amount to control spice level.' },
+];
+
+const TECHNIQUES = [
+  { id:'tadka', emoji:'🔥', name:'Tadka (Tempering)', desc:'Whole spices bloomed in hot oil or ghee until they pop, then poured over a finished dish.' },
+  { id:'bhuna', emoji:'🍳', name:'Bhuna', desc:'Slow-frying spices and onions until the oil separates out, building a deep base flavor.' },
+  { id:'dum', emoji:'♨️', name:'Dum', desc:'Sealed, slow-steam cooking that lets flavors mingle — used for biryani and some curries.' },
+  { id:'marination', emoji:'🥣', name:'Marination', desc:'Soaking meat or paneer in spiced yogurt before cooking, to tenderize and flavor it.' },
+];
+
+const RECIPES = [
+  { id:'chai', emoji:'☕', name:'Masala Chai', category:'Beverage', time:'10 min',
+    ingredients:['2 cups water','1 cup milk','2 tsp black tea leaves','1 inch ginger, crushed','2 cardamom pods, crushed','2 tsp sugar (to taste)'],
+    steps:['Bring water to a boil with crushed ginger and cardamom.','Add tea leaves and let boil for 2 minutes until the water darkens.','Pour in the milk and bring back to a boil.','Simmer for 2-3 minutes, then add sugar to taste.','Strain into cups and serve hot.'] },
+  { id:'jeerarice', emoji:'🍚', name:'Jeera Rice', category:'Rice', time:'20 min',
+    ingredients:['1 cup basmati rice','2 tbsp ghee','1.5 tsp cumin seeds','1 bay leaf','2 cups water','Salt to taste'],
+    steps:['Rinse rice until water runs clear, then soak for 15 minutes.','Heat ghee, add cumin seeds and bay leaf, let them sizzle.','Add drained rice and stir for a minute to coat in ghee.','Add water and salt, bring to a boil.','Cover and simmer on low for 12-15 minutes until water is absorbed.'] },
+  { id:'daltadka', emoji:'🥘', name:'Dal Tadka', category:'Curry', time:'35 min',
+    ingredients:['1 cup yellow lentils (toor dal)','1 tomato, chopped','1/2 tsp turmeric','2 tbsp ghee','1 tsp cumin seeds','2 dried red chilies','3 cloves garlic, sliced','Pinch of asafoetida','Salt to taste'],
+    steps:['Pressure cook dal with turmeric, tomato, salt, and water until soft.','Mash the cooked dal to a smooth consistency.','In a separate pan, heat ghee and add cumin seeds until they pop.','Add garlic, dried chilies, and asafoetida, frying until fragrant.','Pour this tadka over the dal and simmer for 5 minutes.'] },
+  { id:'aloogobi', emoji:'🥔', name:'Aloo Gobi', category:'Curry', time:'30 min', locked:true,
+    ingredients:['2 potatoes, cubed','1 small cauliflower, cut into florets','1 tsp cumin seeds','1/2 tsp turmeric','1 tsp coriander powder','1/2 tsp red chili powder','2 tbsp oil','Salt, coriander leaves to garnish'],
+    steps:['Heat oil and add cumin seeds until they sizzle.','Add potatoes and cauliflower, stir to coat in oil.','Add turmeric, coriander powder, chili powder, and salt.','Cover and cook on low heat, stirring occasionally, until vegetables are tender.','Garnish with coriander leaves before serving.'] },
+  { id:'paneerbm', emoji:'🧀', name:'Paneer Butter Masala', category:'Curry', time:'40 min', locked:true,
+    ingredients:['200g paneer, cubed','3 tomatoes, pureed','1 onion, chopped','2 tbsp butter','1 tsp garam masala','1/2 cup cream','Ginger-garlic paste, salt'],
+    steps:['Saute onions until golden, add ginger-garlic paste.','Add tomato puree and cook until oil separates.','Blend to a smooth gravy, return to pan with butter.','Add garam masala and cream, simmer gently.','Add paneer cubes and simmer for 5 minutes without boiling hard.'] },
+  { id:'gulabjamun', emoji:'🍮', name:'Gulab Jamun', category:'Dessert', time:'45 min', locked:true,
+    ingredients:['1 cup milk powder','2 tbsp flour','1/4 tsp baking soda','2 tbsp ghee','Milk as needed','2 cups sugar for syrup','Cardamom, rosewater'],
+    steps:['Mix milk powder, flour, and baking soda, then bind with ghee and milk into a soft dough.','Roll into smooth, crack-free balls.','Deep fry on low heat until evenly golden brown.','Prepare sugar syrup with cardamom and a dash of rosewater.','Soak the fried balls in warm syrup for at least an hour before serving.'] },
+];
+
+const QUIZ_POOL = [
+  { emoji:'⚫', q:'Which spice pops and crackles loudly the moment it hits hot oil?', a:'Mustard Seeds', opts:['Mustard Seeds','Cardamom','Turmeric','Garam Masala'] },
+  { emoji:'🟡', q:'Which spice gives curries their golden-yellow color?', a:'Turmeric', opts:['Turmeric','Hing','Cumin','Chili Powder'] },
+  { emoji:'✨', q:'Which spice is used in just a pinch, and is pungent raw but mellow once cooked?', a:'Asafoetida (Hing)', opts:['Asafoetida (Hing)','Coriander','Cumin','Cardamom'] },
+  { emoji:'🔥', q:'What is the technique of blooming whole spices in hot oil called?', a:'Tadka', opts:['Tadka','Dum','Bhuna','Marination'] },
+  { emoji:'♨️', q:'Which technique is a sealed, slow-steam method used for biryani?', a:'Dum', opts:['Dum','Tadka','Bhuna','Marination'] },
+  { emoji:'💚', q:'Which spice is sweet and floral, showing up in both chai and curries?', a:'Cardamom', opts:['Cardamom','Mustard Seeds','Chili Powder','Hing'] },
+  { emoji:'🥣', q:'Soaking paneer or meat in spiced yogurt before cooking is called?', a:'Marination', opts:['Marination','Tadka','Bhuna','Dum'] },
+  { emoji:'🟤', q:'Which spice blend is usually added at the very end of cooking?', a:'Garam Masala', opts:['Garam Masala','Cumin Seeds','Turmeric','Mustard Seeds'] },
+];
+
+/* ---------------- STATE ---------------- */
+const DEFAULT_STATE = { xp:0, learned:[], cooked:[], quizIndex:0, quizStreak:0, quizCorrect:0, streak:0, lastPlay:null, badges:[] };
+let state;
+try {
+  const saved = localStorage.getItem('masala_kitchen_state');
+  state = saved ? JSON.parse(saved) : { ...DEFAULT_STATE };
+} catch(e) { state = { ...DEFAULT_STATE }; }
+
+function saveState(){
+  try { localStorage.setItem('masala_kitchen_state', JSON.stringify(state)); } catch(e) {}
+}
+
+function updateStreak(){
+  const today = new Date().toDateString();
+  if (state.lastPlay !== today) {
+    const yesterday = new Date(Date.now() - 86400000).toDateString();
+    state.streak = state.lastPlay === yesterday ? state.streak + 1 : 1;
+    state.lastPlay = today;
+    saveState();
+  }
+}
+updateStreak();
+
+/* ---------------- TADKA ANIMATION ---------------- */
+function triggerTadka(message){
+  document.getElementById('tadkaCaption').innerHTML = message;
+  const svg = document.getElementById('tadkaSvg');
+  const wrap = svg.parentElement;
+  for (let i=0;i<6;i++){
+    const seed = document.createElement('div');
+    seed.className = 'pop-seed';
+    seed.style.left = (28 + Math.random()*20) + 'px';
+    seed.style.top = '26px';
+    seed.style.width = seed.style.height = (3+Math.random()*2) + 'px';
+    seed.style.setProperty('--dx', (Math.random()*40-20)+'px');
+    wrap.appendChild(seed);
+    setTimeout(()=>seed.remove(), 950);
+  }
+  for (let i=0;i<3;i++){
+    const steam = document.createElement('div');
+    steam.className = 'steam';
+    steam.style.left = (26 + Math.random()*16) + 'px';
+    steam.style.top = '20px';
+    wrap.appendChild(steam);
+    setTimeout(()=>steam.remove(), 1350);
+  }
+}
+
+/* ---------------- BADGES ---------------- */
+const BADGE_DEFS = [
+  { id:'first_tadka', emoji:'🔥', name:'First Tadka', check: s => s.learned.length >= 1 },
+  { id:'chai_master', emoji:'☕', name:'Chai Master', check: s => s.cooked.includes('chai') },
+  { id:'spice_detective', emoji:'🔍', name:'Spice Detective', check: s => s.quizCorrect >= 5 },
+  { id:'curry_connoisseur', emoji:'🥘', name:'Curry Connoisseur', check: s => s.cooked.length >= 3 },
+];
+
+function refreshBadges(){
+  BADGE_DEFS.forEach(b => {
+    if (b.check(state) && !state.badges.includes(b.id)) state.badges.push(b.id);
+  });
+  saveState();
+}
+
+function addXP(amount){
+  state.xp += amount;
+  saveState();
+  renderProgress();
+}
+
+/* ---------------- MODAL ---------------- */
+function openModal(html){
+  document.getElementById('modalContent').innerHTML = html;
+  document.getElementById('modalOverlay').classList.remove('hidden');
+}
+function closeModal(){ document.getElementById('modalOverlay').classList.add('hidden'); }
+document.getElementById('modalOverlay').addEventListener('click', e => { if (e.target.id === 'modalOverlay') closeModal(); });
+
+function showLockedModal(){
+  openModal(`
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h2>🔒 Premium Content</h2>
+    <p class="lock-note">This lesson is part of the full Masala Kitchen collection. The full version — with every spice, technique, and recipe — is coming soon.</p>
+    <button class="btn btn-primary btn-block" onclick="closeModal()">Got it</button>
+  `);
+}
+
+/* ---------------- LEARN TAB ---------------- */
+function renderLearn(){
+  const spiceGrid = document.getElementById('spiceGrid');
+  spiceGrid.innerHTML = SPICES.map((s,i) => {
+    const locked = i >= 3 && !state.learned.includes(s.id);
+    const learned = state.learned.includes(s.id);
+    return `<div class="item-card ${learned?'learned':''} ${locked?'locked':''}" onclick="${locked ? 'showLockedModal()' : `learnItem('${s.id}','${s.emoji}','${s.name.replace(/'/g,"\\'")}')`}">
+      <div class="check">✓</div>
+      <span class="emoji">${s.emoji}</span>
+      <h3>${s.name}</h3>
+      <p>${s.desc}</p>
+    </div>`;
+  }).join('');
+
+  const techGrid = document.getElementById('techniqueGrid');
+  techGrid.innerHTML = TECHNIQUES.map((t,i) => {
+    const locked = i >= 2 && !state.learned.includes(t.id);
+    const learned = state.learned.includes(t.id);
+    return `<div class="item-card ${learned?'learned':''} ${locked?'locked':''}" onclick="${locked ? 'showLockedModal()' : `learnItem('${t.id}','${t.emoji}','${t.name.replace(/'/g,"\\'")}')`}">
+      <div class="check">✓</div>
+      <span class="emoji">${t.emoji}</span>
+      <h3>${t.name}</h3>
+      <p>${t.desc}</p>
+    </div>`;
+  }).join('');
+}
+
+function learnItem(id, emoji, name){
+  if (!state.learned.includes(id)) {
+    state.learned.push(id);
+    addXP(10);
+    refreshBadges();
+    triggerTadka(`${emoji} <b>${name}</b> learned! +10 XP`);
+    renderLearn();
+    renderProgress();
+  } else {
+    triggerTadka(`${emoji} You already know ${name}!`);
+  }
+}
+
+/* ---------------- RECIPES TAB ---------------- */
+function renderRecipes(){
+  const list = document.getElementById('recipeList');
+  list.innerHTML = RECIPES.map(r => {
+    const locked = r.locked;
+    const cooked = state.cooked.includes(r.id);
+    const badge = locked ? `<span class="badge-lock">🔒 Premium</span>` : (cooked ? `<span class="badge-cooked">✓ Cooked</span>` : '');
+    return `<div class="recipe-row" onclick="${locked ? 'showLockedModal()' : `openRecipe('${r.id}')`}">
+      <span class="emoji">${r.emoji}</span>
+      <div class="info">
+        <h3>${r.name}</h3>
+        <div class="meta">${r.category} · ${r.time}</div>
+      </div>
+      ${badge}
+    </div>`;
+  }).join('');
+}
+
+let currentRecipeStep = 0;
+function openRecipe(id){
+  const r = RECIPES.find(x => x.id === id);
+  currentRecipeStep = 0;
+  renderRecipeModal(r);
+}
+function renderRecipeModal(r){
+  openModal(`
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h2>${r.emoji} ${r.name}</h2>
+    <div class="modal-meta">${r.category} · ${r.time}</div>
+    <div id="ingredientsBlock">
+      <strong>Ingredients</strong>
+      <ul class="ingredient-list">${r.ingredients.map(i => `<li>${i}</li>`).join('')}</ul>
+      <button class="btn btn-primary btn-block" onclick="startCooking('${r.id}')">Start Cooking</button>
+    </div>
+  `);
+}
+function startCooking(id){
+  const r = RECIPES.find(x => x.id === id);
+  currentRecipeStep = 0;
+  renderStep(r);
+}
+function renderStep(r){
+  const isLast = currentRecipeStep === r.steps.length - 1;
+  openModal(`
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h2>${r.emoji} ${r.name}</h2>
+    <div class="modal-meta">Step ${currentRecipeStep+1} of ${r.steps.length}</div>
+    <div class="step-box">
+      <div class="step-num">STEP ${currentRecipeStep+1}</div>
+      <div>${r.steps[currentRecipeStep]}</div>
+    </div>
+    <div class="step-nav">
+      ${currentRecipeStep > 0 ? `<button class="btn btn-ghost" onclick="prevStep('${r.id}')">Back</button>` : `<span></span>`}
+      ${isLast
+        ? `<button class="btn btn-primary" onclick="finishRecipe('${r.id}')">Finish 🎉</button>`
+        : `<button class="btn btn-primary" onclick="nextStep('${r.id}')">Next Step</button>`}
+    </div>
+  `);
+}
+function nextStep(id){ currentRecipeStep++; renderStep(RECIPES.find(x=>x.id===id)); }
+function prevStep(id){ currentRecipeStep--; renderStep(RECIPES.find(x=>x.id===id)); }
+function finishRecipe(id){
+  const r = RECIPES.find(x => x.id === id);
+  if (!state.cooked.includes(id)) {
+    state.cooked.push(id);
+    addXP(25);
+    refreshBadges();
+  }
+  closeModal();
+  triggerTadka(`${r.emoji} <b>${r.name}</b> cooked! +25 XP`);
+  renderRecipes();
+  renderProgress();
+}
+
+/* ---------------- QUIZ TAB ---------------- */
+let quizOrder = [];
+function shuffle(arr){ return arr.map(v=>[Math.random(),v]).sort((a,b)=>a[0]-b[0]).map(v=>v[1]); }
+function initQuiz(){
+  quizOrder = shuffle([...QUIZ_POOL.keys()]);
+  if (state.quizIndex >= quizOrder.length) state.quizIndex = 0;
+  renderQuiz();
+}
+function renderQuiz(){
+  const q = QUIZ_POOL[quizOrder[state.quizIndex % quizOrder.length]];
+  document.getElementById('quizEmoji').textContent = q.emoji;
+  document.getElementById('quizQuestion').textContent = q.q;
+  document.getElementById('quizProgress').textContent = `Question ${(state.quizIndex % quizOrder.length) + 1} of ${quizOrder.length}`;
+  document.getElementById('quizStreak').textContent = `🔥 ${state.quizStreak}`;
+  const optsHtml = shuffle(q.opts).map(o => `<button class="quiz-opt" onclick="answerQuiz(this,'${o.replace(/'/g,"\\'")}','${q.a.replace(/'/g,"\\'")}')">${o}</button>`).join('');
+  document.getElementById('quizOptions').innerHTML = optsHtml;
+}
+function answerQuiz(btn, chosen, correct){
+  const buttons = document.querySelectorAll('.quiz-opt');
+  buttons.forEach(b => b.onclick = null);
+  if (chosen === correct) {
+    btn.classList.add('correct');
+    state.quizStreak++;
+    state.quizCorrect++;
+    addXP(15);
+    refreshBadges();
+    triggerTadka(`✅ Correct! <b>${correct}</b> +15 XP`);
+  } else {
+    btn.classList.add('wrong');
+    buttons.forEach(b => { if (b.textContent === correct) b.classList.add('correct'); });
+    state.quizStreak = 0;
+    triggerTadka(`❌ Not quite — it was <b>${correct}</b>`);
+  }
+  saveState();
+  setTimeout(() => {
+    state.quizIndex++;
+    saveState();
+    renderQuiz();
+    renderProgress();
+  }, 1400);
+}
+
+/* ---------------- PROGRESS TAB ---------------- */
+function renderProgress(){
+  document.getElementById('xpNum').textContent = `${state.xp} XP`;
+  const pct = Math.min(100, (state.xp % 200) / 200 * 100);
+  document.getElementById('xpFill').style.width = pct + '%';
+  document.getElementById('streakNum').textContent = `${state.streak} day streak`;
+  const grid = document.getElementById('badgeGrid');
+  grid.innerHTML = BADGE_DEFS.map(b => {
+    const unlocked = state.badges.includes(b.id);
+    return `<div class="badge ${unlocked ? 'unlocked' : ''}">
+      <span class="emoji">${b.emoji}</span>
+      <div class="name">${b.name}</div>
+    </div>`;
+  }).join('');
+}
+
+/* ---------------- TABS ---------------- */
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+/* ---------------- INIT ---------------- */
+renderLearn();
+renderRecipes();
+initQuiz();
+renderProgress();
+refreshBadges();
+</script>
+</body>
+</html>
