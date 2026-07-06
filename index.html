@@ -347,6 +347,10 @@ const UI = {
   question:{en:'Question',hi:'प्रश्न'},
   of:{en:'of',hi:'में से'},
   essentialSpice:{en:'Essential Spice',hi:'ज़रूरी मसाला'},
+  coreTechnique:{en:'Core Technique',hi:'मुख्य तकनीक'},
+  howToDo:{en:'How to do it:',hi:'कैसे करें:'},
+  usedIn:{en:'Used in:',hi:'किन व्यंजनों में:'},
+  regionNote:{en:'Regional note:',hi:'क्षेत्रीय जानकारी:'},
   whatItsLike:{en:"What it's like:",hi:'कैसा होता है:'},
   origin:{en:'Origin:',hi:'उत्पत्ति:'},
   benefits:{en:'Traditional benefits:',hi:'पारंपरिक लाभ:'},
@@ -511,16 +515,32 @@ const SPICES = [
 const TECHNIQUES = [
   { id:'tadka', emoji:'🔥',
     name:{en:'Tadka (Tempering)',hi:'तड़का'},
-    desc:{en:'Whole spices bloomed in hot oil or ghee until they pop, then poured over a finished dish.',hi:'साबुत मसाले गरम तेल या घी में चटकने तक भूने जाते हैं, फिर तैयार व्यंजन पर डाले जाते हैं।'} },
+    desc:{en:'Whole spices bloomed in hot oil or ghee until they pop, then poured over a finished dish.',hi:'साबुत मसाले गरम तेल या घी में चटकने तक भूने जाते हैं, फिर तैयार व्यंजन पर डाले जाते हैं।'},
+    how:{en:'Heat 1-2 tbsp oil or ghee until shimmering. Add whole spices in order of cooking time — cumin or mustard first, then garlic, chilies, and curry leaves. The moment they pop and turn fragrant (10-20 seconds), pour the whole thing over your dish.',hi:'1-2 बड़े चम्मच तेल या घी को अच्छी तरह गरम करें। साबुत मसाले पकने के क्रम में डालें — पहले जीरा या राई, फिर लहसुन, मिर्च और कड़ी पत्ता। जैसे ही वे चटकें और महकें (10-20 सेकंड), पूरा तड़का व्यंजन पर डाल दें।'},
+    usedIn:{en:'Dal tadka, sambar, rasam, kadhi, raita, upma — almost any dish gets a final flavor lift from it.',hi:'दाल तड़का, सांभर, रसम, कढ़ी, रायता, उपमा — लगभग हर व्यंजन को इससे आख़िरी स्वाद मिलता है।'},
+    region:{en:'Universal across India — called tadka in the north, thalippu in Tamil, popu in Telugu, baghar in Hyderabadi cooking.',hi:'पूरे भारत में प्रचलित — उत्तर में तड़का, तमिल में तालिप्पु, तेलुगु में पोपु, हैदराबादी खाने में बघार कहलाता है।'},
+    tip:{en:'The oil must be properly hot before spices go in — if cumin sinks silently instead of sizzling, the oil is too cold and the spices will taste raw.',hi:'मसाले डालने से पहले तेल अच्छी तरह गरम होना चाहिए — अगर जीरा बिना आवाज़ के डूब जाए, तो तेल ठंडा है और मसाले कच्चे लगेंगे।'} },
   { id:'bhuna', emoji:'🍳',
     name:{en:'Bhuna',hi:'भूनना'},
-    desc:{en:'Slow-frying spices and onions until the oil separates out, building a deep base flavor.',hi:'मसालों और प्याज़ को धीमी आँच पर तब तक भूनना जब तक तेल अलग न हो जाए — गहरे स्वाद की नींव।'} },
+    desc:{en:'Slow-frying spices and onions until the oil separates out, building a deep base flavor.',hi:'मसालों और प्याज़ को धीमी आँच पर तब तक भूनना जब तक तेल अलग न हो जाए — गहरे स्वाद की नींव।'},
+    how:{en:'Fry onions in oil on medium heat until golden, add ginger-garlic paste, then tomatoes and ground spices. Keep stirring and scraping on medium-low heat until the masala thickens, darkens, and oil visibly separates at the edges — usually 10-15 minutes.',hi:'प्याज़ को मध्यम आँच पर सुनहरा होने तक तलें, अदरक-लहसुन पेस्ट डालें, फिर टमाटर और पिसे मसाले। मध्यम-धीमी आँच पर चलाते रहें जब तक मसाला गाढ़ा और गहरा न हो जाए और किनारों पर तेल दिखने न लगे — आमतौर पर 10-15 मिनट।'},
+    usedIn:{en:'The base of butter chicken, paneer butter masala, chana masala, and virtually every North Indian gravy.',hi:'बटर चिकन, पनीर बटर मसाला, छोले और लगभग हर उत्तर भारतीय ग्रेवी का आधार।'},
+    region:{en:'The heart of North Indian and Mughlai cooking — restaurant "curry flavor" is mostly well-executed bhuna.',hi:'उत्तर भारतीय और मुगलई खाने का दिल — रेस्टोरेंट की "करी का स्वाद" ज़्यादातर अच्छी तरह किया गया भूनना ही है।'},
+    tip:{en:"Don't rush it. Oil separating from the masala is the visual signal that raw flavors are gone — stopping early is the #1 reason home curries taste flat.",hi:'जल्दबाज़ी न करें। मसाले से तेल अलग होना इस बात का संकेत है कि कच्चापन चला गया — जल्दी रोक देना घर की करी फीकी लगने की सबसे बड़ी वजह है।'} },
   { id:'dum', emoji:'♨️',
     name:{en:'Dum',hi:'दम'},
-    desc:{en:'Sealed, slow-steam cooking that lets flavors mingle — used for biryani and some curries.',hi:'बंद बर्तन में धीमी भाप पर पकाना जिससे स्वाद आपस में घुल जाते हैं — बिरयानी और कुछ करी में।'} },
+    desc:{en:'Sealed, slow-steam cooking that lets flavors mingle — used for biryani and some curries.',hi:'बंद बर्तन में धीमी भाप पर पकाना जिससे स्वाद आपस में घुल जाते हैं — बिरयानी और कुछ करी में।'},
+    how:{en:'Layer partially cooked ingredients in a heavy pot, seal the lid — traditionally with a rope of atta dough — and cook on the lowest flame (or with coals on the lid) for 20-40 minutes. The trapped steam finishes the cooking gently and evenly.',hi:'आधे पके हुए खाने को भारी बर्तन में परतों में रखें, ढक्कन को सील करें — पारंपरिक रूप से आटे की लोई से — और सबसे धीमी आँच पर 20-40 मिनट पकाएँ। बंद भाप खाना धीरे और समान रूप से पकाती है।'},
+    usedIn:{en:'Biryani above all; also dum aloo, nihari, and slow-cooked Awadhi curries.',hi:'सबसे बढ़कर बिरयानी; साथ ही दम आलू, निहारी और धीमी आँच की अवधी करी।'},
+    region:{en:'Perfected in the royal kitchens of Lucknow (Awadh) and Hyderabad — "dum pukht" literally means cooking on slow breath.',hi:'लखनऊ (अवध) और हैदराबाद की शाही रसोइयों में निखरी — "दम पुख़्त" का अर्थ ही है धीमी साँस पर पकाना।'},
+    tip:{en:'Use your heaviest pot and the lowest flame, with a tawa underneath as a heat buffer if needed — direct heat scorches the bottom layer before the steam does its work.',hi:'सबसे भारी बर्तन और सबसे धीमी आँच इस्तेमाल करें, ज़रूरत हो तो नीचे तवा रखें — सीधी आँच से नीचे की परत भाप का काम पूरा होने से पहले ही जल जाती है।'} },
   { id:'marination', emoji:'🥣',
     name:{en:'Marination',hi:'मैरिनेशन'},
-    desc:{en:'Soaking meat or paneer in spiced yogurt before cooking, to tenderize and flavor it.',hi:'पकाने से पहले मांस या पनीर को मसालेदार दही में भिगोना, ताकि वह नरम और स्वादिष्ट बने।'} },
+    desc:{en:'Soaking meat or paneer in spiced yogurt before cooking, to tenderize and flavor it.',hi:'पकाने से पहले मांस या पनीर को मसालेदार दही में भिगोना, ताकि वह नरम और स्वादिष्ट बने।'},
+    how:{en:'Whisk yogurt with ginger-garlic paste, salt, and spices, coat the protein thoroughly, and rest it — 30 minutes for paneer, 2-4 hours for chicken, overnight for tougher cuts. The yogurt\'s mild acidity tenderizes while the spices soak in.',hi:'दही में अदरक-लहसुन पेस्ट, नमक और मसाले फेंटें, प्रोटीन पर अच्छी तरह लगाएँ और रखें — पनीर के लिए 30 मिनट, चिकन के लिए 2-4 घंटे, सख़्त मांस के लिए रातभर। दही की हल्की खटास नरम बनाती है और मसाले भीतर तक उतरते हैं।'},
+    usedIn:{en:'Tandoori chicken, chicken tikka, paneer tikka, seekh kebab, and fish fry.',hi:'तंदूरी चिकन, चिकन टिक्का, पनीर टिक्का, सीख कबाब और मछली फ्राई।'},
+    region:{en:'Central to tandoor cooking of Punjab and the kebab traditions of Lucknow and Hyderabad.',hi:'पंजाब के तंदूरी खाने और लखनऊ-हैदराबाद की कबाब परंपराओं का केंद्र।'},
+    tip:{en:'Use thick (hung) yogurt — watery marinade slides off instead of clinging, and salt the marinade slightly more than feels right since some stays behind in the bowl.',hi:'गाढ़ा (टंगा हुआ) दही इस्तेमाल करें — पतला मैरिनेड चिपकने की बजाय बह जाता है, और नमक थोड़ा ज़्यादा डालें क्योंकि कुछ मैरिनेड कटोरे में ही रह जाता है।'} },
 ];
 
 const RECIPES = [
@@ -681,7 +701,7 @@ function renderLearn(){
   const techGrid = document.getElementById('techniqueGrid');
   techGrid.innerHTML = TECHNIQUES.map(t => {
     const learned = state.learned.includes(t.id);
-    return `<div class="item-card ${learned?'learned':''}" onclick="learnItem('${t.id}')">
+    return `<div class="item-card ${learned?'learned':''}" onclick="openTechDetail('${t.id}')">
       <div class="check">✓</div>
       <span class="emoji">${t.emoji}</span>
       <h3>${L(t.name)}</h3>
@@ -724,6 +744,26 @@ function openSpiceDetail(id){
       <p><strong>${T('cookingTip')}</strong> ${L(s.tip)}</p>
     </div>
     <button class="btn btn-primary btn-block" onclick="learnItem('${s.id}'); closeModal();">
+      ${learned ? T('reviewAgain') : T('markLearned')}
+    </button>
+  `);
+}
+
+function openTechDetail(id){
+  const t = TECHNIQUES.find(x => x.id === id);
+  const learned = state.learned.includes(id);
+  openModal(`
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h2>${t.emoji} ${L(t.name)}</h2>
+    <div class="modal-meta">${T('coreTechnique')}</div>
+    <div class="spice-detail">
+      <p><strong>${T('whatItsLike')}</strong> ${L(t.desc)}</p>
+      <p><strong>${T('howToDo')}</strong> ${L(t.how)}</p>
+      <p><strong>${T('usedIn')}</strong> ${L(t.usedIn)}</p>
+      <p><strong>${T('regionNote')}</strong> ${L(t.region)}</p>
+      <p><strong>${T('cookingTip')}</strong> ${L(t.tip)}</p>
+    </div>
+    <button class="btn btn-primary btn-block" onclick="learnItem('${t.id}'); closeModal();">
       ${learned ? T('reviewAgain') : T('markLearned')}
     </button>
   `);
