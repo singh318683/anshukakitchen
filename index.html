@@ -210,6 +210,8 @@
     padding: 0 0.2rem;
   }
   .diet-group.open .diet-group-body{ max-height: 3000px; padding-top:0.8rem; }
+  .learn-group.open .diet-group-body{ max-height: 9000px; }
+  .learn-group .section-sub{ margin: 0 0.2rem 0.9rem; }
 
   /* QUIZ */
   .quiz-card{ background: var(--white); border-radius: var(--radius); padding:1.5rem; box-shadow: var(--shadow); text-align:center; }
@@ -320,13 +322,29 @@
 
     <!-- LEARN TAB -->
     <section id="tab-learn" class="tab-panel active">
-      <h2 class="section-title" data-i18n="spicesTitle">Essential Spices</h2>
-      <p class="section-sub" data-i18n="spicesSub">Tap each one to learn it.</p>
-      <div class="card-grid" id="spiceGrid"></div>
+      <div class="diet-group learn-group open" id="lgroup-spices">
+        <button class="diet-group-header diet-veg" onclick="toggleLearnGroup('spices')">
+          <span data-i18n="spicesTitle">Essential Spices</span>
+          <span class="diet-count" id="spiceCount"></span>
+          <span class="diet-chevron">▾</span>
+        </button>
+        <div class="diet-group-body">
+          <p class="section-sub" data-i18n="spicesSub">Tap each one to learn it.</p>
+          <div class="card-grid" id="spiceGrid"></div>
+        </div>
+      </div>
 
-      <h2 class="section-title" data-i18n="techTitle">Core Techniques</h2>
-      <p class="section-sub" data-i18n="techSub">The methods behind almost every Indian dish.</p>
-      <div class="card-grid" id="techniqueGrid"></div>
+      <div class="diet-group learn-group" id="lgroup-techniques">
+        <button class="diet-group-header diet-nonveg" onclick="toggleLearnGroup('techniques')">
+          <span data-i18n="techTitle">Core Techniques</span>
+          <span class="diet-count" id="techCount"></span>
+          <span class="diet-chevron">▾</span>
+        </button>
+        <div class="diet-group-body">
+          <p class="section-sub" data-i18n="techSub">The methods behind almost every Indian dish.</p>
+          <div class="card-grid" id="techniqueGrid"></div>
+        </div>
+      </div>
     </section>
 
     <!-- RECIPES TAB -->
@@ -639,6 +657,27 @@ const TECHNIQUES = [
     usedIn:{en:'Roti, chapati, paratha, dosa, uttapam, tawa pulao, and pav bhaji.',hi:'रोटी, चपाती, पराठा, डोसा, उत्तपम, तवा पुलाव और पाव भाजी।'},
     region:{en:'Every Indian home has a tawa; Mumbai street food elevated it into a cuisine of its own (tawa pulao, pav bhaji).',hi:'हर भारतीय घर में तवा है; मुंबई के स्ट्रीट फूड ने इसे अपने आप में एक व्यंजन शैली बना दिया (तवा पुलाव, पाव भाजी)।'},
     tip:{en:'Get the tawa properly hot before the first roti — a lukewarm tawa makes rotis leathery instead of soft and puffed.',hi:'पहली रोटी से पहले तवा अच्छी तरह गरम करें — गुनगुने तवे पर रोटी नरम और फूली होने की बजाय चमड़े जैसी बनती है।'} },
+  { id:'khameer', emoji:'🫧',
+    name:{en:'Khameer (Fermentation)',hi:'ख़मीर (किण्वन)'},
+    desc:{en:'Letting batters and doughs sour naturally overnight — the invisible technique behind idli, dosa, and dhokla.',hi:'बैटर और आटे को रातभर प्राकृतिक रूप से खट्टा होने देना — इडली, डोसा और ढोकले के पीछे की अदृश्य तकनीक।'},
+    how:{en:'Soaked rice and urad dal are ground into a batter and left in a warm spot 8-14 hours until doubled, airy, and gently sour. Wild yeasts and bacteria do the work — no added yeast needed. Salt after fermenting in cold climates, before in hot ones.',hi:'भिगोए चावल और उड़द दाल को पीसकर बैटर बनाते हैं और गर्म जगह पर 8-14 घंटे रखते हैं, जब तक वह दोगुना, हवादार और हल्का खट्टा न हो जाए। जंगली ख़मीर और बैक्टीरिया ही सारा काम करते हैं — अलग से ख़मीर नहीं चाहिए।'},
+    usedIn:{en:'Idli, dosa, uttapam, dhokla, appam, and jalebi batter.',hi:'इडली, डोसा, उत्तपम, ढोकला, अप्पम और जलेबी का बैटर।'},
+    region:{en:'The backbone of South Indian breakfast culture, and Gujarat\'s dhokla-khaman tradition.',hi:'दक्षिण भारतीय नाश्ता संस्कृति और गुजरात की ढोकला-खमण परंपरा की रीढ़।'},
+    tip:{en:'In a cold kitchen, ferment inside an oven with just the light on — the gentle warmth is exactly what the batter wants.',hi:'ठंडी रसोई में, बैटर को सिर्फ़ लाइट जले ओवन के अंदर रखें — यह हल्की गर्माहट बैटर के लिए बिल्कुल सही है।'} },
+  { id:'achaar', emoji:'🥭',
+    name:{en:'Achaar (Pickling)',hi:'अचार'},
+    desc:{en:'Preserving raw mango, lime, or vegetables in salt, spice, and oil — flavor that matures for months.',hi:'कच्चे आम, नींबू या सब्ज़ियों को नमक, मसाले और तेल में सुरक्षित रखना — महीनों में निखरने वाला स्वाद।'},
+    how:{en:'Cut fruit or vegetables are salted and sun-dried briefly, tossed with roasted spice blends (fenugreek, fennel, mustard, chili), covered in hot mustard oil, and matured in sterilized jars — traditionally sunned daily for 1-2 weeks.',hi:'कटे फल या सब्ज़ियों को नमक लगाकर थोड़ा धूप में सुखाते हैं, भुने मसालों (मेथी, सौंफ, राई, मिर्च) में मिलाते हैं, गरम सरसों के तेल से ढकते हैं, और साफ़ जारों में पकने देते हैं — पारंपरिक रूप से 1-2 हफ़्ते रोज़ धूप दिखाते हैं।'},
+    usedIn:{en:'Mango achaar, lime achaar, mixed vegetable pickle, chili pickle — the essential sidekick to every thali.',hi:'आम का अचार, नींबू का अचार, मिक्स सब्ज़ी अचार, मिर्च का अचार — हर थाली का ज़रूरी साथी।'},
+    region:{en:'Every region and family guards its own recipe — Punjabi mango achaar, Andhra avakaya, Bengali kasundi.',hi:'हर क्षेत्र और परिवार की अपनी गुप्त रेसिपी है — पंजाबी आम का अचार, आंध्र की आवकाया, बंगाली कासुंदी।'},
+    tip:{en:'Moisture is the enemy — bone-dry jars, dry spoons every time, and a layer of oil always covering the pickle keep it good for a year.',hi:'नमी ही दुश्मन है — बिल्कुल सूखे जार, हर बार सूखा चम्मच, और अचार के ऊपर हमेशा तेल की परत — तो अचार साल भर चलेगा।'} },
+  { id:'galauti', emoji:'🫓',
+    name:{en:'Galauti (Melt-in-Mouth Kebabs)',hi:'गलौटी (मुँह में घुलने वाले कबाब)'},
+    desc:{en:'Mince ground to a silken paste with raw papaya so the kebab dissolves on the tongue — Lucknow\'s royal art.',hi:'कीमे को कच्चे पपीते के साथ रेशमी पेस्ट में पीसना ताकि कबाब ज़ुबान पर घुल जाए — लखनऊ की शाही कला।'},
+    how:{en:'Meat is minced twice to a paste, tenderized with raw papaya paste for a few hours, seasoned with a complex masala (legend says 100+ spices in the original), bound with roasted gram flour, then shaped into patties and shallow-fried gently in ghee.',hi:'मांस को दो बार पीसकर पेस्ट बनाते हैं, कच्चे पपीते के पेस्ट से कुछ घंटे नरम करते हैं, जटिल मसाले से सजाते हैं (कहते हैं मूल रेसिपी में 100+ मसाले थे), भुने बेसन से बाँधते हैं, फिर टिक्की बनाकर घी में धीरे से तलते हैं।'},
+    usedIn:{en:'Galauti kebab, tunday kebab, and shami kebab (a firmer cousin).',hi:'गलौटी कबाब, टुंडे कबाब, और शामी कबाब (इसका थोड़ा सख़्त रिश्तेदार)।'},
+    region:{en:'Invented in Lucknow — legend says for an aging Nawab who had lost his teeth but not his love of kebabs.',hi:'लखनऊ की खोज — कहा जाता है एक बूढ़े नवाब के लिए, जिनके दाँत नहीं रहे थे पर कबाबों का शौक़ बरक़रार था।'},
+    tip:{en:'Raw papaya is the tenderizer — a little goes far, and too much turns the mince to mush. Chill the mixture well before shaping.',hi:'कच्चा पपीता ही नरम बनाता है — थोड़ा ही काफ़ी है, ज़्यादा डालने से कीमा गल जाता है। आकार देने से पहले मिश्रण अच्छी तरह ठंडा करें।'} },
 ];
 
 const RECIPES = [
@@ -957,8 +996,14 @@ function closeModal(){ document.getElementById('modalOverlay').classList.add('hi
 document.getElementById('modalOverlay').addEventListener('click', e => { if (e.target.id === 'modalOverlay') closeModal(); });
 
 /* ---------------- LEARN TAB ---------------- */
+function toggleLearnGroup(name){
+  document.getElementById('lgroup-' + name).classList.toggle('open');
+}
+
 function renderLearn(){
   const spiceGrid = document.getElementById('spiceGrid');
+  document.getElementById('spiceCount').textContent = SPICES.length;
+  document.getElementById('techCount').textContent = TECHNIQUES.length;
   spiceGrid.innerHTML = SPICES.map(s => {
     return `<div class="item-card" onclick="openSpiceDetail('${s.id}')">
       <span class="emoji">${s.emoji}</span>
