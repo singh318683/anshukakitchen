@@ -161,11 +161,6 @@
   .item-card .emoji{ font-size:1.6rem; margin-bottom:0.4rem; display:block; }
   .item-card h3{ font-family: var(--font-display); font-size:1.02rem; color: var(--maroon); margin-bottom:0.3rem; }
   .item-card p{ font-size:0.85rem; color: rgba(42,24,16,0.65); line-height:1.45; }
-  .item-card .check{
-    position:absolute; top:0.7rem; right:0.7rem; width:22px; height:22px; border-radius:50%;
-    background: var(--leaf); color:#fff; font-size:0.75rem; display:none; align-items:center; justify-content:center;
-  }
-  .item-card.learned .check{ display:flex; }
 
   .btn{
     font-family: var(--font-display); font-weight:600; font-size:0.9rem; border:none;
@@ -930,9 +925,7 @@ document.getElementById('modalOverlay').addEventListener('click', e => { if (e.t
 function renderLearn(){
   const spiceGrid = document.getElementById('spiceGrid');
   spiceGrid.innerHTML = SPICES.map(s => {
-    const learned = state.learned.includes(s.id);
-    return `<div class="item-card ${learned?'learned':''}" onclick="openSpiceDetail('${s.id}')">
-      <div class="check">✓</div>
+    return `<div class="item-card" onclick="openSpiceDetail('${s.id}')">
       <span class="emoji">${s.emoji}</span>
       <h3>${L(s.name)}</h3>
       <p>${L(s.desc)}</p>
@@ -941,9 +934,7 @@ function renderLearn(){
 
   const techGrid = document.getElementById('techniqueGrid');
   techGrid.innerHTML = TECHNIQUES.map(t => {
-    const learned = state.learned.includes(t.id);
-    return `<div class="item-card ${learned?'learned':''}" onclick="openTechDetail('${t.id}')">
-      <div class="check">✓</div>
+    return `<div class="item-card" onclick="openTechDetail('${t.id}')">
       <span class="emoji">${t.emoji}</span>
       <h3>${L(t.name)}</h3>
       <p>${L(t.desc)}</p>
