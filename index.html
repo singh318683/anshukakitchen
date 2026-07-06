@@ -157,6 +157,14 @@
   .recipe-row h3{ font-family: var(--font-display); font-size:1.02rem; color:var(--maroon); }
   .recipe-row .meta{ font-size:0.8rem; color: rgba(42,24,16,0.55); margin-top:0.15rem; }
   .recipe-row .badge-cooked{ background: var(--leaf); color:#fff; font-size:0.68rem; font-weight:600; padding:0.2rem 0.6rem; border-radius:100px; }
+  .diet-group-title{
+    font-family: var(--font-display); font-weight:700; font-size:1.05rem;
+    margin: 1.4rem 0 0.7rem; padding-left:0.75rem; border-left:4px solid var(--turmeric);
+  }
+  .diet-group-title:first-child{ margin-top:0.3rem; }
+  .diet-vegan{ color: var(--leaf-dark); border-left-color: var(--leaf); }
+  .diet-veg{ color: var(--leaf-dark); border-left-color: var(--turmeric); }
+  .diet-nonveg{ color: var(--maroon); border-left-color: var(--chili); }
 
   /* QUIZ */
   .quiz-card{ background: var(--white); border-radius: var(--radius); padding:1.5rem; box-shadow: var(--shadow); text-align:center; }
@@ -348,6 +356,9 @@ const UI = {
   of:{en:'of',hi:'में से'},
   essentialSpice:{en:'Essential Spice',hi:'ज़रूरी मसाला'},
   coreTechnique:{en:'Core Technique',hi:'मुख्य तकनीक'},
+  dietVegan:{en:'🌱 Vegan',hi:'🌱 वीगन'},
+  dietVeg:{en:'🥬 Vegetarian',hi:'🥬 शाकाहारी'},
+  dietNonveg:{en:'🍗 Non-Vegetarian',hi:'🍗 मांसाहारी'},
   howToDo:{en:'How to do it:',hi:'कैसे करें:'},
   usedIn:{en:'Used in:',hi:'किन व्यंजनों में:'},
   regionNote:{en:'Regional note:',hi:'क्षेत्रीय जानकारी:'},
@@ -544,36 +555,51 @@ const TECHNIQUES = [
 ];
 
 const RECIPES = [
-  { id:'chai', emoji:'☕', name:{en:'Masala Chai',hi:'मसाला चाय'}, category:{en:'Beverage',hi:'पेय'}, time:10,
+  { id:'chai', emoji:'☕', diet:'veg', name:{en:'Masala Chai',hi:'मसाला चाय'}, category:{en:'Beverage',hi:'पेय'}, time:10,
     ingredients:{en:['2 cups water','1 cup milk','2 tsp black tea leaves','1 inch ginger, crushed','2 cardamom pods, crushed','2 tsp sugar (to taste)'],
       hi:['2 कप पानी','1 कप दूध','2 छोटे चम्मच चाय पत्ती','1 इंच अदरक, कुटा हुआ','2 इलायची, कुटी हुई','2 छोटे चम्मच चीनी (स्वादानुसार)']},
     steps:{en:['Bring water to a boil with crushed ginger and cardamom.','Add tea leaves and let boil for 2 minutes until the water darkens.','Pour in the milk and bring back to a boil.','Simmer for 2-3 minutes, then add sugar to taste.','Strain into cups and serve hot.'],
       hi:['कुटे अदरक और इलायची के साथ पानी उबालें।','चाय पत्ती डालें और 2 मिनट उबलने दें जब तक पानी गहरा न हो जाए।','दूध डालें और फिर से उबाल आने दें।','2-3 मिनट धीमी आँच पर पकाएँ, फिर स्वादानुसार चीनी डालें।','छानकर कप में डालें और गरम परोसें।']} },
-  { id:'jeerarice', emoji:'🍚', name:{en:'Jeera Rice',hi:'जीरा राइस'}, category:{en:'Rice',hi:'चावल'}, time:20,
+  { id:'jeerarice', emoji:'🍚', diet:'veg', name:{en:'Jeera Rice',hi:'जीरा राइस'}, category:{en:'Rice',hi:'चावल'}, time:20,
     ingredients:{en:['1 cup basmati rice','2 tbsp ghee','1.5 tsp cumin seeds','1 bay leaf','2 cups water','Salt to taste'],
       hi:['1 कप बासमती चावल','2 बड़े चम्मच घी','1.5 छोटे चम्मच जीरा','1 तेज पत्ता','2 कप पानी','नमक स्वादानुसार']},
     steps:{en:['Rinse rice until water runs clear, then soak for 15 minutes.','Heat ghee, add cumin seeds and bay leaf, let them sizzle.','Add drained rice and stir for a minute to coat in ghee.','Add water and salt, bring to a boil.','Cover and simmer on low for 12-15 minutes until water is absorbed.'],
       hi:['चावल को साफ़ पानी आने तक धोएँ, फिर 15 मिनट भिगोएँ।','घी गरम करें, जीरा और तेज पत्ता डालकर चटकने दें।','छाने हुए चावल डालें और एक मिनट चलाएँ ताकि घी लग जाए।','पानी और नमक डालकर उबाल आने दें।','ढककर धीमी आँच पर 12-15 मिनट पकाएँ जब तक पानी सूख न जाए।']} },
-  { id:'daltadka', emoji:'🥘', name:{en:'Dal Tadka',hi:'दाल तड़का'}, category:{en:'Curry',hi:'करी'}, time:35,
+  { id:'daltadka', emoji:'🥘', diet:'veg', name:{en:'Dal Tadka',hi:'दाल तड़का'}, category:{en:'Curry',hi:'करी'}, time:35,
     ingredients:{en:['1 cup yellow lentils (toor dal)','1 tomato, chopped','1/2 tsp turmeric','2 tbsp ghee','1 tsp cumin seeds','2 dried red chilies','3 cloves garlic, sliced','Pinch of asafoetida','Salt to taste'],
       hi:['1 कप अरहर (तूर) दाल','1 टमाटर, कटा हुआ','1/2 छोटा चम्मच हल्दी','2 बड़े चम्मच घी','1 छोटा चम्मच जीरा','2 सूखी लाल मिर्च','3 कली लहसुन, कटा हुआ','चुटकी भर हींग','नमक स्वादानुसार']},
     steps:{en:['Pressure cook dal with turmeric, tomato, salt, and water until soft.','Mash the cooked dal to a smooth consistency.','In a separate pan, heat ghee and add cumin seeds until they pop.','Add garlic, dried chilies, and asafoetida, frying until fragrant.','Pour this tadka over the dal and simmer for 5 minutes.'],
       hi:['दाल को हल्दी, टमाटर, नमक और पानी के साथ नरम होने तक प्रेशर कुक करें।','पकी दाल को अच्छी तरह मैश करें।','अलग कढ़ाई में घी गरम करें और जीरा चटकने तक डालें।','लहसुन, सूखी मिर्च और हींग डालकर खुशबू आने तक भूनें।','यह तड़का दाल पर डालें और 5 मिनट धीमी आँच पर पकाएँ।']} },
-  { id:'aloogobi', emoji:'🥔', name:{en:'Aloo Gobi',hi:'आलू गोभी'}, category:{en:'Curry',hi:'करी'}, time:30,
+  { id:'aloogobi', emoji:'🥔', diet:'vegan', name:{en:'Aloo Gobi',hi:'आलू गोभी'}, category:{en:'Curry',hi:'करी'}, time:30,
     ingredients:{en:['2 potatoes, cubed','1 small cauliflower, cut into florets','1 tsp cumin seeds','1/2 tsp turmeric','1 tsp coriander powder','1/2 tsp red chili powder','2 tbsp oil','Salt, coriander leaves to garnish'],
       hi:['2 आलू, कटे हुए','1 छोटी गोभी, फूल अलग किए हुए','1 छोटा चम्मच जीरा','1/2 छोटा चम्मच हल्दी','1 छोटा चम्मच धनिया पाउडर','1/2 छोटा चम्मच लाल मिर्च पाउडर','2 बड़े चम्मच तेल','नमक, हरा धनिया सजाने के लिए']},
     steps:{en:['Heat oil and add cumin seeds until they sizzle.','Add potatoes and cauliflower, stir to coat in oil.','Add turmeric, coriander powder, chili powder, and salt.','Cover and cook on low heat, stirring occasionally, until vegetables are tender.','Garnish with coriander leaves before serving.'],
       hi:['तेल गरम करें और जीरा चटकने तक डालें।','आलू और गोभी डालकर तेल में अच्छी तरह मिलाएँ।','हल्दी, धनिया पाउडर, मिर्च पाउडर और नमक डालें।','ढककर धीमी आँच पर पकाएँ, बीच-बीच में चलाते रहें, जब तक सब्ज़ियाँ नरम न हो जाएँ।','परोसने से पहले हरे धनिये से सजाएँ।']} },
-  { id:'paneerbm', emoji:'🧀', name:{en:'Paneer Butter Masala',hi:'पनीर बटर मसाला'}, category:{en:'Curry',hi:'करी'}, time:40,
+  { id:'paneerbm', emoji:'🧀', diet:'veg', name:{en:'Paneer Butter Masala',hi:'पनीर बटर मसाला'}, category:{en:'Curry',hi:'करी'}, time:40,
     ingredients:{en:['200g paneer, cubed','3 tomatoes, pureed','1 onion, chopped','2 tbsp butter','1 tsp garam masala','1/2 cup cream','Ginger-garlic paste, salt'],
       hi:['200 ग्राम पनीर, कटा हुआ','3 टमाटर की प्यूरी','1 प्याज़, कटा हुआ','2 बड़े चम्मच मक्खन','1 छोटा चम्मच गरम मसाला','1/2 कप क्रीम','अदरक-लहसुन पेस्ट, नमक']},
     steps:{en:['Saute onions until golden, add ginger-garlic paste.','Add tomato puree and cook until oil separates.','Blend to a smooth gravy, return to pan with butter.','Add garam masala and cream, simmer gently.','Add paneer cubes and simmer for 5 minutes without boiling hard.'],
       hi:['प्याज़ सुनहरा होने तक भूनें, अदरक-लहसुन पेस्ट डालें।','टमाटर प्यूरी डालकर तेल अलग होने तक पकाएँ।','मिश्रण को पीसकर चिकनी ग्रेवी बनाएँ, मक्खन के साथ वापस कढ़ाई में डालें।','गरम मसाला और क्रीम डालकर धीमी आँच पर पकाएँ।','पनीर के टुकड़े डालें और 5 मिनट धीमी आँच पर पकाएँ, तेज़ उबाल न आने दें।']} },
-  { id:'gulabjamun', emoji:'🍮', name:{en:'Gulab Jamun',hi:'गुलाब जामुन'}, category:{en:'Dessert',hi:'मिठाई'}, time:45,
+  { id:'gulabjamun', emoji:'🍮', diet:'veg', name:{en:'Gulab Jamun',hi:'गुलाब जामुन'}, category:{en:'Dessert',hi:'मिठाई'}, time:45,
     ingredients:{en:['1 cup milk powder','2 tbsp flour','1/4 tsp baking soda','2 tbsp ghee','Milk as needed','2 cups sugar for syrup','Cardamom, rosewater'],
       hi:['1 कप मिल्क पाउडर','2 बड़े चम्मच मैदा','1/4 छोटा चम्मच बेकिंग सोडा','2 बड़े चम्मच घी','दूध आवश्यकतानुसार','चाशनी के लिए 2 कप चीनी','इलायची, गुलाब जल']},
     steps:{en:['Mix milk powder, flour, and baking soda, then bind with ghee and milk into a soft dough.','Roll into smooth, crack-free balls.','Deep fry on low heat until evenly golden brown.','Prepare sugar syrup with cardamom and a dash of rosewater.','Soak the fried balls in warm syrup for at least an hour before serving.'],
       hi:['मिल्क पाउडर, मैदा और बेकिंग सोडा मिलाएँ, फिर घी और दूध से नरम आटा गूँथें।','चिकनी, बिना दरार वाली गोलियाँ बनाएँ।','धीमी आँच पर सुनहरा भूरा होने तक तलें।','इलायची और थोड़े गुलाब जल के साथ चीनी की चाशनी बनाएँ।','तली हुई गोलियों को परोसने से पहले कम से कम एक घंटा गर्म चाशनी में भिगोएँ।']} },
+  { id:'chanamasala', emoji:'🫘', diet:'vegan', name:{en:'Chana Masala',hi:'छोले मसाला'}, category:{en:'Curry',hi:'करी'}, time:40,
+    ingredients:{en:['2 cups chickpeas, soaked overnight','2 onions, finely chopped','2 tomatoes, pureed','1 tbsp ginger-garlic paste','1 tsp cumin seeds','2 tsp chana masala powder','1/2 tsp turmeric','1 tsp red chili powder','3 tbsp oil','Salt, coriander leaves'],
+      hi:['2 कप काबुली चने, रातभर भिगोए हुए','2 प्याज़, बारीक कटे','2 टमाटर की प्यूरी','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','1 छोटा चम्मच जीरा','2 छोटे चम्मच छोले मसाला','1/2 छोटा चम्मच हल्दी','1 छोटा चम्मच लाल मिर्च पाउडर','3 बड़े चम्मच तेल','नमक, हरा धनिया']},
+    steps:{en:['Pressure cook soaked chickpeas with salt until soft but not mushy.','Heat oil, add cumin seeds, then onions — fry until deep golden.','Add ginger-garlic paste, then tomato puree and all dry spices; bhuna until oil separates.','Add the chickpeas with a cup of their cooking water and simmer for 10-15 minutes.','Mash a few chickpeas against the pan to thicken the gravy, garnish with coriander.'],
+      hi:['भिगोए चनों को नमक के साथ नरम होने तक प्रेशर कुक करें, गलने न दें।','तेल गरम करें, जीरा डालें, फिर प्याज़ — गहरा सुनहरा होने तक भूनें।','अदरक-लहसुन पेस्ट, फिर टमाटर प्यूरी और सारे सूखे मसाले डालें; तेल अलग होने तक भूनें।','चने और एक कप उनका पानी डालकर 10-15 मिनट धीमी आँच पर पकाएँ।','कुछ चने कढ़ाई में मसलकर ग्रेवी गाढ़ी करें, हरे धनिये से सजाएँ।']} },
+  { id:'eggbhurji', emoji:'🍳', diet:'nonveg', name:{en:'Egg Bhurji',hi:'अंडा भुर्जी'}, category:{en:'Breakfast',hi:'नाश्ता'}, time:15,
+    ingredients:{en:['4 eggs','1 onion, finely chopped','1 tomato, chopped','1 green chili, chopped','1/2 tsp cumin seeds','1/4 tsp turmeric','2 tbsp oil','Salt, coriander leaves'],
+      hi:['4 अंडे','1 प्याज़, बारीक कटा','1 टमाटर, कटा हुआ','1 हरी मिर्च, कटी हुई','1/2 छोटा चम्मच जीरा','1/4 छोटा चम्मच हल्दी','2 बड़े चम्मच तेल','नमक, हरा धनिया']},
+    steps:{en:['Heat oil and sizzle the cumin seeds.','Fry onions and green chili until soft and lightly golden.','Add tomatoes, turmeric, and salt; cook until tomatoes break down.','Crack in the eggs and scramble on medium heat, stirring continuously.','Cook until just set but still soft, and finish with coriander leaves.'],
+      hi:['तेल गरम करें और जीरा चटकाएँ।','प्याज़ और हरी मिर्च को नरम और हल्का सुनहरा होने तक भूनें।','टमाटर, हल्दी और नमक डालें; टमाटर गलने तक पकाएँ।','अंडे फोड़कर डालें और मध्यम आँच पर लगातार चलाते हुए भुर्जी बनाएँ।','हल्का सेट होने तक पकाएँ, नरम ही रखें, और हरे धनिये से सजाएँ।']} },
+  { id:'chickencurry', emoji:'🍗', diet:'nonveg', name:{en:'Chicken Curry',hi:'चिकन करी'}, category:{en:'Curry',hi:'करी'}, time:50,
+    ingredients:{en:['500g chicken, cut into pieces','2 onions, sliced','2 tomatoes, pureed','1 tbsp ginger-garlic paste','1/2 cup yogurt','1 tsp turmeric','2 tsp coriander powder','1 tsp red chili powder','1 tsp garam masala','3 tbsp oil','Whole spices: 1 bay leaf, 2 cardamom, 3 cloves','Salt, coriander leaves'],
+      hi:['500 ग्राम चिकन, टुकड़ों में कटा','2 प्याज़, कटे हुए','2 टमाटर की प्यूरी','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','1/2 कप दही','1 छोटा चम्मच हल्दी','2 छोटे चम्मच धनिया पाउडर','1 छोटा चम्मच लाल मिर्च पाउडर','1 छोटा चम्मच गरम मसाला','3 बड़े चम्मच तेल','साबुत मसाले: 1 तेज पत्ता, 2 इलायची, 3 लौंग','नमक, हरा धनिया']},
+    steps:{en:['Marinate chicken in yogurt, turmeric, and salt for at least 30 minutes.','Heat oil, add whole spices, then sliced onions — fry until deep golden.','Add ginger-garlic paste and tomato puree with the dry spices; bhuna until oil separates.','Add the marinated chicken and sear on high for 5 minutes, coating it in the masala.','Add a cup of water, cover, and simmer for 20-25 minutes until chicken is tender.','Finish with garam masala and coriander leaves; rest 5 minutes before serving.'],
+      hi:['चिकन को दही, हल्दी और नमक में कम से कम 30 मिनट मैरिनेट करें।','तेल गरम करें, साबुत मसाले डालें, फिर प्याज़ — गहरा सुनहरा होने तक भूनें।','अदरक-लहसुन पेस्ट और टमाटर प्यूरी सूखे मसालों के साथ डालें; तेल अलग होने तक भूनें।','मैरिनेट किया चिकन डालकर तेज़ आँच पर 5 मिनट भूनें, मसाले में लपेटें।','एक कप पानी डालें, ढककर 20-25 मिनट पकाएँ जब तक चिकन नरम न हो जाए।','गरम मसाला और हरे धनिये से पूरा करें; परोसने से पहले 5 मिनट रखें।']} },
 ];
 
 const QUIZ_POOL = [
@@ -772,17 +798,27 @@ function openTechDetail(id){
 /* ---------------- RECIPES TAB ---------------- */
 function renderRecipes(){
   const list = document.getElementById('recipeList');
-  list.innerHTML = RECIPES.map(r => {
-    const cooked = state.cooked.includes(r.id);
-    const badge = cooked ? `<span class="badge-cooked">${T('cookedBadge')}</span>` : '';
-    return `<div class="recipe-row" onclick="openRecipe('${r.id}')">
-      <span class="emoji">${r.emoji}</span>
-      <div class="info">
-        <h3>${L(r.name)}</h3>
-        <div class="meta">${L(r.category)} · ${r.time} ${T('min')}</div>
-      </div>
-      ${badge}
-    </div>`;
+  const groups = [
+    { diet:'vegan', label:T('dietVegan') },
+    { diet:'veg', label:T('dietVeg') },
+    { diet:'nonveg', label:T('dietNonveg') },
+  ];
+  list.innerHTML = groups.map(g => {
+    const items = RECIPES.filter(r => r.diet === g.diet);
+    if (!items.length) return '';
+    const rows = items.map(r => {
+      const cooked = state.cooked.includes(r.id);
+      const badge = cooked ? `<span class="badge-cooked">${T('cookedBadge')}</span>` : '';
+      return `<div class="recipe-row" onclick="openRecipe('${r.id}')">
+        <span class="emoji">${r.emoji}</span>
+        <div class="info">
+          <h3>${L(r.name)}</h3>
+          <div class="meta">${L(r.category)} · ${r.time} ${T('min')}</div>
+        </div>
+        ${badge}
+      </div>`;
+    }).join('');
+    return `<h3 class="diet-group-title diet-${g.diet}">${g.label}</h3>${rows}`;
   }).join('');
 }
 
