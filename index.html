@@ -436,7 +436,23 @@
   }
   .ing-chip:hover{ transform: translateY(-2px); box-shadow: 0 5px 14px rgba(42,24,16,0.18); }
   .ing-chip:active{ transform: scale(0.94); }
-  .result-dish{ text-align:center; padding: 0.6rem 0 0.4rem; }
+  .result-photo-wrap{
+    width:100%; height:200px; border-radius:14px; overflow:hidden;
+    margin-bottom:1rem; position:relative; background: var(--cream-2);
+  }
+  .result-photo-shimmer{
+    position:absolute; inset:0; border-radius:14px;
+    background: linear-gradient(90deg, var(--cream-2) 25%, rgba(255,253,248,0.8) 50%, var(--cream-2) 75%);
+    background-size: 200% 100%;
+    animation: shimmerSlide 1.4s infinite;
+  }
+  @keyframes shimmerSlide{ 0%{ background-position:200% 0; } 100%{ background-position:-200% 0; } }
+  .result-photo{
+    width:100%; height:200px; object-fit:cover; border-radius:14px;
+    opacity:0; transition: opacity 0.5s ease; position:relative; z-index:1;
+  }
+  .result-photo.loaded{ opacity:1; }
+  .result-dish{ text-align:center; padding: 0.3rem 0 0.4rem; }
   .result-dish .dish-emoji{ font-size:3.4rem; display:inline-block; animation: dishReveal 0.7s cubic-bezier(.2,.9,.3,1.4); }
   @keyframes dishReveal{ 0%{ transform: scale(0.3) rotate(-15deg); opacity:0; } 100%{ transform:none; opacity:1; } }
   .result-dish h3{ font-family: var(--font-display); font-size:1.35rem; color: var(--maroon); margin:0.5rem 0 0.2rem; }
@@ -1789,6 +1805,8 @@ function cookDish(){
   }, 3500);
 }
 
+const DISH_WIKI_MAP = {'Butter Chicken': 'Butter_chicken', 'बटर चिकन': 'Butter_chicken', 'Chicken Masala': 'Chicken_curry', 'चिकन मसाला': 'Chicken_curry', 'Chicken Korma': 'Korma', 'चिकन कोरमा': 'Korma', 'Chicken Coconut Curry': 'Chicken_curry', 'चिकन नारियल करी': 'Chicken_curry', 'Mutton Korma': 'Korma', 'मटन कोरमा': 'Korma', 'Mutton Curry': 'Mutton_curry', 'मटन करी': 'Mutton_curry', 'Prawn Coconut Curry': 'Prawn_curry', 'झींगा नारियल करी': 'Prawn_curry', 'Prawn Masala': 'Prawn_curry', 'झींगा मसाला': 'Prawn_curry', 'Fish Tamarind Curry': 'Fish_curry', 'मछली इमली करी': 'Fish_curry', 'Fish Coconut Curry': 'Fish_curry', 'मछली नारियल करी': 'Fish_curry', 'Fish Fry Masala': 'Fish_fry', 'मछली मसाला': 'Fish_fry', 'Egg Curry': 'Egg_curry', 'अंडा करी': 'Egg_curry', 'Egg Bhurji': 'Anda_bhurji', 'अंडा भुर्जी': 'Anda_bhurji', 'Matar Paneer': 'Mattar_paneer', 'मटर पनीर': 'Mattar_paneer', 'Palak Paneer': 'Palak_paneer', 'पालक पनीर': 'Palak_paneer', 'Paneer Butter Masala': 'Paneer_butter_masala', 'पनीर बटर मसाला': 'Paneer_butter_masala', 'Kadai Paneer': 'Kadai_paneer', 'कड़ाही पनीर': 'Kadai_paneer', 'Paneer Masala': 'Paneer_butter_masala', 'पनीर मसाला': 'Paneer_butter_masala', 'Cream of Mushroom': 'Cream_of_mushroom_soup', 'मलाई मशरूम': 'Cream_of_mushroom_soup', 'Mushroom Masala': 'Mushroom_masala', 'मशरूम मसाला': 'Mushroom_masala', 'Chana Masala': 'Chana_masala', 'छोले मसाला': 'Chana_masala', 'Rajma': 'Rajma', 'राजमा': 'Rajma', 'Dal Tadka': 'Dal_tadka', 'दाल तड़का': 'Dal_tadka', 'Dal Rasam': 'Rasam', 'रसम': 'Rasam', 'Aloo Gobi': 'Aloo_gobi', 'आलू गोभी': 'Aloo_gobi', 'Aloo Matar': 'Aloo_matar', 'आलू मटर': 'Aloo_matar', 'Aloo Masala': 'Dum_aloo', 'आलू मसाला': 'Dum_aloo', 'Baingan Masala': 'Baingan_bharta', 'बैंगन मसाला': 'Baingan_bharta', 'Bhindi Masala': 'Bhindi_masala', 'भिंडी मसाला': 'Bhindi_masala', 'Palak Masala': 'Palak_paneer', 'पालक मसाला': 'Palak_paneer', 'Matar Tamatar': 'Mattar_paneer', 'मटर टमाटर': 'Mattar_paneer', 'Corn Masala': 'Corn_on_the_cob', 'मकई मसाला': 'Corn_on_the_cob', 'Saag Coconut': 'Saag', 'साग नारियल': 'Saag', 'Gajar Masala': 'Gajar_ka_halwa', 'गाजर मसाला': 'Gajar_ka_halwa', 'Makhani Gravy': 'Butter_chicken', 'मखनी ग्रेवी': 'Butter_chicken', 'Tamatar Shorba': 'Tomato_soup', 'टमाटर शोरबा': 'Tomato_soup', 'Mystery Tadka': 'Tadka_(food)', 'रहस्यमयी तड़का': 'Tadka_(food)', 'Aromatic Tadka Oil': 'Tadka_(food)', 'ख़ुशबूदार तड़के का तेल': 'Tadka_(food)'};
+
 function showDishResult(){
   const ids = pot.map(p => p.id);
   const has = id => ids.includes(id);
@@ -1882,8 +1900,13 @@ function showDishResult(){
   addXP(20);
   refreshBadges();
 
+  const wikiTitle = DISH_WIKI_MAP[dishName] || null;
   openModal(`
     <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="result-photo-wrap" id="resultPhotoWrap">
+      <div class="result-photo-shimmer" id="resultShimmer"></div>
+      <img id="resultPhoto" class="result-photo" alt="${dishName}" style="display:none" onerror="document.getElementById('resultShimmer').style.display='none'">
+    </div>
     <div class="result-dish">
       <span class="dish-emoji">${dishEmoji}</span>
       <div class="modal-meta">${T('yourDish')} · +20 XP</div>
@@ -1893,6 +1916,27 @@ function showDishResult(){
     <div class="result-feedback">${fb.map(f => `<p>${f}</p>`).join('')}</div>
     <button class="btn btn-primary btn-block" onclick="resetPot(); closeModal();">${T('cookAnother')}</button>
   `);
+  if(wikiTitle){
+    fetch('https://en.wikipedia.org/api/rest_v1/page/summary/' + wikiTitle)
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        const src = data && data.thumbnail ? data.thumbnail.source
+          .replace('/320px-', '/640px-') : null;
+        const img = document.getElementById('resultPhoto');
+        const shimmer = document.getElementById('resultShimmer');
+        if(src && img){
+          img.src = src;
+          img.style.display = 'block';
+          img.onload = () => { shimmer.style.display='none'; img.classList.add('loaded'); };
+        } else if(shimmer){ shimmer.style.display='none'; }
+      }).catch(() => {
+        const shimmer = document.getElementById('resultShimmer');
+        if(shimmer) shimmer.style.display='none';
+      });
+  } else {
+    const shimmer = document.getElementById('resultShimmer');
+    if(shimmer) shimmer.style.display='none';
+  }
 }
 
 /* ---------------- TABS ---------------- */
