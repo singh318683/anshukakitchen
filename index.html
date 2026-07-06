@@ -462,6 +462,86 @@
   .result-feedback p:last-child{ border-bottom:none; }
 
   footer{ text-align:center; font-size:0.8rem; color: rgba(42,24,16,0.5); padding: 1.5rem 1rem 0; font-family: var(--font-utility); }
+
+  /* INGREDIENT SEARCH */
+  .ing-search-wrap{ position:relative; margin-bottom:1rem; }
+  .ing-search{
+    width:100%; padding:0.75rem 2.5rem 0.75rem 1rem; border-radius:100px;
+    border:1.5px solid rgba(107,30,35,0.12); background:var(--white);
+    font-family:var(--font-body); font-size:0.95rem; color:var(--ember);
+    box-shadow:var(--shadow); outline:none; transition:border 0.2s ease;
+  }
+  .ing-search:focus{ border-color:var(--turmeric); }
+  .ing-search-icon{ position:absolute; right:1rem; top:50%; transform:translateY(-50%); font-size:1rem; pointer-events:none; }
+
+  /* STEP TIMER */
+  .step-timer-row{ margin-top:0.9rem; display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap; }
+  .step-timer-btn{
+    font-family:var(--font-display); font-weight:600; font-size:0.85rem;
+    background:linear-gradient(135deg,var(--maroon),var(--maroon-dark)); color:#fff;
+    border:none; border-radius:100px; padding:0.45rem 1rem; cursor:pointer;
+    box-shadow:0 3px 8px rgba(42,24,16,0.2); transition:transform 0.15s ease;
+  }
+  .step-timer-btn:hover{ transform:translateY(-1px); }
+  .step-timer-display{
+    font-family:var(--font-display); font-weight:800; font-size:1.2rem;
+    color:var(--white); background:var(--maroon); border-radius:100px;
+    padding:0.3rem 1rem; min-width:70px; text-align:center;
+    box-shadow:0 3px 8px rgba(42,24,16,0.25); display:flex; align-items:center; justify-content:center;
+  }
+
+  /* DIFFICULTY FILTER */
+  .diff-filter-row{ display:flex; gap:0.5rem; margin-bottom:1rem; flex-wrap:wrap; }
+  .diff-btn{
+    font-family:var(--font-display); font-weight:600; font-size:0.82rem;
+    background:var(--white); color:var(--ember); border:1.5px solid rgba(107,30,35,0.1);
+    border-radius:100px; padding:0.4rem 0.9rem; cursor:pointer;
+    box-shadow:0 2px 6px rgba(42,24,16,0.08); transition:all 0.2s ease;
+  }
+  .diff-btn.active{ background:var(--maroon); color:#fff; border-color:var(--maroon); }
+  .diff-badge{
+    display:inline-block; font-size:0.65rem; font-weight:700; color:#fff;
+    padding:0.1rem 0.45rem; border-radius:100px; margin-left:0.3rem; vertical-align:middle;
+  }
+
+  /* RECENTLY COOKED */
+  .recent-card{
+    display:flex; align-items:center; gap:0.9rem; background:var(--white);
+    border-radius:var(--radius); padding:0.75rem 1rem; margin-bottom:0.7rem;
+    box-shadow:var(--shadow); cursor:pointer; transition:transform 0.2s ease;
+    border:1px solid rgba(107,30,35,0.06);
+  }
+  .recent-card:hover{ transform:translateX(3px); }
+  .recent-thumb-wrap{ width:52px; height:52px; border-radius:12px; overflow:hidden; flex-shrink:0; background:var(--cream-2); display:flex; align-items:center; justify-content:center; }
+  .recent-thumb{ width:52px; height:52px; object-fit:cover; border-radius:12px; opacity:0; transition:opacity 0.4s ease; }
+  .recent-thumb.loaded{ opacity:1; }
+  .recent-info{ flex:1; }
+  .recent-name{ font-family:var(--font-display); font-weight:700; font-size:0.95rem; color:var(--maroon); }
+  .recent-meta{ font-size:0.78rem; color:rgba(42,24,16,0.55); margin-top:0.1rem; }
+  .recent-cooked-badge{ background:var(--leaf); color:#fff; font-size:0.75rem; font-weight:700; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+
+  /* ONBOARDING */
+  .onboard-overlay{
+    display:none; position:fixed; inset:0; background:rgba(42,24,16,0.7);
+    z-index:100; align-items:center; justify-content:center; padding:1.5rem;
+  }
+  .onboard-card{
+    background:var(--cream); border-radius:24px; max-width:380px; width:100%;
+    padding:2rem 1.75rem; text-align:center; box-shadow:0 24px 60px rgba(0,0,0,0.35);
+    animation:modalIn 0.4s cubic-bezier(.2,.8,.2,1);
+  }
+  .onboard-slides{ min-height:180px; position:relative; }
+  .onboard-slide{ display:none; }
+  .onboard-slide.active{ display:block; animation:fadeUp 0.35s ease; }
+  .onboard-art{ font-size:3.5rem; margin-bottom:0.8rem; animation:flamePulse 2s ease-in-out infinite; }
+  .onboard-card h2{ font-family:var(--font-display); font-size:1.4rem; color:var(--maroon); margin-bottom:0.6rem; }
+  .onboard-card p{ font-size:0.95rem; color:rgba(42,24,16,0.75); line-height:1.6; }
+  .onboard-card p b{ color:var(--maroon); }
+  .onboard-dots{ display:flex; justify-content:center; gap:0.5rem; margin:1.2rem 0 1rem; }
+  .onboard-dot{ width:10px; height:10px; border-radius:50%; background:var(--cream-2); transition:all 0.3s ease; }
+  .onboard-dot.active{ background:var(--turmeric); transform:scale(1.2); }
+  .onboard-btn{ width:100%; font-size:1rem; }
+  .onboard-skip{ background:none; border:none; font-size:0.85rem; color:rgba(42,24,16,0.45); cursor:pointer; margin-top:0.7rem; display:block; width:100%; }
 </style>
 </head>
 <body>
@@ -538,6 +618,12 @@
     <section id="tab-recipes" class="tab-panel">
       <h2 class="section-title" data-i18n="recipesTitle">Cook Along</h2>
       <p class="section-sub" data-i18n="recipesSub">Step-by-step guides with ingredients and timers.</p>
+      <div class="diff-filter-row" id="diffFilterRow">
+        <button class="diff-btn active" data-diff="all" onclick="setDiffFilter('all')">All</button>
+        <button class="diff-btn" data-diff="easy" onclick="setDiffFilter('easy')" style="--dc:var(--leaf)">🟢 Easy</button>
+        <button class="diff-btn" data-diff="medium" onclick="setDiffFilter('medium')" style="--dc:var(--turmeric)">🟡 Medium</button>
+        <button class="diff-btn" data-diff="hard" onclick="setDiffFilter('hard')" style="--dc:var(--chili)">🔴 Hard</button>
+      </div>
       <div id="recipeList"></div>
     </section>
 
@@ -566,6 +652,10 @@
         </div>
       </div>
 
+      <div class="ing-search-wrap">
+        <input type="text" id="ingSearch" class="ing-search" placeholder="Search ingredients..." oninput="filterIngredients(this.value)" autocomplete="off">
+        <span class="ing-search-icon">🔍</span>
+      </div>
       <div id="ingredientPalette"></div>
     </section>
 
@@ -600,6 +690,10 @@
       </div>
       <h2 class="section-title" data-i18n="badgesTitle">Badges</h2>
       <div class="badge-grid" id="badgeGrid"></div>
+
+      <h2 class="section-title" data-i18n="recentTitle">Recently Cooked</h2>
+      <p class="section-sub" data-i18n="recentSub">Dishes you've completed in Cook Along.</p>
+      <div id="recentCooked"></div>
     </section>
 
   </main>
@@ -607,11 +701,62 @@
   <footer data-i18n="footerText">Made for home cooks learning Indian food, one tadka at a time 🌶️</footer>
 </div>
 
-<div class="modal-overlay hidden" id="modalOverlay">
+
+  <!-- ONBOARDING -->
+  <div class="onboard-overlay" id="onboardOverlay">
+    <div class="onboard-card">
+      <div class="onboard-slides">
+        <div class="onboard-slide active" id="os1">
+          <div class="onboard-art">🌶️</div>
+          <h2>Anshu Ka Kitchen</h2>
+          <p>Your complete guide to Indian cooking — spices, techniques, recipes, and more.</p>
+        </div>
+        <div class="onboard-slide" id="os2">
+          <div class="onboard-art">📖</div>
+          <h2>Learn First</h2>
+          <p>Start with <b>Essential Spices</b> and <b>Core Techniques</b> — tap any card for the full story, origin, and cooking tips.</p>
+        </div>
+        <div class="onboard-slide" id="os3">
+          <div class="onboard-art">👨‍🍳</div>
+          <h2>Then Cook & Create</h2>
+          <p>Follow <b>40 step-by-step recipes</b> or build your own dish in the animated <b>Create</b> kitchen.</p>
+        </div>
+      </div>
+      <div class="onboard-dots">
+        <span class="onboard-dot active" id="od1"></span>
+        <span class="onboard-dot" id="od2"></span>
+        <span class="onboard-dot" id="od3"></span>
+      </div>
+      <button class="btn btn-primary onboard-btn" id="onboardBtn" onclick="onboardNext()">Next →</button>
+      <button class="onboard-skip" onclick="closeOnboard()">Skip</button>
+    </div>
+  </div>
+  <div class="modal-overlay hidden" id="modalOverlay">
   <div class="modal" id="modalContent"></div>
 </div>
 
 <script>
+
+/* ---- ONBOARDING ---- */
+let onboardStep = 1;
+function onboardNext(){
+  if(onboardStep >= 3){ closeOnboard(); return; }
+  document.getElementById('os'+onboardStep).classList.remove('active');
+  document.getElementById('od'+onboardStep).classList.remove('active');
+  onboardStep++;
+  document.getElementById('os'+onboardStep).classList.add('active');
+  document.getElementById('od'+onboardStep).classList.add('active');
+  if(onboardStep === 3) document.getElementById('onboardBtn').textContent = "Let's Cook! 🍳";
+}
+function closeOnboard(){
+  document.getElementById('onboardOverlay').style.display = 'none';
+  try{ localStorage.setItem('anshu_onboarded','1'); }catch(e){}
+}
+function checkOnboard(){
+  try{ if(localStorage.getItem('anshu_onboarded')) return; }catch(e){}
+  document.getElementById('onboardOverlay').style.display = 'flex';
+}
+
 /* ---------------- LANGUAGE ---------------- */
 let lang = 'en';
 try { lang = localStorage.getItem('anshu_ka_kitchen_lang') || 'en'; } catch(e) {}
@@ -633,6 +778,9 @@ const UI = {
   addedWord:{en:'added',hi:'डाला'},
   yourDish:{en:'Your Creation',hi:'आपकी रचना'},
   cookAnother:{en:'Cook Another Dish',hi:'एक और व्यंजन पकाएँ'},
+  recentTitle:{en:'Recently Cooked',hi:'हाल में पकाए'},
+  recentSub:{en:'Dishes you have completed in Cook Along.',hi:'Cook Along में पूरे किए व्यंजन।'},
+  nothingCooked:{en:'Nothing cooked yet — go try a recipe!',hi:'अभी कुछ नहीं पकाया — एक रेसिपी आज़माएँ!'},
   grpBase:{en:'Base (start here)',hi:'आधार (यहाँ से शुरू करें)'},
   grpTempering:{en:'Tempering Spices',hi:'तड़के के मसाले'},
   grpAromatics:{en:'Aromatics',hi:'ख़ुशबूदार सामग्री'},
@@ -1324,6 +1472,23 @@ function openTechDetail(id){
 }
 
 /* ---------------- RECIPES TAB ---------------- */
+const RECIPE_DIFFICULTY = {
+  'chai':'easy','jeerarice':'easy','daltadka':'easy','aloogobi':'easy','eggbhurji':'easy',
+  'masaladosa':'medium','rajma':'medium','chanamasala':'medium','paneerbm':'medium',
+  'palakpaneer':'medium','matarpaneer':'medium','mushroommasala':'medium','vegpulao':'medium',
+  'bainganbharta':'medium','dalmakhani':'hard','malaikofta':'hard','kadaipaneer':'medium',
+  'paneertikka':'medium','vegbiryani':'hard','cholebhature':'hard','shahipaneer':'medium',
+  'vegkorma':'medium','idlisambar':'medium','chickencurry':'medium','chickentikka':'medium',
+  'butterchicken':'hard','chickentikkamasala':'hard','chickenbiryani':'hard',
+  'tandoorichicken':'hard','chickenkorma':'hard','kadaichicken':'medium','chicken65':'medium',
+  'chillichicken':'medium','roganjosh':'hard','muttoncurry':'hard','keemamatar':'medium',
+  'seekhkebab':'medium','fishcurry':'easy','fishfry':'easy','prawnmasala':'easy',
+  'eggcurry':'easy','chickenchettinad':'hard',
+};
+const DIFF_LABEL = {easy:{en:'Easy',hi:'आसान'},medium:{en:'Medium',hi:'मध्यम'},hard:{en:'Hard',hi:'कठिन'}};
+const DIFF_COLOR = {easy:'var(--leaf)',medium:'var(--turmeric)',hard:'var(--chili)'};
+let activeDiffFilter = 'all';
+
 const thumbCache = {};
 function loadThumbs(container){
   container.querySelectorAll('img[data-wiki]').forEach(img => {
@@ -1343,6 +1508,12 @@ function loadThumbs(container){
   });
 }
 
+function setDiffFilter(diff){
+  activeDiffFilter = diff;
+  document.querySelectorAll('.diff-btn').forEach(b => b.classList.toggle('active', b.dataset.diff === diff));
+  renderRecipes();
+}
+
 function renderRecipes(){
   const list = document.getElementById('recipeList');
   const groups = [
@@ -1353,21 +1524,25 @@ function renderRecipes(){
   list.innerHTML = groups.map(g => {
     const items = RECIPES.filter(r => r.diet === g.diet);
     if (!items.length) return '';
-    const rows = items.map(r => {
+    const filteredItems = activeDiffFilter === 'all' ? items : items.filter(r => (RECIPE_DIFFICULTY[r.id] || 'medium') === activeDiffFilter);
+    const rows = filteredItems.map(r => {
       const cooked = state.cooked.includes(r.id);
       const badge = cooked ? `<span class="badge-cooked">${T('cookedBadge')}</span>` : '';
       const thumb = r.wiki
         ? `<span class="thumb-wrap"><span class="emoji">${r.emoji}</span><img class="recipe-thumb" data-wiki="${r.wiki}" alt="" loading="lazy" onerror="this.remove()"></span>`
         : `<span class="emoji">${r.emoji}</span>`;
+      const diff = RECIPE_DIFFICULTY[r.id] || 'medium';
+      const diffBadge = `<span class="diff-badge" style="background:${DIFF_COLOR[diff]}">${DIFF_LABEL[diff][lang]}</span>`;
       return `<div class="recipe-row" onclick="openRecipe('${r.id}')">
         ${thumb}
         <div class="info">
           <h3>${L(r.name)}</h3>
-          <div class="meta">${L(r.category)} · ${r.time} ${T('min')}</div>
+          <div class="meta">${L(r.category)} · ${r.time} ${T('min')} ${diffBadge}</div>
         </div>
         ${badge}
       </div>`;
     }).join('');
+    const emptyMsg = filteredItems.length === 0 ? `<p class="section-sub" style="padding:0.5rem 0.2rem">No ${activeDiffFilter} recipes in this category.</p>` : '';
     const open = openDietGroups.has(g.diet);
     return `<div class="diet-group ${open ? 'open' : ''}" id="group-${g.diet}">
       <button class="diet-group-header diet-${g.diet}" onclick="toggleDietGroup('${g.diet}')">
@@ -1375,7 +1550,7 @@ function renderRecipes(){
         <span class="diet-count">${items.length}</span>
         <span class="diet-chevron">▾</span>
       </button>
-      <div class="diet-group-body">${rows}</div>
+      <div class="diet-group-body">${rows}${emptyMsg}</div>
     </div>`;
   }).join('');
   loadThumbs(list);
@@ -1410,16 +1585,68 @@ function startCooking(id){
   currentRecipeStep = 0;
   renderStep(RECIPES.find(x => x.id === id));
 }
+let stepTimerInterval = null;
+let stepTimerSeconds = 0;
+
+function getStepMinutes(text){
+  const patterns = [
+    [/\b(\d+)[-–](\d+)\s*minutes?/i, m => Math.round((+m[1]+ +m[2])/2)],
+    [/\b(\d+)\s*minutes?/i, m => +m[1]],
+    [/\b(\d+)\s*hours?/i, m => +m[1]*60],
+    [/overnight/i, () => 480],
+  ];
+  for(const [rx, fn] of patterns){
+    const m = text.match(rx);
+    if(m) return fn(m);
+  }
+  return 0;
+}
+
+function startStepTimer(mins){
+  if(stepTimerInterval) clearInterval(stepTimerInterval);
+  stepTimerSeconds = mins * 60;
+  const btn = document.getElementById('stepTimerBtn');
+  const display = document.getElementById('stepTimerDisplay');
+  if(!btn || !display) return;
+  btn.style.display = 'none';
+  display.style.display = 'flex';
+  function tick(){
+    if(stepTimerSeconds <= 0){
+      clearInterval(stepTimerInterval);
+      display.innerHTML = '✅ Done!';
+      display.style.background = 'var(--leaf)';
+      display.style.color = '#fff';
+      return;
+    }
+    const m = Math.floor(stepTimerSeconds/60);
+    const s = stepTimerSeconds % 60;
+    display.textContent = m + ':' + String(s).padStart(2,'0');
+    stepTimerSeconds--;
+  }
+  tick();
+  stepTimerInterval = setInterval(tick, 1000);
+}
+
 function renderStep(r){
+  if(stepTimerInterval){ clearInterval(stepTimerInterval); stepTimerInterval=null; }
   const steps = L(r.steps);
   const isLast = currentRecipeStep === steps.length - 1;
+  const stepText = steps[currentRecipeStep];
+  const timerMins = getStepMinutes(stepText);
+  const timerHtml = timerMins > 0
+    ? `<div class="step-timer-row">
+        <button class="step-timer-btn" id="stepTimerBtn" onclick="startStepTimer(${timerMins})">⏱ Start ${timerMins < 60 ? timerMins + ' min' : Math.round(timerMins/60) + ' hr'} Timer</button>
+        <div class="step-timer-display" id="stepTimerDisplay" style="display:none"></div>
+       </div>`
+    : '';
   openModal(`
     <button class="modal-close" onclick="closeModal()">✕</button>
     <h2>${r.emoji} ${L(r.name)}</h2>
     <div class="modal-meta">${T('step')} ${currentRecipeStep+1} ${T('of')} ${steps.length}</div>
     <div class="step-box">
       <div class="step-num">${T('stepCap')} ${currentRecipeStep+1}</div>
-      <div>${steps[currentRecipeStep]}</div>
+      <div>${stepText}</div>
+      ${timerHtml}
     </div>
     <div class="step-nav">
       ${currentRecipeStep > 0 ? `<button class="btn btn-ghost" onclick="prevStep('${r.id}')">${T('back')}</button>` : `<span></span>`}
@@ -1511,6 +1738,30 @@ function renderProgress(){
       <div class="name">${L(b.name)}</div>
     </div>`;
   }).join('');
+
+  const recentEl = document.getElementById('recentCooked');
+  if(!recentEl) return;
+  if(!state.cooked.length){
+    recentEl.innerHTML = `<p class="section-sub">${T('nothingCooked')}</p>`;
+    return;
+  }
+  const recent = [...state.cooked].reverse().slice(0, 8);
+  recentEl.innerHTML = recent.map(id => {
+    const r = RECIPES.find(x => x.id === id);
+    if(!r) return '';
+    const thumb = r.wiki
+      ? `<img class="recent-thumb" data-wiki="${r.wiki}" alt="" onerror="this.remove()">`
+      : `<span style="font-size:1.8rem">${r.emoji}</span>`;
+    return `<div class="recent-card" onclick="document.querySelector('[data-tab=recipes]').click(); setTimeout(()=>openRecipe('${r.id}'),300)">
+      <div class="recent-thumb-wrap">${thumb}</div>
+      <div class="recent-info">
+        <div class="recent-name">${L(r.name)}</div>
+        <div class="recent-meta">${L(r.category)} · ${r.time} ${T('min')}</div>
+      </div>
+      <span class="recent-cooked-badge">✓</span>
+    </div>`;
+  }).join('');
+  loadThumbs(recentEl);
 }
 
 /* ---------------- CREATE TAB ---------------- */
@@ -1587,6 +1838,31 @@ function mixColor(c1, c2){
   const r1=p(c1.slice(1,3)), g1=p(c1.slice(3,5)), b1=p(c1.slice(5,7));
   const r2=p(c2.slice(1,3)), g2=p(c2.slice(3,5)), b2=p(c2.slice(5,7));
   return '#' + h(Math.round((r1+r2)/2)) + h(Math.round((g1+g2)/2)) + h(Math.round((b1+b2)/2));
+}
+
+
+function filterIngredients(q){
+  q = q.trim().toLowerCase();
+  if(!q){
+    renderCreate();
+    return;
+  }
+  const matches = CREATE_INGREDIENTS.filter(i =>
+    L(i.name).toLowerCase().includes(q) || i.id.includes(q)
+  );
+  const chips = matches.map(i => {
+    const img = i.wiki
+      ? `<span class="chip-img-wrap"><img class="chip-img" data-wiki="${i.wiki}" alt="" onerror="this.parentElement.style.display='none'">${i.emoji}</span>`
+      : `<span class="chip-emoji">${i.emoji}</span>`;
+    return `<button class="ing-chip" onclick="addToPot('${i.id}')">${img}<span class="chip-label">${L(i.name)}</span></button>`;
+  }).join('');
+  document.getElementById('ingredientPalette').innerHTML =
+    `<div class="ing-accordion open">
+      <div class="ing-acc-body" style="max-height:none;padding-top:0.6rem">
+        <div class="ing-chips">${chips || '<p style="padding:0.5rem;color:var(--maroon-dark);font-size:0.9rem">No ingredients found</p>'}</div>
+      </div>
+    </div>`;
+  loadThumbs(document.getElementById('ingredientPalette'));
 }
 
 let openIngGroups_state = new Set(['base','tempering']);
@@ -1959,6 +2235,7 @@ renderCreate();
 initQuiz();
 renderProgress();
 refreshBadges();
+checkOnboard();
 </script>
 </body>
 </html>
