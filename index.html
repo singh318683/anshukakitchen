@@ -391,12 +391,29 @@
   }
   .pan-log b{ color: var(--chili); }
   .pan-actions{ display:flex; gap:0.7rem; justify-content:center; }
-  .ing-group{ margin-bottom:1.1rem; }
-  .ing-group-title{
-    font-family: var(--font-display); font-weight:700; font-size:0.95rem;
-    color: var(--maroon); margin-bottom:0.5rem; padding-left:0.6rem;
-    border-left:3px solid var(--turmeric);
+  .ing-accordion{ margin-bottom:0.6rem; }
+  .ing-acc-header{
+    width:100%; display:flex; align-items:center; gap:0.6rem;
+    font-family: var(--font-display); font-weight:700; font-size:0.92rem;
+    background: var(--white); border:1px solid rgba(107,30,35,0.08);
+    border-left:4px solid var(--turmeric); border-radius: var(--radius-sm);
+    padding: 0.65rem 0.9rem; cursor:pointer;
+    box-shadow: 0 2px 8px rgba(42,24,16,0.08);
+    transition: all 0.2s ease; text-align:left; color: var(--maroon);
   }
+  .ing-acc-header:hover{ background: var(--cream-2); }
+  .ing-acc-header span:first-child{ flex:1; }
+  .ing-acc-count{
+    background: var(--cream-2); color: var(--maroon-dark);
+    font-size:0.72rem; font-weight:700; padding:0.15rem 0.55rem; border-radius:100px;
+  }
+  .ing-acc-chevron{ font-size:0.85rem; transition: transform 0.25s ease; }
+  .ing-accordion.open .ing-acc-chevron{ transform: rotate(180deg); }
+  .ing-acc-body{
+    max-height:0; overflow:hidden; transition: max-height 0.35s ease, padding 0.25s ease;
+    padding: 0 0.2rem;
+  }
+  .ing-accordion.open .ing-acc-body{ max-height:600px; padding-top:0.6rem; padding-bottom:0.4rem; }
   .ing-chips{ display:flex; flex-wrap:wrap; gap:0.5rem; }
   .chip-img-wrap{
     position:relative; width:36px; height:36px; flex-shrink:0;
@@ -1556,6 +1573,14 @@ function mixColor(c1, c2){
   return '#' + h(Math.round((r1+r2)/2)) + h(Math.round((g1+g2)/2)) + h(Math.round((b1+b2)/2));
 }
 
+let openIngGroups_state = new Set(['base','tempering']);
+function toggleIngGroup(key){
+  if(openIngGroups_state.has(key)) openIngGroups_state.delete(key);
+  else openIngGroups_state.add(key);
+  // toggle without full re-render to keep images cached
+  const acc = document.getElementById('iacc-'+key);
+  if(acc) acc.classList.toggle('open');
+}
 function renderCreate(){
   const groups = [
     { key:'base', label:T('grpBase') },
@@ -1573,14 +1598,25 @@ function renderCreate(){
     { key:'condiments', label:T('grpCondiments') },
     { key:'finish', label:T('grpFinish') },
   ];
-  document.getElementById('ingredientPalette').innerHTML = groups.map(g => {
-    const chips = CREATE_INGREDIENTS.filter(i => i.group === g.key).map(i => {
+  const openIngGroups = openIngGroups_state || new Set(['base','tempering']);
+  document.getElementById('ingredientPalette').innerHTML = groups.map((g,gi) => {
+    const items = CREATE_INGREDIENTS.filter(i => i.group === g.key);
+    if(!items.length) return '';
+    const chips = items.map(i => {
       const img = i.wiki
         ? `<span class="chip-img-wrap"><img class="chip-img" data-wiki="${i.wiki}" alt="" onerror="this.parentElement.style.display='none'">${i.emoji}</span>`
         : `<span class="chip-emoji">${i.emoji}</span>`;
       return `<button class="ing-chip" onclick="addToPot('${i.id}')">${img}<span class="chip-label">${L(i.name)}</span></button>`;
     }).join('');
-    return `<div class="ing-group"><div class="ing-group-title">${g.label}</div><div class="ing-chips">${chips}</div></div>`;
+    const isOpen = openIngGroups.has(g.key);
+    return `<div class="ing-accordion ${isOpen?'open':''}" id="iacc-${g.key}">
+      <button class="ing-acc-header" onclick="toggleIngGroup('${g.key}')">
+        <span>${g.label}</span>
+        <span class="ing-acc-count">${items.length}</span>
+        <span class="ing-acc-chevron">▾</span>
+      </button>
+      <div class="ing-acc-body"><div class="ing-chips">${chips}</div></div>
+    </div>`;
   }).join('');
   if (!pot.length) document.getElementById('panLog').textContent = T('panEmptyMsg');
   updateGravy();
