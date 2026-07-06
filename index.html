@@ -51,12 +51,21 @@
     animation: dropIn 0.6s cubic-bezier(.2,.8,.2,1) both;
   }
   @keyframes dropIn{ from{ transform: translateY(-16px); opacity:0; } to{ transform:none; opacity:1; } }
+  .brand-row{ display:flex; align-items:center; justify-content:space-between; margin-bottom:0.9rem; }
   .brand{
     font-family: var(--font-display); font-weight:800; color: var(--white);
     font-size: 1.5rem; letter-spacing:0.01em; display:flex; align-items:center; gap:0.5rem;
-    margin-bottom: 0.9rem;
   }
   .brand span{ background: linear-gradient(90deg, var(--turmeric-light), var(--turmeric)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .lang-toggle{
+    display:flex; gap:0; border:1px solid rgba(255,255,255,0.25); border-radius:100px; overflow:hidden;
+  }
+  .lang-btn{
+    font-family: var(--font-display); font-weight:600; font-size:0.85rem;
+    background: transparent; color: rgba(255,253,248,0.7); border:none;
+    padding:0.35rem 0.85rem; cursor:pointer; transition: all 0.2s ease;
+  }
+  .lang-btn.active{ background: var(--turmeric); color: var(--ember); }
   .tabs{ display:flex; gap:0.4rem; overflow-x:auto; }
   .tab-btn{
     font-family: var(--font-display); font-weight:600; font-size:0.95rem;
@@ -124,13 +133,6 @@
     background: var(--leaf); color:#fff; font-size:0.75rem; display:none; align-items:center; justify-content:center;
   }
   .item-card.learned .check{ display:flex; }
-  .item-card.locked{ cursor:pointer; }
-  .item-card.locked::after{
-    content:'🔒 Premium'; position:absolute; top:0.7rem; right:0.7rem;
-    background: var(--chili); color:#fff; font-size:0.68rem; font-weight:600;
-    padding:0.2rem 0.55rem; border-radius:100px;
-  }
-  .item-card.locked .emoji, .item-card.locked h3, .item-card.locked p{ opacity:0.45; filter: grayscale(0.3); }
 
   .btn{
     font-family: var(--font-display); font-weight:600; font-size:0.9rem; border:none;
@@ -154,7 +156,6 @@
   .recipe-row .info{ flex:1; }
   .recipe-row h3{ font-family: var(--font-display); font-size:1.02rem; color:var(--maroon); }
   .recipe-row .meta{ font-size:0.8rem; color: rgba(42,24,16,0.55); margin-top:0.15rem; }
-  .recipe-row .badge-lock{ background: var(--chili); color:#fff; font-size:0.68rem; font-weight:600; padding:0.2rem 0.6rem; border-radius:100px; }
   .recipe-row .badge-cooked{ background: var(--leaf); color:#fff; font-size:0.68rem; font-weight:600; padding:0.2rem 0.6rem; border-radius:100px; }
 
   /* QUIZ */
@@ -216,9 +217,8 @@
   .step-box{ background: var(--white); border-radius: var(--radius-sm); padding:1rem; margin-bottom:0.8rem; border-left:4px solid var(--turmeric); }
   .step-box .step-num{ font-family: var(--font-display); font-weight:700; color: var(--chili); font-size:0.85rem; margin-bottom:0.2rem; }
   .step-nav{ display:flex; justify-content:space-between; gap:0.6rem; margin-top:1rem; }
-  .lock-note{ font-size:0.9rem; color: rgba(42,24,16,0.7); line-height:1.5; margin-bottom:1rem; }
-.spice-detail p{ font-size:0.9rem; line-height:1.55; margin-bottom:0.85rem; color: rgba(42,24,16,0.85); }
-.spice-detail strong{ color: var(--maroon); font-family: var(--font-display); font-weight:600; font-size:0.85rem; display:block; margin-bottom:0.15rem; }
+  .spice-detail p{ font-size:0.9rem; line-height:1.55; margin-bottom:0.85rem; color: rgba(42,24,16,0.85); }
+  .spice-detail strong{ color: var(--maroon); font-family: var(--font-display); font-weight:600; font-size:0.85rem; display:block; margin-bottom:0.15rem; }
 
   footer{ text-align:center; font-size:0.8rem; color: rgba(42,24,16,0.5); padding: 1.5rem 1rem 0; font-family: var(--font-utility); }
 </style>
@@ -227,12 +227,18 @@
 <div id="app">
 
   <header class="topbar">
-    <div class="brand">🌶️ <span>Anshu Ka Kitchen</span></div>
+    <div class="brand-row">
+      <div class="brand">🌶️ <span>Anshu Ka Kitchen</span></div>
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="langEn" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" id="langHi" onclick="setLang('hi')">हिं</button>
+      </div>
+    </div>
     <nav class="tabs">
-      <button class="tab-btn active" data-tab="learn">Learn</button>
-      <button class="tab-btn" data-tab="recipes">Recipes</button>
-      <button class="tab-btn" data-tab="quiz">Quiz</button>
-      <button class="tab-btn" data-tab="progress">Progress</button>
+      <button class="tab-btn active" data-tab="learn" data-i18n="tabLearn">Learn</button>
+      <button class="tab-btn" data-tab="recipes" data-i18n="tabRecipes">Recipes</button>
+      <button class="tab-btn" data-tab="quiz" data-i18n="tabQuiz">Quiz</button>
+      <button class="tab-btn" data-tab="progress" data-i18n="tabProgress">Progress</button>
     </nav>
   </header>
 
@@ -247,7 +253,7 @@
         <circle class="seed idle1" cx="41" cy="30" r="2" fill="#2a1810"/>
         <rect x="56" y="20" width="16" height="4" rx="2" fill="#6b1e23"/>
       </svg>
-      <div class="tadka-caption" id="tadkaCaption">Tap a lesson, recipe, or quiz answer to hear the tadka pop 🔥</div>
+      <div class="tadka-caption" id="tadkaCaption"></div>
     </div>
   </div>
 
@@ -255,32 +261,32 @@
 
     <!-- LEARN TAB -->
     <section id="tab-learn" class="tab-panel active">
-      <h2 class="section-title">Essential Spices</h2>
-      <p class="section-sub">Tap each one to learn it.</p>
+      <h2 class="section-title" data-i18n="spicesTitle">Essential Spices</h2>
+      <p class="section-sub" data-i18n="spicesSub">Tap each one to learn it.</p>
       <div class="card-grid" id="spiceGrid"></div>
 
-      <h2 class="section-title">Core Techniques</h2>
-      <p class="section-sub">The methods behind almost every Indian dish.</p>
+      <h2 class="section-title" data-i18n="techTitle">Core Techniques</h2>
+      <p class="section-sub" data-i18n="techSub">The methods behind almost every Indian dish.</p>
       <div class="card-grid" id="techniqueGrid"></div>
     </section>
 
     <!-- RECIPES TAB -->
     <section id="tab-recipes" class="tab-panel">
-      <h2 class="section-title">Cook Along</h2>
-      <p class="section-sub">Step-by-step guides with ingredients and timers.</p>
+      <h2 class="section-title" data-i18n="recipesTitle">Cook Along</h2>
+      <p class="section-sub" data-i18n="recipesSub">Step-by-step guides with ingredients and timers.</p>
       <div id="recipeList"></div>
     </section>
 
     <!-- QUIZ TAB -->
     <section id="tab-quiz" class="tab-panel">
-      <h2 class="section-title">Spice Detective</h2>
-      <p class="section-sub">Identify the spice or technique from the clue.</p>
+      <h2 class="section-title" data-i18n="quizTitle">Spice Detective</h2>
+      <p class="section-sub" data-i18n="quizSub">Identify the spice or technique from the clue.</p>
       <div class="quiz-card">
         <div class="quiz-emoji" id="quizEmoji">🔍</div>
         <div class="quiz-question" id="quizQuestion">Loading...</div>
         <div class="quiz-options" id="quizOptions"></div>
         <div class="quiz-footer">
-          <span id="quizProgress">Question 1</span>
+          <span id="quizProgress"></span>
           <span class="streak-pill" id="quizStreak">🔥 0</span>
         </div>
       </div>
@@ -288,25 +294,25 @@
 
     <!-- PROGRESS TAB -->
     <section id="tab-progress" class="tab-panel">
-      <h2 class="section-title">Your Progress</h2>
+      <h2 class="section-title" data-i18n="progressTitle">Your Progress</h2>
       <div class="streak-card">
         <div class="streak-flame">🔥</div>
         <div>
-          <div class="num" id="streakNum">0 day streak</div>
-          <div class="lbl">Come back daily to keep it going</div>
+          <div class="num" id="streakNum"></div>
+          <div class="lbl" data-i18n="streakLbl">Come back daily to keep it going</div>
         </div>
       </div>
       <div class="xp-jar-wrap">
-        <div class="xp-jar-label"><span>Spice Jar</span><span id="xpNum">0 XP</span></div>
+        <div class="xp-jar-label"><span data-i18n="xpJar">Spice Jar</span><span id="xpNum">0 XP</span></div>
         <div class="xp-track"><div class="xp-fill" id="xpFill"></div></div>
       </div>
-      <h2 class="section-title">Badges</h2>
+      <h2 class="section-title" data-i18n="badgesTitle">Badges</h2>
       <div class="badge-grid" id="badgeGrid"></div>
     </section>
 
   </main>
 
-  <footer>Made for home cooks learning Indian food, one tadka at a time 🌶️</footer>
+  <footer data-i18n="footerText">Made for home cooks learning Indian food, one tadka at a time 🌶️</footer>
 </div>
 
 <div class="modal-overlay hidden" id="modalOverlay">
@@ -314,127 +320,268 @@
 </div>
 
 <script>
+/* ---------------- LANGUAGE ---------------- */
+let lang = 'en';
+try { lang = localStorage.getItem('anshu_ka_kitchen_lang') || 'en'; } catch(e) {}
+
+const UI = {
+  tabLearn:{en:'Learn',hi:'सीखें'},
+  tabRecipes:{en:'Recipes',hi:'रेसिपी'},
+  tabQuiz:{en:'Quiz',hi:'क्विज़'},
+  tabProgress:{en:'Progress',hi:'प्रगति'},
+  spicesTitle:{en:'Essential Spices',hi:'ज़रूरी मसाले'},
+  spicesSub:{en:'Tap each one to learn it.',hi:'हर एक को सीखने के लिए टैप करें।'},
+  techTitle:{en:'Core Techniques',hi:'मुख्य तकनीकें'},
+  techSub:{en:'The methods behind almost every Indian dish.',hi:'लगभग हर भारतीय व्यंजन के पीछे की विधियाँ।'},
+  recipesTitle:{en:'Cook Along',hi:'साथ में पकाएँ'},
+  recipesSub:{en:'Step-by-step guides with ingredients and timers.',hi:'सामग्री सहित चरण-दर-चरण मार्गदर्शन।'},
+  quizTitle:{en:'Spice Detective',hi:'मसाला जासूस'},
+  quizSub:{en:'Identify the spice or technique from the clue.',hi:'सुराग से मसाला या तकनीक पहचानें।'},
+  progressTitle:{en:'Your Progress',hi:'आपकी प्रगति'},
+  streakLbl:{en:'Come back daily to keep it going',hi:'सिलसिला जारी रखने के लिए रोज़ आएँ'},
+  xpJar:{en:'Spice Jar',hi:'मसाले का डिब्बा'},
+  badgesTitle:{en:'Badges',hi:'बैज'},
+  footerText:{en:'Made for home cooks learning Indian food, one tadka at a time 🌶️',hi:'घर के रसोइयों के लिए, एक तड़के से भारतीय खाना सीखने का सफ़र 🌶️'},
+  tadkaWelcome:{en:'Tap a lesson, recipe, or quiz answer to hear the tadka pop 🔥',hi:'तड़के की चटपट सुनने के लिए कोई पाठ, रेसिपी या क्विज़ उत्तर टैप करें 🔥'},
+  dayStreak:{en:'day streak',hi:'दिन का सिलसिला'},
+  question:{en:'Question',hi:'प्रश्न'},
+  of:{en:'of',hi:'में से'},
+  essentialSpice:{en:'Essential Spice',hi:'ज़रूरी मसाला'},
+  whatItsLike:{en:"What it's like:",hi:'कैसा होता है:'},
+  origin:{en:'Origin:',hi:'उत्पत्ति:'},
+  benefits:{en:'Traditional benefits:',hi:'पारंपरिक लाभ:'},
+  commonUses:{en:'Common uses:',hi:'आम उपयोग:'},
+  cookingTip:{en:'Cooking tip:',hi:'खाना पकाने की टिप:'},
+  markLearned:{en:'Mark as Learned (+10 XP)',hi:'सीखा हुआ चिह्नित करें (+10 XP)'},
+  reviewAgain:{en:'✓ Learned — Review Again',hi:'✓ सीख लिया — फिर देखें'},
+  ingredients:{en:'Ingredients',hi:'सामग्री'},
+  startCooking:{en:'Start Cooking',hi:'पकाना शुरू करें'},
+  step:{en:'Step',hi:'चरण'},
+  stepCap:{en:'STEP',hi:'चरण'},
+  back:{en:'Back',hi:'पीछे'},
+  nextStep:{en:'Next Step',hi:'अगला चरण'},
+  finish:{en:'Finish 🎉',hi:'पूर्ण 🎉'},
+  learned:{en:'learned! +10 XP',hi:'सीख लिया! +10 XP'},
+  alreadyKnow:{en:'You already know',hi:'आप पहले से जानते हैं'},
+  cooked:{en:'cooked! +25 XP',hi:'पक गया! +25 XP'},
+  cookedBadge:{en:'✓ Cooked',hi:'✓ पकाया'},
+  correct:{en:'Correct!',hi:'सही!'},
+  notQuite:{en:'Not quite — it was',hi:'ग़लत — सही उत्तर था'},
+  min:{en:'min',hi:'मिनट'},
+};
+
+function T(key){ return UI[key] ? UI[key][lang] : key; }
+function L(obj){ return typeof obj === 'object' && obj !== null && ('en' in obj) ? (obj[lang] || obj.en) : obj; }
+
+function setLang(l){
+  lang = l;
+  try { localStorage.setItem('anshu_ka_kitchen_lang', l); } catch(e) {}
+  document.getElementById('langEn').classList.toggle('active', l === 'en');
+  document.getElementById('langHi').classList.toggle('active', l === 'hi');
+  applyStaticI18n();
+  renderLearn();
+  renderRecipes();
+  renderQuiz();
+  renderProgress();
+  document.getElementById('tadkaCaption').innerHTML = T('tadkaWelcome');
+  closeModal();
+}
+
+function applyStaticI18n(){
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    el.textContent = T(el.dataset.i18n);
+  });
+}
+
 /* ---------------- DATA ---------------- */
 const SPICES = [
-  { id:'turmeric', emoji:'🟡', name:'Turmeric (Haldi)', desc:'Earthy and slightly bitter. Gives dishes their golden color and is almost always added early in cooking.',
-    origin:'Native to South Asia and cultivated in India for thousands of years, mostly grown in Telangana, Andhra Pradesh, and Tamil Nadu.',
-    benefits:'Contains curcumin, prized in Ayurveda for its anti-inflammatory and antioxidant properties. Often taken as "haldi doodh" (turmeric milk) when unwell.',
-    uses:'The base color and flavor note in nearly every curry, dal, and rice dish across India.',
-    tip:'A little goes a long way — too much turns a dish bitter. Add it early so it cooks into the oil instead of tasting raw.' },
-  { id:'cumin', emoji:'🌰', name:'Cumin Seeds (Jeera)', desc:'Nutty and warm. Usually the first thing to hit hot oil at the start of a tadka.',
-    origin:'Native to the eastern Mediterranean and South Asia; India is now both the largest grower and consumer of cumin in the world.',
-    benefits:'Traditionally used to aid digestion after meals, and is a good source of iron.',
-    uses:'The starting spice for most tadkas, and ground into cumin powder for spice blends and marinades.',
-    tip:'Toast briefly in oil just until it sizzles and turns fragrant — burnt cumin turns bitter fast.' },
-  { id:'mustard', emoji:'⚫', name:'Mustard Seeds (Rai)', desc:'Pop and crackle loudly in hot oil, releasing a sharp nutty flavor — the classic sound of tadka starting.',
-    origin:'Grown widely across India, especially the west and south, for both seeds and mustard oil.',
-    benefits:'A source of selenium and magnesium; mustard oil is also traditionally used in massage.',
-    uses:'Essential to South Indian tempering for sambar, rasam, and coconut-based curries.',
-    tip:'Add to hot oil and stand back or cover the pan briefly — the seeds pop and can jump out.' },
-  { id:'coriander', emoji:'🌿', name:'Coriander Powder (Dhania)', desc:'Mild and citrusy. The quiet workhorse behind most North Indian curry bases.',
-    origin:'Grown throughout India; the seeds and the fresh leaves (cilantro) come from the same plant but are used very differently.',
-    benefits:'Gentle on digestion, and commonly paired with cumin to balance heavier spices in a blend.',
-    uses:'A base spice in most curry powders, adding body and a mild citrus note without much heat.',
-    tip:'Toast whole coriander seeds and grind them fresh for noticeably more flavor than pre-ground powder.' },
-  { id:'garammasala', emoji:'🟤', name:'Garam Masala', desc:'A warm ground spice blend added near the end of cooking to round out the flavor.',
-    origin:'A North Indian blend of warming spices — cinnamon, clove, cardamom, and more — with the exact recipe varying by region and household.',
-    benefits:'The blend of warming spices is traditionally believed to aid digestion and circulation.',
-    uses:'Sprinkled in near the end of cooking so its more delicate aromatic notes aren\'t boiled away.',
-    tip:'Every family has its own ratio — start with a good store-bought blend, then adjust to your taste over time.' },
-  { id:'hing', emoji:'✨', name:'Asafoetida (Hing)', desc:'Pungent raw, but mellow and savory once it touches hot oil. A pinch goes a very long way.',
-    origin:'A dried resin from a plant native to Afghanistan and Iran, historically traded into India along ancient trade routes.',
-    benefits:'Traditionally used to reduce bloating, especially when cooking lentils and beans.',
-    uses:'A pinch added to hot oil at the very start of tempering, especially in dals and vegetable dishes.',
-    tip:'Keep it in an airtight container — its raw smell is strong and can seep into other spices nearby.' },
-  { id:'cardamom', emoji:'💚', name:'Cardamom (Elaichi)', desc:'Sweet and floral. Shows up in both savory curries and chai or dessert.',
-    origin:'Native to the forests of the Western Ghats in South India, though Guatemala is now also a major grower.',
-    benefits:'Used in Ayurveda to freshen breath and settle the stomach after a heavy meal.',
-    uses:'Whole pods flavor rice and chai; ground cardamom appears in desserts and in garam masala blends.',
-    tip:'Lightly crush whole pods with the back of a spoon before adding, to release the essential oils inside.' },
-  { id:'chilipowder', emoji:'🔴', name:'Red Chili Powder', desc:'Brings heat and deep red color. Adjust the amount to control spice level.',
-    origin:'Chilies arrived in India from the Americas in the 16th century via Portuguese traders and were rapidly adopted across the subcontinent.',
-    benefits:'Contains capsaicin, which is linked to a temporary boost in metabolism.',
-    uses:'The primary source of heat and red color in most curries, marinades, and pickles.',
-    tip:'Add it with the other dry spices early in cooking so it loses its raw, sharp edge.' },
-  { id:'blackpepper', emoji:'⚪', name:'Black Pepper (Kali Mirch)', desc:'Sharp, woody heat. India\'s original source of spice-trade fame, long before chilies arrived.',
-    origin:'Native to the Malabar coast of Kerala — the "black gold" that drove centuries of global spice trade to India.',
-    benefits:'Contains piperine, which is traditionally paired with turmeric to help the body absorb curcumin.',
-    uses:'Whole peppercorns in rice dishes and rasam; freshly ground over curries, soups, and eggs.',
-    tip:'Grind fresh just before using — pre-ground pepper loses its aroma within weeks.' },
-  { id:'cloves', emoji:'🟫', name:'Cloves (Laung)', desc:'Intensely aromatic flower buds with a warm, almost numbing sweetness.',
-    origin:'Originally from the Maluku "Spice Islands" of Indonesia, now grown in South India, especially Kerala and Tamil Nadu.',
-    benefits:'Clove oil is a traditional home remedy for toothache, and cloves are chewed to freshen breath.',
-    uses:'Whole cloves in biryani, pulao, and garam masala; a key note in masala chai.',
-    tip:'Use sparingly — 2-3 whole cloves flavor an entire pot. Too many overpower everything else.' },
-  { id:'cinnamon', emoji:'🪵', name:'Cinnamon (Dalchini)', desc:'Sweet, warm bark that rounds out both savory curries and desserts.',
-    origin:'True cinnamon comes from Sri Lanka; the stronger cassia variety is more common in Indian kitchens.',
-    benefits:'Traditionally used to support blood sugar balance and warm the body in winter.',
-    uses:'A stick dropped into biryani, pulao, and curries at the tadka stage; ground into garam masala and chai.',
-    tip:'Add the whole stick to hot oil at the start — it releases flavor slowly and can be fished out before serving.' },
-  { id:'fenugreek', emoji:'🌾', name:'Fenugreek (Methi)', desc:'Bitter seeds and aromatic dried leaves — the flavor behind that "restaurant curry" smell.',
-    origin:'One of the oldest cultivated spice plants, grown across India with Rajasthan as the major producer.',
-    benefits:'Traditionally used to support digestion and lactation; often soaked overnight and eaten in the morning.',
-    uses:'Seeds in pickles, sambar powder, and tadkas; dried leaves (kasuri methi) crushed over butter chicken and paneer dishes.',
-    tip:'Crush kasuri methi between your palms before adding at the end — heat from your hands releases its aroma.' },
-  { id:'fennel', emoji:'🌱', name:'Fennel Seeds (Saunf)', desc:'Sweet, licorice-like seeds served after meals in every Indian restaurant.',
-    origin:'Grown widely in Gujarat and Rajasthan; a staple of both the kitchen and the after-dinner tray.',
-    benefits:'Chewed after meals as a natural mouth freshener and to ease digestion.',
-    uses:'In pickling spice blends, Kashmiri and Bengali cuisine, and the five-spice mix panch phoron.',
-    tip:'Dry-roast lightly before grinding to deepen the sweetness and remove any raw edge.' },
-  { id:'curryleaves', emoji:'🍃', name:'Curry Leaves (Kadi Patta)', desc:'Glossy aromatic leaves that crackle in hot oil — the soul of South Indian tempering.',
-    origin:'Native to India and Sri Lanka; the tree grows in courtyards across South India.',
-    benefits:'Rich in antioxidants and traditionally associated with healthy hair and digestion.',
-    uses:'Fried in oil at the start of sambar, rasam, upma, and coconut chutneys — added fresh, not dried.',
-    tip:'Fresh leaves beat dried ones by a mile. Freeze extras in a zip bag; they go straight from freezer to hot oil.' },
-  { id:'ajwain', emoji:'🌼', name:'Carom Seeds (Ajwain)', desc:'Tiny seeds with a sharp thyme-like punch, used in doughs and fried snacks.',
-    origin:'Cultivated mainly in Rajasthan and Gujarat; a staple of home remedies across North India.',
-    benefits:'The classic Indian home remedy for gas and indigestion — often taken with warm water and salt.',
-    uses:'Kneaded into paratha and puri dough, sprinkled into pakora batter, and used in fish fry masalas.',
-    tip:'Rub the seeds between your fingers before adding to release the thymol aroma.' },
-  { id:'saffron', emoji:'🌸', name:'Saffron (Kesar)', desc:'The world\'s most precious spice — a few threads perfume an entire dish golden.',
-    origin:'Grown in India almost exclusively in the Pampore region of Kashmir, harvested by hand from crocus flowers.',
-    benefits:'Prized in Ayurveda as a mood-lifter and traditionally added to warm milk for expectant mothers.',
-    uses:'Steeped in warm milk for biryani, kheer, shrikhand, and festive sweets.',
-    tip:'Never add threads directly — soak them in 2 tbsp of warm milk for 10 minutes first to draw out color and aroma.' },
+  { id:'turmeric', emoji:'🟡',
+    name:{en:'Turmeric (Haldi)',hi:'हल्दी'},
+    desc:{en:'Earthy and slightly bitter. Gives dishes their golden color and is almost always added early in cooking.',hi:'मिट्टी जैसी और हल्की कड़वी। व्यंजनों को सुनहरा रंग देती है और लगभग हमेशा पकाने की शुरुआत में डाली जाती है।'},
+    origin:{en:'Native to South Asia and cultivated in India for thousands of years, mostly grown in Telangana, Andhra Pradesh, and Tamil Nadu.',hi:'दक्षिण एशिया की मूल निवासी, भारत में हज़ारों वर्षों से उगाई जाती है — मुख्यतः तेलंगाना, आंध्र प्रदेश और तमिलनाडु में।'},
+    benefits:{en:'Contains curcumin, prized in Ayurveda for its anti-inflammatory and antioxidant properties. Often taken as "haldi doodh" (turmeric milk) when unwell.',hi:'इसमें करक्यूमिन होता है, जो आयुर्वेद में सूजन-रोधी और एंटीऑक्सीडेंट गुणों के लिए प्रसिद्ध है। तबीयत खराब होने पर अक्सर हल्दी दूध के रूप में लिया जाता है।'},
+    uses:{en:'The base color and flavor note in nearly every curry, dal, and rice dish across India.',hi:'भारत भर की लगभग हर करी, दाल और चावल के व्यंजन में रंग और स्वाद का आधार।'},
+    tip:{en:'A little goes a long way — too much turns a dish bitter. Add it early so it cooks into the oil instead of tasting raw.',hi:'थोड़ी ही काफ़ी है — ज़्यादा डालने से व्यंजन कड़वा हो जाता है। शुरुआत में डालें ताकि यह तेल में अच्छे से पक जाए।'} },
+  { id:'cumin', emoji:'🌰',
+    name:{en:'Cumin Seeds (Jeera)',hi:'जीरा'},
+    desc:{en:'Nutty and warm. Usually the first thing to hit hot oil at the start of a tadka.',hi:'मेवे जैसा और गर्म स्वाद। तड़के की शुरुआत में गरम तेल में सबसे पहले यही डाला जाता है।'},
+    origin:{en:'Native to the eastern Mediterranean and South Asia; India is now both the largest grower and consumer of cumin in the world.',hi:'पूर्वी भूमध्यसागर और दक्षिण एशिया का मूल निवासी; भारत आज दुनिया में जीरे का सबसे बड़ा उत्पादक और उपभोक्ता है।'},
+    benefits:{en:'Traditionally used to aid digestion after meals, and is a good source of iron.',hi:'परंपरागत रूप से भोजन के बाद पाचन में सहायक माना जाता है, और आयरन का अच्छा स्रोत है।'},
+    uses:{en:'The starting spice for most tadkas, and ground into cumin powder for spice blends and marinades.',hi:'अधिकांश तड़कों का पहला मसाला, और पिसा हुआ जीरा मसाला मिश्रणों व मैरिनेड में इस्तेमाल होता है।'},
+    tip:{en:'Toast briefly in oil just until it sizzles and turns fragrant — burnt cumin turns bitter fast.',hi:'तेल में बस तब तक भूनें जब तक चटकने और महकने लगे — जला हुआ जीरा जल्दी कड़वा हो जाता है।'} },
+  { id:'mustard', emoji:'⚫',
+    name:{en:'Mustard Seeds (Rai)',hi:'राई (सरसों के दाने)'},
+    desc:{en:'Pop and crackle loudly in hot oil, releasing a sharp nutty flavor — the classic sound of tadka starting.',hi:'गरम तेल में ज़ोर से चटकती है और तीखा स्वाद छोड़ती है — तड़का शुरू होने की पहचान यही आवाज़ है।'},
+    origin:{en:'Grown widely across India, especially the west and south, for both seeds and mustard oil.',hi:'भारत भर में, विशेषकर पश्चिम और दक्षिण में, दानों और सरसों के तेल दोनों के लिए उगाई जाती है।'},
+    benefits:{en:'A source of selenium and magnesium; mustard oil is also traditionally used in massage.',hi:'सेलेनियम और मैग्नीशियम का स्रोत; सरसों का तेल परंपरागत रूप से मालिश में भी उपयोग होता है।'},
+    uses:{en:'Essential to South Indian tempering for sambar, rasam, and coconut-based curries.',hi:'सांभर, रसम और नारियल आधारित करी के दक्षिण भारतीय तड़के के लिए अनिवार्य।'},
+    tip:{en:'Add to hot oil and stand back or cover the pan briefly — the seeds pop and can jump out.',hi:'गरम तेल में डालकर थोड़ा पीछे हटें या ढक्कन लगाएँ — दाने चटककर बाहर उछल सकते हैं।'} },
+  { id:'coriander', emoji:'🌿',
+    name:{en:'Coriander Powder (Dhania)',hi:'धनिया पाउडर'},
+    desc:{en:'Mild and citrusy. The quiet workhorse behind most North Indian curry bases.',hi:'हल्का और नींबू जैसा। अधिकांश उत्तर भारतीय करी के आधार का ख़ामोश मेहनती मसाला।'},
+    origin:{en:'Grown throughout India; the seeds and the fresh leaves (cilantro) come from the same plant but are used very differently.',hi:'पूरे भारत में उगाया जाता है; बीज और ताज़ी पत्तियाँ (हरा धनिया) एक ही पौधे से आते हैं पर इस्तेमाल बहुत अलग है।'},
+    benefits:{en:'Gentle on digestion, and commonly paired with cumin to balance heavier spices in a blend.',hi:'पाचन के लिए हल्का, और भारी मसालों को संतुलित करने के लिए अक्सर जीरे के साथ मिलाया जाता है।'},
+    uses:{en:'A base spice in most curry powders, adding body and a mild citrus note without much heat.',hi:'अधिकांश करी पाउडर का आधार मसाला — बिना तीखेपन के गाढ़ापन और हल्की खटास देता है।'},
+    tip:{en:'Toast whole coriander seeds and grind them fresh for noticeably more flavor than pre-ground powder.',hi:'साबुत धनिया भूनकर ताज़ा पीसें — बाज़ार के पिसे पाउडर से कहीं ज़्यादा स्वाद मिलेगा।'} },
+  { id:'garammasala', emoji:'🟤',
+    name:{en:'Garam Masala',hi:'गरम मसाला'},
+    desc:{en:'A warm ground spice blend added near the end of cooking to round out the flavor.',hi:'गर्म मसालों का पिसा मिश्रण, जो स्वाद निखारने के लिए पकाने के अंत में डाला जाता है।'},
+    origin:{en:'A North Indian blend of warming spices — cinnamon, clove, cardamom, and more — with the exact recipe varying by region and household.',hi:'दालचीनी, लौंग, इलायची जैसे गर्म मसालों का उत्तर भारतीय मिश्रण — हर क्षेत्र और घर की अपनी रेसिपी होती है।'},
+    benefits:{en:'The blend of warming spices is traditionally believed to aid digestion and circulation.',hi:'गर्म मसालों का यह मिश्रण परंपरागत रूप से पाचन और रक्त संचार में सहायक माना जाता है।'},
+    uses:{en:"Sprinkled in near the end of cooking so its more delicate aromatic notes aren't boiled away.",hi:'पकाने के अंत में छिड़का जाता है ताकि इसकी नाज़ुक खुशबू उबलकर उड़ न जाए।'},
+    tip:{en:'Every family has its own ratio — start with a good store-bought blend, then adjust to your taste over time.',hi:'हर परिवार का अपना अनुपात होता है — अच्छे बाज़ारू मिश्रण से शुरू करें, फिर धीरे-धीरे अपने स्वाद के अनुसार बदलें।'} },
+  { id:'hing', emoji:'✨',
+    name:{en:'Asafoetida (Hing)',hi:'हींग'},
+    desc:{en:'Pungent raw, but mellow and savory once it touches hot oil. A pinch goes a very long way.',hi:'कच्ची तीखी गंध, पर गरम तेल में पड़ते ही सौम्य और स्वादिष्ट। एक चुटकी ही बहुत है।'},
+    origin:{en:'A dried resin from a plant native to Afghanistan and Iran, historically traded into India along ancient trade routes.',hi:'अफ़ग़ानिस्तान और ईरान के पौधे की सूखी गोंद, जो प्राचीन व्यापार मार्गों से भारत आई।'},
+    benefits:{en:'Traditionally used to reduce bloating, especially when cooking lentils and beans.',hi:'परंपरागत रूप से पेट फूलने से राहत के लिए, विशेषकर दाल और फलियाँ पकाते समय, उपयोग होती है।'},
+    uses:{en:'A pinch added to hot oil at the very start of tempering, especially in dals and vegetable dishes.',hi:'तड़के की बिल्कुल शुरुआत में गरम तेल में एक चुटकी, विशेषकर दाल और सब्ज़ियों में।'},
+    tip:{en:'Keep it in an airtight container — its raw smell is strong and can seep into other spices nearby.',hi:'हवाबंद डिब्बे में रखें — इसकी तेज़ गंध आस-पास के मसालों में समा सकती है।'} },
+  { id:'cardamom', emoji:'💚',
+    name:{en:'Cardamom (Elaichi)',hi:'इलायची'},
+    desc:{en:'Sweet and floral. Shows up in both savory curries and chai or dessert.',hi:'मीठी और फूलों जैसी खुशबू। नमकीन करी से लेकर चाय और मिठाई तक में मिलती है।'},
+    origin:{en:'Native to the forests of the Western Ghats in South India, though Guatemala is now also a major grower.',hi:'दक्षिण भारत के पश्चिमी घाट के जंगलों की मूल निवासी, हालाँकि अब ग्वाटेमाला भी बड़ा उत्पादक है।'},
+    benefits:{en:'Used in Ayurveda to freshen breath and settle the stomach after a heavy meal.',hi:'आयुर्वेद में मुँह की ताज़गी और भारी भोजन के बाद पेट शांत करने के लिए उपयोग होती है।'},
+    uses:{en:'Whole pods flavor rice and chai; ground cardamom appears in desserts and in garam masala blends.',hi:'साबुत इलायची चावल और चाय में; पिसी इलायची मिठाइयों और गरम मसाले में।'},
+    tip:{en:'Lightly crush whole pods with the back of a spoon before adding, to release the essential oils inside.',hi:'डालने से पहले चम्मच की पीठ से हल्का कुचलें, ताकि अंदर के सुगंधित तेल निकल आएँ।'} },
+  { id:'chilipowder', emoji:'🔴',
+    name:{en:'Red Chili Powder',hi:'लाल मिर्च पाउडर'},
+    desc:{en:'Brings heat and deep red color. Adjust the amount to control spice level.',hi:'तीखापन और गहरा लाल रंग देता है। मात्रा घटा-बढ़ाकर तीखापन नियंत्रित करें।'},
+    origin:{en:'Chilies arrived in India from the Americas in the 16th century via Portuguese traders and were rapidly adopted across the subcontinent.',hi:'मिर्च 16वीं सदी में पुर्तगाली व्यापारियों के ज़रिये अमेरिका से भारत आई और पूरे उपमहाद्वीप में तेज़ी से अपनाई गई।'},
+    benefits:{en:'Contains capsaicin, which is linked to a temporary boost in metabolism.',hi:'इसमें कैप्साइसिन होता है, जो चयापचय (मेटाबॉलिज़्म) को अस्थायी रूप से बढ़ाने से जुड़ा है।'},
+    uses:{en:'The primary source of heat and red color in most curries, marinades, and pickles.',hi:'अधिकांश करी, मैरिनेड और अचार में तीखेपन और लाल रंग का मुख्य स्रोत।'},
+    tip:{en:'Add it with the other dry spices early in cooking so it loses its raw, sharp edge.',hi:'पकाने की शुरुआत में बाकी सूखे मसालों के साथ डालें ताकि इसका कच्चापन निकल जाए।'} },
+  { id:'blackpepper', emoji:'⚪',
+    name:{en:'Black Pepper (Kali Mirch)',hi:'काली मिर्च'},
+    desc:{en:"Sharp, woody heat. India's original source of spice-trade fame, long before chilies arrived.",hi:'तीखी, लकड़ी जैसी गर्मी। मिर्च के आने से बहुत पहले भारत की मसाला-व्यापार प्रसिद्धि का मूल स्रोत।'},
+    origin:{en:'Native to the Malabar coast of Kerala — the "black gold" that drove centuries of global spice trade to India.',hi:'केरल के मालाबार तट की मूल निवासी — वह "काला सोना" जिसने सदियों तक दुनिया का मसाला व्यापार भारत की ओर खींचा।'},
+    benefits:{en:'Contains piperine, which is traditionally paired with turmeric to help the body absorb curcumin.',hi:'इसमें पिपेरिन होता है, जिसे परंपरागत रूप से हल्दी के साथ लिया जाता है ताकि शरीर करक्यूमिन बेहतर सोख सके।'},
+    uses:{en:'Whole peppercorns in rice dishes and rasam; freshly ground over curries, soups, and eggs.',hi:'साबुत काली मिर्च चावल के व्यंजनों और रसम में; ताज़ी पिसी हुई करी, सूप और अंडों पर।'},
+    tip:{en:'Grind fresh just before using — pre-ground pepper loses its aroma within weeks.',hi:'इस्तेमाल से ठीक पहले ताज़ा पीसें — पहले से पिसी मिर्च की खुशबू हफ़्तों में उड़ जाती है।'} },
+  { id:'cloves', emoji:'🟫',
+    name:{en:'Cloves (Laung)',hi:'लौंग'},
+    desc:{en:'Intensely aromatic flower buds with a warm, almost numbing sweetness.',hi:'बेहद खुशबूदार फूल की कलियाँ, जिनमें गर्म, हल्की सुन्न करने वाली मिठास होती है।'},
+    origin:{en:'Originally from the Maluku "Spice Islands" of Indonesia, now grown in South India, especially Kerala and Tamil Nadu.',hi:'मूल रूप से इंडोनेशिया के मालुकु "मसाला द्वीपों" से, अब दक्षिण भारत में — विशेषकर केरल और तमिलनाडु में — उगाई जाती है।'},
+    benefits:{en:'Clove oil is a traditional home remedy for toothache, and cloves are chewed to freshen breath.',hi:'लौंग का तेल दाँत दर्द का पारंपरिक घरेलू उपचार है, और मुँह की ताज़गी के लिए लौंग चबाई जाती है।'},
+    uses:{en:'Whole cloves in biryani, pulao, and garam masala; a key note in masala chai.',hi:'साबुत लौंग बिरयानी, पुलाव और गरम मसाले में; मसाला चाय की एक ख़ास खुशबू।'},
+    tip:{en:'Use sparingly — 2-3 whole cloves flavor an entire pot. Too many overpower everything else.',hi:'कम इस्तेमाल करें — 2-3 लौंग पूरे बर्तन के लिए काफ़ी हैं। ज़्यादा डालने से बाकी सब दब जाता है।'} },
+  { id:'cinnamon', emoji:'🪵',
+    name:{en:'Cinnamon (Dalchini)',hi:'दालचीनी'},
+    desc:{en:'Sweet, warm bark that rounds out both savory curries and desserts.',hi:'मीठी, गर्म छाल जो नमकीन करी और मिठाइयों दोनों का स्वाद निखारती है।'},
+    origin:{en:'True cinnamon comes from Sri Lanka; the stronger cassia variety is more common in Indian kitchens.',hi:'असली दालचीनी श्रीलंका से आती है; भारतीय रसोई में तेज़ स्वाद वाली कैसिया किस्म ज़्यादा आम है।'},
+    benefits:{en:'Traditionally used to support blood sugar balance and warm the body in winter.',hi:'परंपरागत रूप से रक्त शर्करा संतुलन और सर्दियों में शरीर को गर्म रखने के लिए उपयोग होती है।'},
+    uses:{en:'A stick dropped into biryani, pulao, and curries at the tadka stage; ground into garam masala and chai.',hi:'तड़के के समय बिरयानी, पुलाव और करी में एक टुकड़ा; पिसी हुई गरम मसाले और चाय में।'},
+    tip:{en:'Add the whole stick to hot oil at the start — it releases flavor slowly and can be fished out before serving.',hi:'शुरुआत में गरम तेल में साबुत टुकड़ा डालें — यह धीरे-धीरे स्वाद छोड़ती है और परोसने से पहले निकाली जा सकती है।'} },
+  { id:'fenugreek', emoji:'🌾',
+    name:{en:'Fenugreek (Methi)',hi:'मेथी'},
+    desc:{en:'Bitter seeds and aromatic dried leaves — the flavor behind that "restaurant curry" smell.',hi:'कड़वे दाने और खुशबूदार सूखी पत्तियाँ — "रेस्टोरेंट वाली करी" की महक का राज़।'},
+    origin:{en:'One of the oldest cultivated spice plants, grown across India with Rajasthan as the major producer.',hi:'सबसे पुराने उगाए जाने वाले मसाला पौधों में से एक, पूरे भारत में उगती है — राजस्थान सबसे बड़ा उत्पादक है।'},
+    benefits:{en:'Traditionally used to support digestion and lactation; often soaked overnight and eaten in the morning.',hi:'परंपरागत रूप से पाचन और स्तनपान में सहायक; अक्सर रातभर भिगोकर सुबह खाई जाती है।'},
+    uses:{en:'Seeds in pickles, sambar powder, and tadkas; dried leaves (kasuri methi) crushed over butter chicken and paneer dishes.',hi:'दाने अचार, सांभर पाउडर और तड़कों में; सूखी पत्तियाँ (कसूरी मेथी) बटर चिकन और पनीर के व्यंजनों पर।'},
+    tip:{en:'Crush kasuri methi between your palms before adding at the end — heat from your hands releases its aroma.',hi:'अंत में डालने से पहले कसूरी मेथी को हथेलियों में मसलें — हाथों की गर्मी से खुशबू खिल उठती है।'} },
+  { id:'fennel', emoji:'🌱',
+    name:{en:'Fennel Seeds (Saunf)',hi:'सौंफ'},
+    desc:{en:'Sweet, licorice-like seeds served after meals in every Indian restaurant.',hi:'मीठे, मुलेठी जैसे दाने जो हर भारतीय रेस्टोरेंट में भोजन के बाद परोसे जाते हैं।'},
+    origin:{en:'Grown widely in Gujarat and Rajasthan; a staple of both the kitchen and the after-dinner tray.',hi:'गुजरात और राजस्थान में बड़े पैमाने पर उगाई जाती है; रसोई और भोजन के बाद की तश्तरी दोनों की शान।'},
+    benefits:{en:'Chewed after meals as a natural mouth freshener and to ease digestion.',hi:'भोजन के बाद प्राकृतिक माउथ फ्रेशनर और पाचन में आराम के लिए चबाई जाती है।'},
+    uses:{en:'In pickling spice blends, Kashmiri and Bengali cuisine, and the five-spice mix panch phoron.',hi:'अचार के मसालों, कश्मीरी और बंगाली व्यंजनों, और पंचफोरन (पाँच मसालों के मिश्रण) में।'},
+    tip:{en:'Dry-roast lightly before grinding to deepen the sweetness and remove any raw edge.',hi:'पीसने से पहले हल्का सूखा भूनें — मिठास गहरी होती है और कच्चापन निकल जाता है।'} },
+  { id:'curryleaves', emoji:'🍃',
+    name:{en:'Curry Leaves (Kadi Patta)',hi:'कड़ी पत्ता'},
+    desc:{en:'Glossy aromatic leaves that crackle in hot oil — the soul of South Indian tempering.',hi:'चमकदार खुशबूदार पत्तियाँ जो गरम तेल में चटकती हैं — दक्षिण भारतीय तड़के की आत्मा।'},
+    origin:{en:'Native to India and Sri Lanka; the tree grows in courtyards across South India.',hi:'भारत और श्रीलंका की मूल निवासी; दक्षिण भारत के आँगनों में इसका पेड़ आम है।'},
+    benefits:{en:'Rich in antioxidants and traditionally associated with healthy hair and digestion.',hi:'एंटीऑक्सीडेंट से भरपूर, और परंपरागत रूप से स्वस्थ बालों व पाचन से जुड़ी हुई।'},
+    uses:{en:'Fried in oil at the start of sambar, rasam, upma, and coconut chutneys — added fresh, not dried.',hi:'सांभर, रसम, उपमा और नारियल चटनी की शुरुआत में तेल में तली जाती हैं — सूखी नहीं, ताज़ी डालें।'},
+    tip:{en:'Fresh leaves beat dried ones by a mile. Freeze extras in a zip bag; they go straight from freezer to hot oil.',hi:'ताज़ी पत्तियाँ सूखी से कहीं बेहतर हैं। बची हुई ज़िप बैग में फ्रीज़ करें — सीधे फ्रीज़र से गरम तेल में डाल सकते हैं।'} },
+  { id:'ajwain', emoji:'🌼',
+    name:{en:'Carom Seeds (Ajwain)',hi:'अजवाइन'},
+    desc:{en:'Tiny seeds with a sharp thyme-like punch, used in doughs and fried snacks.',hi:'छोटे दाने जिनमें तीखा अजवायन-सा स्वाद होता है — आटे और तले नाश्तों में इस्तेमाल।'},
+    origin:{en:'Cultivated mainly in Rajasthan and Gujarat; a staple of home remedies across North India.',hi:'मुख्यतः राजस्थान और गुजरात में उगाई जाती है; उत्तर भारत के घरेलू नुस्खों की मुख्य सामग्री।'},
+    benefits:{en:'The classic Indian home remedy for gas and indigestion — often taken with warm water and salt.',hi:'गैस और अपच का क्लासिक भारतीय घरेलू उपचार — अक्सर गुनगुने पानी और नमक के साथ ली जाती है।'},
+    uses:{en:'Kneaded into paratha and puri dough, sprinkled into pakora batter, and used in fish fry masalas.',hi:'पराठे और पूरी के आटे में गूँथी जाती है, पकौड़े के घोल में छिड़की जाती है, और मछली फ्राई मसालों में।'},
+    tip:{en:'Rub the seeds between your fingers before adding to release the thymol aroma.',hi:'डालने से पहले उंगलियों के बीच मसलें ताकि थाइमोल की खुशबू निकल आए।'} },
+  { id:'saffron', emoji:'🌸',
+    name:{en:'Saffron (Kesar)',hi:'केसर'},
+    desc:{en:"The world's most precious spice — a few threads perfume an entire dish golden.",hi:'दुनिया का सबसे कीमती मसाला — कुछ ही रेशे पूरे व्यंजन को सुनहरी खुशबू से भर देते हैं।'},
+    origin:{en:'Grown in India almost exclusively in the Pampore region of Kashmir, harvested by hand from crocus flowers.',hi:'भारत में लगभग पूरी तरह कश्मीर के पंपोर क्षेत्र में उगाया जाता है, क्रोकस फूलों से हाथ से चुना जाता है।'},
+    benefits:{en:'Prized in Ayurveda as a mood-lifter and traditionally added to warm milk for expectant mothers.',hi:'आयुर्वेद में मन प्रसन्न करने वाला माना जाता है, और परंपरागत रूप से गर्भवती माताओं के लिए गर्म दूध में डाला जाता है।'},
+    uses:{en:'Steeped in warm milk for biryani, kheer, shrikhand, and festive sweets.',hi:'बिरयानी, खीर, श्रीखंड और त्योहारों की मिठाइयों के लिए गर्म दूध में भिगोया जाता है।'},
+    tip:{en:'Never add threads directly — soak them in 2 tbsp of warm milk for 10 minutes first to draw out color and aroma.',hi:'रेशे सीधे कभी न डालें — पहले 2 चम्मच गर्म दूध में 10 मिनट भिगोएँ ताकि रंग और खुशबू निकल आए।'} },
 ];
 
 const TECHNIQUES = [
-  { id:'tadka', emoji:'🔥', name:'Tadka (Tempering)', desc:'Whole spices bloomed in hot oil or ghee until they pop, then poured over a finished dish.' },
-  { id:'bhuna', emoji:'🍳', name:'Bhuna', desc:'Slow-frying spices and onions until the oil separates out, building a deep base flavor.' },
-  { id:'dum', emoji:'♨️', name:'Dum', desc:'Sealed, slow-steam cooking that lets flavors mingle — used for biryani and some curries.' },
-  { id:'marination', emoji:'🥣', name:'Marination', desc:'Soaking meat or paneer in spiced yogurt before cooking, to tenderize and flavor it.' },
+  { id:'tadka', emoji:'🔥',
+    name:{en:'Tadka (Tempering)',hi:'तड़का'},
+    desc:{en:'Whole spices bloomed in hot oil or ghee until they pop, then poured over a finished dish.',hi:'साबुत मसाले गरम तेल या घी में चटकने तक भूने जाते हैं, फिर तैयार व्यंजन पर डाले जाते हैं।'} },
+  { id:'bhuna', emoji:'🍳',
+    name:{en:'Bhuna',hi:'भूनना'},
+    desc:{en:'Slow-frying spices and onions until the oil separates out, building a deep base flavor.',hi:'मसालों और प्याज़ को धीमी आँच पर तब तक भूनना जब तक तेल अलग न हो जाए — गहरे स्वाद की नींव।'} },
+  { id:'dum', emoji:'♨️',
+    name:{en:'Dum',hi:'दम'},
+    desc:{en:'Sealed, slow-steam cooking that lets flavors mingle — used for biryani and some curries.',hi:'बंद बर्तन में धीमी भाप पर पकाना जिससे स्वाद आपस में घुल जाते हैं — बिरयानी और कुछ करी में।'} },
+  { id:'marination', emoji:'🥣',
+    name:{en:'Marination',hi:'मैरिनेशन'},
+    desc:{en:'Soaking meat or paneer in spiced yogurt before cooking, to tenderize and flavor it.',hi:'पकाने से पहले मांस या पनीर को मसालेदार दही में भिगोना, ताकि वह नरम और स्वादिष्ट बने।'} },
 ];
 
 const RECIPES = [
-  { id:'chai', emoji:'☕', name:'Masala Chai', category:'Beverage', time:'10 min',
-    ingredients:['2 cups water','1 cup milk','2 tsp black tea leaves','1 inch ginger, crushed','2 cardamom pods, crushed','2 tsp sugar (to taste)'],
-    steps:['Bring water to a boil with crushed ginger and cardamom.','Add tea leaves and let boil for 2 minutes until the water darkens.','Pour in the milk and bring back to a boil.','Simmer for 2-3 minutes, then add sugar to taste.','Strain into cups and serve hot.'] },
-  { id:'jeerarice', emoji:'🍚', name:'Jeera Rice', category:'Rice', time:'20 min',
-    ingredients:['1 cup basmati rice','2 tbsp ghee','1.5 tsp cumin seeds','1 bay leaf','2 cups water','Salt to taste'],
-    steps:['Rinse rice until water runs clear, then soak for 15 minutes.','Heat ghee, add cumin seeds and bay leaf, let them sizzle.','Add drained rice and stir for a minute to coat in ghee.','Add water and salt, bring to a boil.','Cover and simmer on low for 12-15 minutes until water is absorbed.'] },
-  { id:'daltadka', emoji:'🥘', name:'Dal Tadka', category:'Curry', time:'35 min',
-    ingredients:['1 cup yellow lentils (toor dal)','1 tomato, chopped','1/2 tsp turmeric','2 tbsp ghee','1 tsp cumin seeds','2 dried red chilies','3 cloves garlic, sliced','Pinch of asafoetida','Salt to taste'],
-    steps:['Pressure cook dal with turmeric, tomato, salt, and water until soft.','Mash the cooked dal to a smooth consistency.','In a separate pan, heat ghee and add cumin seeds until they pop.','Add garlic, dried chilies, and asafoetida, frying until fragrant.','Pour this tadka over the dal and simmer for 5 minutes.'] },
-  { id:'aloogobi', emoji:'🥔', name:'Aloo Gobi', category:'Curry', time:'30 min',
-    ingredients:['2 potatoes, cubed','1 small cauliflower, cut into florets','1 tsp cumin seeds','1/2 tsp turmeric','1 tsp coriander powder','1/2 tsp red chili powder','2 tbsp oil','Salt, coriander leaves to garnish'],
-    steps:['Heat oil and add cumin seeds until they sizzle.','Add potatoes and cauliflower, stir to coat in oil.','Add turmeric, coriander powder, chili powder, and salt.','Cover and cook on low heat, stirring occasionally, until vegetables are tender.','Garnish with coriander leaves before serving.'] },
-  { id:'paneerbm', emoji:'🧀', name:'Paneer Butter Masala', category:'Curry', time:'40 min',
-    ingredients:['200g paneer, cubed','3 tomatoes, pureed','1 onion, chopped','2 tbsp butter','1 tsp garam masala','1/2 cup cream','Ginger-garlic paste, salt'],
-    steps:['Saute onions until golden, add ginger-garlic paste.','Add tomato puree and cook until oil separates.','Blend to a smooth gravy, return to pan with butter.','Add garam masala and cream, simmer gently.','Add paneer cubes and simmer for 5 minutes without boiling hard.'] },
-  { id:'gulabjamun', emoji:'🍮', name:'Gulab Jamun', category:'Dessert', time:'45 min',
-    ingredients:['1 cup milk powder','2 tbsp flour','1/4 tsp baking soda','2 tbsp ghee','Milk as needed','2 cups sugar for syrup','Cardamom, rosewater'],
-    steps:['Mix milk powder, flour, and baking soda, then bind with ghee and milk into a soft dough.','Roll into smooth, crack-free balls.','Deep fry on low heat until evenly golden brown.','Prepare sugar syrup with cardamom and a dash of rosewater.','Soak the fried balls in warm syrup for at least an hour before serving.'] },
+  { id:'chai', emoji:'☕', name:{en:'Masala Chai',hi:'मसाला चाय'}, category:{en:'Beverage',hi:'पेय'}, time:10,
+    ingredients:{en:['2 cups water','1 cup milk','2 tsp black tea leaves','1 inch ginger, crushed','2 cardamom pods, crushed','2 tsp sugar (to taste)'],
+      hi:['2 कप पानी','1 कप दूध','2 छोटे चम्मच चाय पत्ती','1 इंच अदरक, कुटा हुआ','2 इलायची, कुटी हुई','2 छोटे चम्मच चीनी (स्वादानुसार)']},
+    steps:{en:['Bring water to a boil with crushed ginger and cardamom.','Add tea leaves and let boil for 2 minutes until the water darkens.','Pour in the milk and bring back to a boil.','Simmer for 2-3 minutes, then add sugar to taste.','Strain into cups and serve hot.'],
+      hi:['कुटे अदरक और इलायची के साथ पानी उबालें।','चाय पत्ती डालें और 2 मिनट उबलने दें जब तक पानी गहरा न हो जाए।','दूध डालें और फिर से उबाल आने दें।','2-3 मिनट धीमी आँच पर पकाएँ, फिर स्वादानुसार चीनी डालें।','छानकर कप में डालें और गरम परोसें।']} },
+  { id:'jeerarice', emoji:'🍚', name:{en:'Jeera Rice',hi:'जीरा राइस'}, category:{en:'Rice',hi:'चावल'}, time:20,
+    ingredients:{en:['1 cup basmati rice','2 tbsp ghee','1.5 tsp cumin seeds','1 bay leaf','2 cups water','Salt to taste'],
+      hi:['1 कप बासमती चावल','2 बड़े चम्मच घी','1.5 छोटे चम्मच जीरा','1 तेज पत्ता','2 कप पानी','नमक स्वादानुसार']},
+    steps:{en:['Rinse rice until water runs clear, then soak for 15 minutes.','Heat ghee, add cumin seeds and bay leaf, let them sizzle.','Add drained rice and stir for a minute to coat in ghee.','Add water and salt, bring to a boil.','Cover and simmer on low for 12-15 minutes until water is absorbed.'],
+      hi:['चावल को साफ़ पानी आने तक धोएँ, फिर 15 मिनट भिगोएँ।','घी गरम करें, जीरा और तेज पत्ता डालकर चटकने दें।','छाने हुए चावल डालें और एक मिनट चलाएँ ताकि घी लग जाए।','पानी और नमक डालकर उबाल आने दें।','ढककर धीमी आँच पर 12-15 मिनट पकाएँ जब तक पानी सूख न जाए।']} },
+  { id:'daltadka', emoji:'🥘', name:{en:'Dal Tadka',hi:'दाल तड़का'}, category:{en:'Curry',hi:'करी'}, time:35,
+    ingredients:{en:['1 cup yellow lentils (toor dal)','1 tomato, chopped','1/2 tsp turmeric','2 tbsp ghee','1 tsp cumin seeds','2 dried red chilies','3 cloves garlic, sliced','Pinch of asafoetida','Salt to taste'],
+      hi:['1 कप अरहर (तूर) दाल','1 टमाटर, कटा हुआ','1/2 छोटा चम्मच हल्दी','2 बड़े चम्मच घी','1 छोटा चम्मच जीरा','2 सूखी लाल मिर्च','3 कली लहसुन, कटा हुआ','चुटकी भर हींग','नमक स्वादानुसार']},
+    steps:{en:['Pressure cook dal with turmeric, tomato, salt, and water until soft.','Mash the cooked dal to a smooth consistency.','In a separate pan, heat ghee and add cumin seeds until they pop.','Add garlic, dried chilies, and asafoetida, frying until fragrant.','Pour this tadka over the dal and simmer for 5 minutes.'],
+      hi:['दाल को हल्दी, टमाटर, नमक और पानी के साथ नरम होने तक प्रेशर कुक करें।','पकी दाल को अच्छी तरह मैश करें।','अलग कढ़ाई में घी गरम करें और जीरा चटकने तक डालें।','लहसुन, सूखी मिर्च और हींग डालकर खुशबू आने तक भूनें।','यह तड़का दाल पर डालें और 5 मिनट धीमी आँच पर पकाएँ।']} },
+  { id:'aloogobi', emoji:'🥔', name:{en:'Aloo Gobi',hi:'आलू गोभी'}, category:{en:'Curry',hi:'करी'}, time:30,
+    ingredients:{en:['2 potatoes, cubed','1 small cauliflower, cut into florets','1 tsp cumin seeds','1/2 tsp turmeric','1 tsp coriander powder','1/2 tsp red chili powder','2 tbsp oil','Salt, coriander leaves to garnish'],
+      hi:['2 आलू, कटे हुए','1 छोटी गोभी, फूल अलग किए हुए','1 छोटा चम्मच जीरा','1/2 छोटा चम्मच हल्दी','1 छोटा चम्मच धनिया पाउडर','1/2 छोटा चम्मच लाल मिर्च पाउडर','2 बड़े चम्मच तेल','नमक, हरा धनिया सजाने के लिए']},
+    steps:{en:['Heat oil and add cumin seeds until they sizzle.','Add potatoes and cauliflower, stir to coat in oil.','Add turmeric, coriander powder, chili powder, and salt.','Cover and cook on low heat, stirring occasionally, until vegetables are tender.','Garnish with coriander leaves before serving.'],
+      hi:['तेल गरम करें और जीरा चटकने तक डालें।','आलू और गोभी डालकर तेल में अच्छी तरह मिलाएँ।','हल्दी, धनिया पाउडर, मिर्च पाउडर और नमक डालें।','ढककर धीमी आँच पर पकाएँ, बीच-बीच में चलाते रहें, जब तक सब्ज़ियाँ नरम न हो जाएँ।','परोसने से पहले हरे धनिये से सजाएँ।']} },
+  { id:'paneerbm', emoji:'🧀', name:{en:'Paneer Butter Masala',hi:'पनीर बटर मसाला'}, category:{en:'Curry',hi:'करी'}, time:40,
+    ingredients:{en:['200g paneer, cubed','3 tomatoes, pureed','1 onion, chopped','2 tbsp butter','1 tsp garam masala','1/2 cup cream','Ginger-garlic paste, salt'],
+      hi:['200 ग्राम पनीर, कटा हुआ','3 टमाटर की प्यूरी','1 प्याज़, कटा हुआ','2 बड़े चम्मच मक्खन','1 छोटा चम्मच गरम मसाला','1/2 कप क्रीम','अदरक-लहसुन पेस्ट, नमक']},
+    steps:{en:['Saute onions until golden, add ginger-garlic paste.','Add tomato puree and cook until oil separates.','Blend to a smooth gravy, return to pan with butter.','Add garam masala and cream, simmer gently.','Add paneer cubes and simmer for 5 minutes without boiling hard.'],
+      hi:['प्याज़ सुनहरा होने तक भूनें, अदरक-लहसुन पेस्ट डालें।','टमाटर प्यूरी डालकर तेल अलग होने तक पकाएँ।','मिश्रण को पीसकर चिकनी ग्रेवी बनाएँ, मक्खन के साथ वापस कढ़ाई में डालें।','गरम मसाला और क्रीम डालकर धीमी आँच पर पकाएँ।','पनीर के टुकड़े डालें और 5 मिनट धीमी आँच पर पकाएँ, तेज़ उबाल न आने दें।']} },
+  { id:'gulabjamun', emoji:'🍮', name:{en:'Gulab Jamun',hi:'गुलाब जामुन'}, category:{en:'Dessert',hi:'मिठाई'}, time:45,
+    ingredients:{en:['1 cup milk powder','2 tbsp flour','1/4 tsp baking soda','2 tbsp ghee','Milk as needed','2 cups sugar for syrup','Cardamom, rosewater'],
+      hi:['1 कप मिल्क पाउडर','2 बड़े चम्मच मैदा','1/4 छोटा चम्मच बेकिंग सोडा','2 बड़े चम्मच घी','दूध आवश्यकतानुसार','चाशनी के लिए 2 कप चीनी','इलायची, गुलाब जल']},
+    steps:{en:['Mix milk powder, flour, and baking soda, then bind with ghee and milk into a soft dough.','Roll into smooth, crack-free balls.','Deep fry on low heat until evenly golden brown.','Prepare sugar syrup with cardamom and a dash of rosewater.','Soak the fried balls in warm syrup for at least an hour before serving.'],
+      hi:['मिल्क पाउडर, मैदा और बेकिंग सोडा मिलाएँ, फिर घी और दूध से नरम आटा गूँथें।','चिकनी, बिना दरार वाली गोलियाँ बनाएँ।','धीमी आँच पर सुनहरा भूरा होने तक तलें।','इलायची और थोड़े गुलाब जल के साथ चीनी की चाशनी बनाएँ।','तली हुई गोलियों को परोसने से पहले कम से कम एक घंटा गर्म चाशनी में भिगोएँ।']} },
 ];
 
 const QUIZ_POOL = [
-  { emoji:'⚫', q:'Which spice pops and crackles loudly the moment it hits hot oil?', a:'Mustard Seeds', opts:['Mustard Seeds','Cardamom','Turmeric','Garam Masala'] },
-  { emoji:'🟡', q:'Which spice gives curries their golden-yellow color?', a:'Turmeric', opts:['Turmeric','Hing','Cumin','Chili Powder'] },
-  { emoji:'✨', q:'Which spice is used in just a pinch, and is pungent raw but mellow once cooked?', a:'Asafoetida (Hing)', opts:['Asafoetida (Hing)','Coriander','Cumin','Cardamom'] },
-  { emoji:'🔥', q:'What is the technique of blooming whole spices in hot oil called?', a:'Tadka', opts:['Tadka','Dum','Bhuna','Marination'] },
-  { emoji:'♨️', q:'Which technique is a sealed, slow-steam method used for biryani?', a:'Dum', opts:['Dum','Tadka','Bhuna','Marination'] },
-  { emoji:'💚', q:'Which spice is sweet and floral, showing up in both chai and curries?', a:'Cardamom', opts:['Cardamom','Mustard Seeds','Chili Powder','Hing'] },
-  { emoji:'🥣', q:'Soaking paneer or meat in spiced yogurt before cooking is called?', a:'Marination', opts:['Marination','Tadka','Bhuna','Dum'] },
-  { emoji:'🟤', q:'Which spice blend is usually added at the very end of cooking?', a:'Garam Masala', opts:['Garam Masala','Cumin Seeds','Turmeric','Mustard Seeds'] },
+  { emoji:'⚫', q:{en:'Which spice pops and crackles loudly the moment it hits hot oil?',hi:'कौन सा मसाला गरम तेल में पड़ते ही ज़ोर से चटकता है?'},
+    a:{en:'Mustard Seeds',hi:'राई'}, opts:{en:['Mustard Seeds','Cardamom','Turmeric','Garam Masala'],hi:['राई','इलायची','हल्दी','गरम मसाला']} },
+  { emoji:'🟡', q:{en:'Which spice gives curries their golden-yellow color?',hi:'कौन सा मसाला करी को सुनहरा-पीला रंग देता है?'},
+    a:{en:'Turmeric',hi:'हल्दी'}, opts:{en:['Turmeric','Hing','Cumin','Chili Powder'],hi:['हल्दी','हींग','जीरा','मिर्च पाउडर']} },
+  { emoji:'✨', q:{en:'Which spice is used in just a pinch, and is pungent raw but mellow once cooked?',hi:'कौन सा मसाला बस एक चुटकी में इस्तेमाल होता है — कच्चा तीखा, पर पकने पर सौम्य?'},
+    a:{en:'Asafoetida (Hing)',hi:'हींग'}, opts:{en:['Asafoetida (Hing)','Coriander','Cumin','Cardamom'],hi:['हींग','धनिया','जीरा','इलायची']} },
+  { emoji:'🔥', q:{en:'What is the technique of blooming whole spices in hot oil called?',hi:'गरम तेल में साबुत मसाले भूनने की तकनीक क्या कहलाती है?'},
+    a:{en:'Tadka',hi:'तड़का'}, opts:{en:['Tadka','Dum','Bhuna','Marination'],hi:['तड़का','दम','भूनना','मैरिनेशन']} },
+  { emoji:'♨️', q:{en:'Which technique is a sealed, slow-steam method used for biryani?',hi:'बिरयानी के लिए बंद बर्तन में धीमी भाप वाली कौन सी विधि है?'},
+    a:{en:'Dum',hi:'दम'}, opts:{en:['Dum','Tadka','Bhuna','Marination'],hi:['दम','तड़का','भूनना','मैरिनेशन']} },
+  { emoji:'💚', q:{en:'Which spice is sweet and floral, showing up in both chai and curries?',hi:'कौन सा मसाला मीठा और फूलों जैसा है, जो चाय और करी दोनों में मिलता है?'},
+    a:{en:'Cardamom',hi:'इलायची'}, opts:{en:['Cardamom','Mustard Seeds','Chili Powder','Hing'],hi:['इलायची','राई','मिर्च पाउडर','हींग']} },
+  { emoji:'🥣', q:{en:'Soaking paneer or meat in spiced yogurt before cooking is called?',hi:'पकाने से पहले पनीर या मांस को मसालेदार दही में भिगोना क्या कहलाता है?'},
+    a:{en:'Marination',hi:'मैरिनेशन'}, opts:{en:['Marination','Tadka','Bhuna','Dum'],hi:['मैरिनेशन','तड़का','भूनना','दम']} },
+  { emoji:'🟤', q:{en:'Which spice blend is usually added at the very end of cooking?',hi:'कौन सा मसाला मिश्रण आमतौर पर पकाने के बिल्कुल अंत में डाला जाता है?'},
+    a:{en:'Garam Masala',hi:'गरम मसाला'}, opts:{en:['Garam Masala','Cumin Seeds','Turmeric','Mustard Seeds'],hi:['गरम मसाला','जीरा','हल्दी','राई']} },
+  { emoji:'⚪', q:{en:'Which Kerala-grown spice was the "black gold" of the ancient spice trade?',hi:'केरल में उगने वाला कौन सा मसाला प्राचीन मसाला व्यापार का "काला सोना" था?'},
+    a:{en:'Black Pepper',hi:'काली मिर्च'}, opts:{en:['Black Pepper','Cloves','Saffron','Fennel'],hi:['काली मिर्च','लौंग','केसर','सौंफ']} },
+  { emoji:'🌸', q:{en:'Which precious spice should be soaked in warm milk before using?',hi:'कौन सा कीमती मसाला इस्तेमाल से पहले गर्म दूध में भिगोना चाहिए?'},
+    a:{en:'Saffron (Kesar)',hi:'केसर'}, opts:{en:['Saffron (Kesar)','Ajwain','Fenugreek','Cinnamon'],hi:['केसर','अजवाइन','मेथी','दालचीनी']} },
+  { emoji:'🍃', q:{en:'Which fresh leaves are the soul of South Indian tempering?',hi:'कौन सी ताज़ी पत्तियाँ दक्षिण भारतीय तड़के की आत्मा हैं?'},
+    a:{en:'Curry Leaves',hi:'कड़ी पत्ता'}, opts:{en:['Curry Leaves','Fenugreek Leaves','Bay Leaf','Coriander Leaves'],hi:['कड़ी पत्ता','मेथी पत्ता','तेज पत्ता','हरा धनिया']} },
+  { emoji:'🌾', q:{en:'Crushing which dried leaves between your palms releases the "restaurant curry" aroma?',hi:'किन सूखी पत्तियों को हथेलियों में मसलने से "रेस्टोरेंट वाली करी" की खुशबू आती है?'},
+    a:{en:'Kasuri Methi',hi:'कसूरी मेथी'}, opts:{en:['Kasuri Methi','Curry Leaves','Mint Leaves','Bay Leaf'],hi:['कसूरी मेथी','कड़ी पत्ता','पुदीना','तेज पत्ता']} },
 ];
 
 /* ---------------- STATE ---------------- */
@@ -487,10 +634,10 @@ function triggerTadka(message){
 
 /* ---------------- BADGES ---------------- */
 const BADGE_DEFS = [
-  { id:'first_tadka', emoji:'🔥', name:'First Tadka', check: s => s.learned.length >= 1 },
-  { id:'chai_master', emoji:'☕', name:'Chai Master', check: s => s.cooked.includes('chai') },
-  { id:'spice_detective', emoji:'🔍', name:'Spice Detective', check: s => s.quizCorrect >= 5 },
-  { id:'curry_connoisseur', emoji:'🥘', name:'Curry Connoisseur', check: s => s.cooked.length >= 3 },
+  { id:'first_tadka', emoji:'🔥', name:{en:'First Tadka',hi:'पहला तड़का'}, check: s => s.learned.length >= 1 },
+  { id:'chai_master', emoji:'☕', name:{en:'Chai Master',hi:'चाय मास्टर'}, check: s => s.cooked.includes('chai') },
+  { id:'spice_detective', emoji:'🔍', name:{en:'Spice Detective',hi:'मसाला जासूस'}, check: s => s.quizCorrect >= 5 },
+  { id:'curry_connoisseur', emoji:'🥘', name:{en:'Curry Connoisseur',hi:'करी के उस्ताद'}, check: s => s.cooked.length >= 3 },
 ];
 
 function refreshBadges(){
@@ -514,52 +661,47 @@ function openModal(html){
 function closeModal(){ document.getElementById('modalOverlay').classList.add('hidden'); }
 document.getElementById('modalOverlay').addEventListener('click', e => { if (e.target.id === 'modalOverlay') closeModal(); });
 
-function showLockedModal(){
-  openModal(`
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <h2>🔒 Premium Content</h2>
-    <p class="lock-note">This lesson is part of the full Masala Kitchen collection. The full version — with every spice, technique, and recipe — is coming soon.</p>
-    <button class="btn btn-primary btn-block" onclick="closeModal()">Got it</button>
-  `);
-}
-
 /* ---------------- LEARN TAB ---------------- */
 function renderLearn(){
   const spiceGrid = document.getElementById('spiceGrid');
-  spiceGrid.innerHTML = SPICES.map((s,i) => {
-    const locked = false;
+  spiceGrid.innerHTML = SPICES.map(s => {
     const learned = state.learned.includes(s.id);
-    return `<div class="item-card ${learned?'learned':''} ${locked?'locked':''}" onclick="openSpiceDetail('${s.id}')">
+    return `<div class="item-card ${learned?'learned':''}" onclick="openSpiceDetail('${s.id}')">
       <div class="check">✓</div>
       <span class="emoji">${s.emoji}</span>
-      <h3>${s.name}</h3>
-      <p>${s.desc}</p>
+      <h3>${L(s.name)}</h3>
+      <p>${L(s.desc)}</p>
     </div>`;
   }).join('');
 
   const techGrid = document.getElementById('techniqueGrid');
-  techGrid.innerHTML = TECHNIQUES.map((t,i) => {
-    const locked = false;
+  techGrid.innerHTML = TECHNIQUES.map(t => {
     const learned = state.learned.includes(t.id);
-    return `<div class="item-card ${learned?'learned':''} ${locked?'locked':''}" onclick="${locked ? 'showLockedModal()' : `learnItem('${t.id}','${t.emoji}','${t.name.replace(/'/g,"\\'")}')`}">
+    return `<div class="item-card ${learned?'learned':''}" onclick="learnItem('${t.id}')">
       <div class="check">✓</div>
       <span class="emoji">${t.emoji}</span>
-      <h3>${t.name}</h3>
-      <p>${t.desc}</p>
+      <h3>${L(t.name)}</h3>
+      <p>${L(t.desc)}</p>
     </div>`;
   }).join('');
 }
 
-function learnItem(id, emoji, name){
+function findItem(id){
+  return SPICES.find(x => x.id === id) || TECHNIQUES.find(x => x.id === id);
+}
+
+function learnItem(id){
+  const item = findItem(id);
+  if (!item) return;
   if (!state.learned.includes(id)) {
     state.learned.push(id);
     addXP(10);
     refreshBadges();
-    triggerTadka(`${emoji} <b>${name}</b> learned! +10 XP`);
+    triggerTadka(`${item.emoji} <b>${L(item.name)}</b> ${T('learned')}`);
     renderLearn();
     renderProgress();
   } else {
-    triggerTadka(`${emoji} You already know ${name}!`);
+    triggerTadka(`${item.emoji} ${T('alreadyKnow')} ${L(item.name)}!`);
   }
 }
 
@@ -568,17 +710,17 @@ function openSpiceDetail(id){
   const learned = state.learned.includes(id);
   openModal(`
     <button class="modal-close" onclick="closeModal()">✕</button>
-    <h2>${s.emoji} ${s.name}</h2>
-    <div class="modal-meta">Essential Spice</div>
+    <h2>${s.emoji} ${L(s.name)}</h2>
+    <div class="modal-meta">${T('essentialSpice')}</div>
     <div class="spice-detail">
-      <p><strong>What it's like:</strong> ${s.desc}</p>
-      <p><strong>Origin:</strong> ${s.origin}</p>
-      <p><strong>Traditional benefits:</strong> ${s.benefits}</p>
-      <p><strong>Common uses:</strong> ${s.uses}</p>
-      <p><strong>Cooking tip:</strong> ${s.tip}</p>
+      <p><strong>${T('whatItsLike')}</strong> ${L(s.desc)}</p>
+      <p><strong>${T('origin')}</strong> ${L(s.origin)}</p>
+      <p><strong>${T('benefits')}</strong> ${L(s.benefits)}</p>
+      <p><strong>${T('commonUses')}</strong> ${L(s.uses)}</p>
+      <p><strong>${T('cookingTip')}</strong> ${L(s.tip)}</p>
     </div>
-    <button class="btn btn-primary btn-block" onclick="learnItem('${s.id}','${s.emoji}','${s.name.replace(/'/g,"\\'")}'); closeModal();">
-      ${learned ? '✓ Learned — Review Again' : 'Mark as Learned (+10 XP)'}
+    <button class="btn btn-primary btn-block" onclick="learnItem('${s.id}'); closeModal();">
+      ${learned ? T('reviewAgain') : T('markLearned')}
     </button>
   `);
 }
@@ -587,14 +729,13 @@ function openSpiceDetail(id){
 function renderRecipes(){
   const list = document.getElementById('recipeList');
   list.innerHTML = RECIPES.map(r => {
-    const locked = r.locked;
     const cooked = state.cooked.includes(r.id);
-    const badge = locked ? `<span class="badge-lock">🔒 Premium</span>` : (cooked ? `<span class="badge-cooked">✓ Cooked</span>` : '');
-    return `<div class="recipe-row" onclick="${locked ? 'showLockedModal()' : `openRecipe('${r.id}')`}">
+    const badge = cooked ? `<span class="badge-cooked">${T('cookedBadge')}</span>` : '';
+    return `<div class="recipe-row" onclick="openRecipe('${r.id}')">
       <span class="emoji">${r.emoji}</span>
       <div class="info">
-        <h3>${r.name}</h3>
-        <div class="meta">${r.category} · ${r.time}</div>
+        <h3>${L(r.name)}</h3>
+        <div class="meta">${L(r.category)} · ${r.time} ${T('min')}</div>
       </div>
       ${badge}
     </div>`;
@@ -605,40 +746,37 @@ let currentRecipeStep = 0;
 function openRecipe(id){
   const r = RECIPES.find(x => x.id === id);
   currentRecipeStep = 0;
-  renderRecipeModal(r);
-}
-function renderRecipeModal(r){
   openModal(`
     <button class="modal-close" onclick="closeModal()">✕</button>
-    <h2>${r.emoji} ${r.name}</h2>
-    <div class="modal-meta">${r.category} · ${r.time}</div>
+    <h2>${r.emoji} ${L(r.name)}</h2>
+    <div class="modal-meta">${L(r.category)} · ${r.time} ${T('min')}</div>
     <div id="ingredientsBlock">
-      <strong>Ingredients</strong>
-      <ul class="ingredient-list">${r.ingredients.map(i => `<li>${i}</li>`).join('')}</ul>
-      <button class="btn btn-primary btn-block" onclick="startCooking('${r.id}')">Start Cooking</button>
+      <strong>${T('ingredients')}</strong>
+      <ul class="ingredient-list">${L(r.ingredients).map(i => `<li>${i}</li>`).join('')}</ul>
+      <button class="btn btn-primary btn-block" onclick="startCooking('${r.id}')">${T('startCooking')}</button>
     </div>
   `);
 }
 function startCooking(id){
-  const r = RECIPES.find(x => x.id === id);
   currentRecipeStep = 0;
-  renderStep(r);
+  renderStep(RECIPES.find(x => x.id === id));
 }
 function renderStep(r){
-  const isLast = currentRecipeStep === r.steps.length - 1;
+  const steps = L(r.steps);
+  const isLast = currentRecipeStep === steps.length - 1;
   openModal(`
     <button class="modal-close" onclick="closeModal()">✕</button>
-    <h2>${r.emoji} ${r.name}</h2>
-    <div class="modal-meta">Step ${currentRecipeStep+1} of ${r.steps.length}</div>
+    <h2>${r.emoji} ${L(r.name)}</h2>
+    <div class="modal-meta">${T('step')} ${currentRecipeStep+1} ${T('of')} ${steps.length}</div>
     <div class="step-box">
-      <div class="step-num">STEP ${currentRecipeStep+1}</div>
-      <div>${r.steps[currentRecipeStep]}</div>
+      <div class="step-num">${T('stepCap')} ${currentRecipeStep+1}</div>
+      <div>${steps[currentRecipeStep]}</div>
     </div>
     <div class="step-nav">
-      ${currentRecipeStep > 0 ? `<button class="btn btn-ghost" onclick="prevStep('${r.id}')">Back</button>` : `<span></span>`}
+      ${currentRecipeStep > 0 ? `<button class="btn btn-ghost" onclick="prevStep('${r.id}')">${T('back')}</button>` : `<span></span>`}
       ${isLast
-        ? `<button class="btn btn-primary" onclick="finishRecipe('${r.id}')">Finish 🎉</button>`
-        : `<button class="btn btn-primary" onclick="nextStep('${r.id}')">Next Step</button>`}
+        ? `<button class="btn btn-primary" onclick="finishRecipe('${r.id}')">${T('finish')}</button>`
+        : `<button class="btn btn-primary" onclick="nextStep('${r.id}')">${T('nextStep')}</button>`}
     </div>
   `);
 }
@@ -652,7 +790,7 @@ function finishRecipe(id){
     refreshBadges();
   }
   closeModal();
-  triggerTadka(`${r.emoji} <b>${r.name}</b> cooked! +25 XP`);
+  triggerTadka(`${r.emoji} <b>${L(r.name)}</b> ${T('cooked')}`);
   renderRecipes();
   renderProgress();
 }
@@ -666,29 +804,40 @@ function initQuiz(){
   renderQuiz();
 }
 function renderQuiz(){
+  if (!quizOrder.length) return;
   const q = QUIZ_POOL[quizOrder[state.quizIndex % quizOrder.length]];
   document.getElementById('quizEmoji').textContent = q.emoji;
-  document.getElementById('quizQuestion').textContent = q.q;
-  document.getElementById('quizProgress').textContent = `Question ${(state.quizIndex % quizOrder.length) + 1} of ${quizOrder.length}`;
+  document.getElementById('quizQuestion').textContent = L(q.q);
+  document.getElementById('quizProgress').textContent = `${T('question')} ${(state.quizIndex % quizOrder.length) + 1} ${T('of')} ${quizOrder.length}`;
   document.getElementById('quizStreak').textContent = `🔥 ${state.quizStreak}`;
-  const optsHtml = shuffle(q.opts).map(o => `<button class="quiz-opt" onclick="answerQuiz(this,'${o.replace(/'/g,"\\'")}','${q.a.replace(/'/g,"\\'")}')">${o}</button>`).join('');
+  const opts = L(q.opts);
+  const correct = L(q.a);
+  const optsHtml = shuffle([...opts]).map(o =>
+    `<button class="quiz-opt" data-opt="${o.replace(/"/g,'&quot;')}">${o}</button>`
+  ).join('');
   document.getElementById('quizOptions').innerHTML = optsHtml;
+  document.querySelectorAll('.quiz-opt').forEach(btn => {
+    btn.addEventListener('click', () => answerQuiz(btn, btn.dataset.opt, correct));
+  });
 }
 function answerQuiz(btn, chosen, correct){
   const buttons = document.querySelectorAll('.quiz-opt');
-  buttons.forEach(b => b.onclick = null);
+  buttons.forEach(b => b.replaceWith(b.cloneNode(true)));
+  const freshButtons = document.querySelectorAll('.quiz-opt');
+  let clickedBtn = null;
+  freshButtons.forEach(b => { if (b.dataset.opt === chosen) clickedBtn = b; });
   if (chosen === correct) {
-    btn.classList.add('correct');
+    if (clickedBtn) clickedBtn.classList.add('correct');
     state.quizStreak++;
     state.quizCorrect++;
     addXP(15);
     refreshBadges();
-    triggerTadka(`✅ Correct! <b>${correct}</b> +15 XP`);
+    triggerTadka(`✅ ${T('correct')} <b>${correct}</b> +15 XP`);
   } else {
-    btn.classList.add('wrong');
-    buttons.forEach(b => { if (b.textContent === correct) b.classList.add('correct'); });
+    if (clickedBtn) clickedBtn.classList.add('wrong');
+    freshButtons.forEach(b => { if (b.dataset.opt === correct) b.classList.add('correct'); });
     state.quizStreak = 0;
-    triggerTadka(`❌ Not quite — it was <b>${correct}</b>`);
+    triggerTadka(`❌ ${T('notQuite')} <b>${correct}</b>`);
   }
   saveState();
   setTimeout(() => {
@@ -704,13 +853,13 @@ function renderProgress(){
   document.getElementById('xpNum').textContent = `${state.xp} XP`;
   const pct = Math.min(100, (state.xp % 200) / 200 * 100);
   document.getElementById('xpFill').style.width = pct + '%';
-  document.getElementById('streakNum').textContent = `${state.streak} day streak`;
+  document.getElementById('streakNum').textContent = `${state.streak} ${T('dayStreak')}`;
   const grid = document.getElementById('badgeGrid');
   grid.innerHTML = BADGE_DEFS.map(b => {
     const unlocked = state.badges.includes(b.id);
     return `<div class="badge ${unlocked ? 'unlocked' : ''}">
       <span class="emoji">${b.emoji}</span>
-      <div class="name">${b.name}</div>
+      <div class="name">${L(b.name)}</div>
     </div>`;
   }).join('');
 }
@@ -726,6 +875,10 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 });
 
 /* ---------------- INIT ---------------- */
+document.getElementById('langEn').classList.toggle('active', lang === 'en');
+document.getElementById('langHi').classList.toggle('active', lang === 'hi');
+applyStaticI18n();
+document.getElementById('tadkaCaption').innerHTML = T('tadkaWelcome');
 renderLearn();
 renderRecipes();
 initQuiz();
