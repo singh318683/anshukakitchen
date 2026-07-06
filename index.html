@@ -386,11 +386,23 @@
     border-left:3px solid var(--turmeric);
   }
   .ing-chips{ display:flex; flex-wrap:wrap; gap:0.5rem; }
+  .chip-img-wrap{
+    position:relative; width:36px; height:36px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .chip-img{
+    position:absolute; inset:0; width:36px; height:36px; object-fit:cover;
+    border-radius:50%; opacity:0; transition: opacity 0.35s ease;
+    box-shadow: 0 1px 4px rgba(42,24,16,0.2);
+  }
+  .chip-img.loaded{ opacity:1; }
+  .chip-emoji{ font-size:1.2rem; width:36px; text-align:center; flex-shrink:0; }
+  .chip-label{ font-size:0.82rem; }
   .ing-chip{
     display:inline-flex; align-items:center; gap:0.4rem;
     font-family: var(--font-body); font-weight:600; font-size:0.87rem; color: var(--ember);
     background: var(--white); border:1px solid rgba(107,30,35,0.1); border-radius:100px;
-    padding:0.45rem 0.9rem; cursor:pointer; box-shadow: 0 2px 8px rgba(42,24,16,0.1);
+    padding:0.3rem 0.7rem 0.3rem 0.3rem; cursor:pointer; box-shadow: 0 2px 8px rgba(42,24,16,0.1);
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
   .ing-chip:hover{ transform: translateY(-2px); box-shadow: 0 5px 14px rgba(42,24,16,0.18); }
@@ -656,21 +668,21 @@ function applyStaticI18n(){
 
 /* ---------------- DATA ---------------- */
 const SPICES = [
-  { id:'turmeric', emoji:'🟡',
+  { id:'turmeric', wiki:'Turmeric', emoji:'🟡',
     name:{en:'Turmeric (Haldi)',hi:'हल्दी'},
     desc:{en:'Earthy and slightly bitter. Gives dishes their golden color and is almost always added early in cooking.',hi:'मिट्टी जैसी और हल्की कड़वी। व्यंजनों को सुनहरा रंग देती है और लगभग हमेशा पकाने की शुरुआत में डाली जाती है।'},
     origin:{en:'Native to South Asia and cultivated in India for thousands of years, mostly grown in Telangana, Andhra Pradesh, and Tamil Nadu.',hi:'दक्षिण एशिया की मूल निवासी, भारत में हज़ारों वर्षों से उगाई जाती है — मुख्यतः तेलंगाना, आंध्र प्रदेश और तमिलनाडु में।'},
     benefits:{en:'Contains curcumin, prized in Ayurveda for its anti-inflammatory and antioxidant properties. Often taken as "haldi doodh" (turmeric milk) when unwell.',hi:'इसमें करक्यूमिन होता है, जो आयुर्वेद में सूजन-रोधी और एंटीऑक्सीडेंट गुणों के लिए प्रसिद्ध है। तबीयत खराब होने पर अक्सर हल्दी दूध के रूप में लिया जाता है।'},
     uses:{en:'The base color and flavor note in nearly every curry, dal, and rice dish across India.',hi:'भारत भर की लगभग हर करी, दाल और चावल के व्यंजन में रंग और स्वाद का आधार।'},
     tip:{en:'A little goes a long way — too much turns a dish bitter. Add it early so it cooks into the oil instead of tasting raw.',hi:'थोड़ी ही काफ़ी है — ज़्यादा डालने से व्यंजन कड़वा हो जाता है। शुरुआत में डालें ताकि यह तेल में अच्छे से पक जाए।'} },
-  { id:'cumin', emoji:'🌰',
+  { id:'cumin', wiki:'Cumin', emoji:'🌰',
     name:{en:'Cumin Seeds (Jeera)',hi:'जीरा'},
     desc:{en:'Nutty and warm. Usually the first thing to hit hot oil at the start of a tadka.',hi:'मेवे जैसा और गर्म स्वाद। तड़के की शुरुआत में गरम तेल में सबसे पहले यही डाला जाता है।'},
     origin:{en:'Native to the eastern Mediterranean and South Asia; India is now both the largest grower and consumer of cumin in the world.',hi:'पूर्वी भूमध्यसागर और दक्षिण एशिया का मूल निवासी; भारत आज दुनिया में जीरे का सबसे बड़ा उत्पादक और उपभोक्ता है।'},
     benefits:{en:'Traditionally used to aid digestion after meals, and is a good source of iron.',hi:'परंपरागत रूप से भोजन के बाद पाचन में सहायक माना जाता है, और आयरन का अच्छा स्रोत है।'},
     uses:{en:'The starting spice for most tadkas, and ground into cumin powder for spice blends and marinades.',hi:'अधिकांश तड़कों का पहला मसाला, और पिसा हुआ जीरा मसाला मिश्रणों व मैरिनेड में इस्तेमाल होता है।'},
     tip:{en:'Toast briefly in oil just until it sizzles and turns fragrant — burnt cumin turns bitter fast.',hi:'तेल में बस तब तक भूनें जब तक चटकने और महकने लगे — जला हुआ जीरा जल्दी कड़वा हो जाता है।'} },
-  { id:'mustard', emoji:'⚫',
+  { id:'mustard', wiki:'Mustard_seed', emoji:'⚫',
     name:{en:'Mustard Seeds (Rai)',hi:'राई (सरसों के दाने)'},
     desc:{en:'Pop and crackle loudly in hot oil, releasing a sharp nutty flavor — the classic sound of tadka starting.',hi:'गरम तेल में ज़ोर से चटकती है और तीखा स्वाद छोड़ती है — तड़का शुरू होने की पहचान यही आवाज़ है।'},
     origin:{en:'Grown widely across India, especially the west and south, for both seeds and mustard oil.',hi:'भारत भर में, विशेषकर पश्चिम और दक्षिण में, दानों और सरसों के तेल दोनों के लिए उगाई जाती है।'},
@@ -684,14 +696,14 @@ const SPICES = [
     benefits:{en:'Gentle on digestion, and commonly paired with cumin to balance heavier spices in a blend.',hi:'पाचन के लिए हल्का, और भारी मसालों को संतुलित करने के लिए अक्सर जीरे के साथ मिलाया जाता है।'},
     uses:{en:'A base spice in most curry powders, adding body and a mild citrus note without much heat.',hi:'अधिकांश करी पाउडर का आधार मसाला — बिना तीखेपन के गाढ़ापन और हल्की खटास देता है।'},
     tip:{en:'Toast whole coriander seeds and grind them fresh for noticeably more flavor than pre-ground powder.',hi:'साबुत धनिया भूनकर ताज़ा पीसें — बाज़ार के पिसे पाउडर से कहीं ज़्यादा स्वाद मिलेगा।'} },
-  { id:'garammasala', emoji:'🟤',
+  { id:'garammasala', wiki:'Garam_masala', emoji:'🟤',
     name:{en:'Garam Masala',hi:'गरम मसाला'},
     desc:{en:'A warm ground spice blend added near the end of cooking to round out the flavor.',hi:'गर्म मसालों का पिसा मिश्रण, जो स्वाद निखारने के लिए पकाने के अंत में डाला जाता है।'},
     origin:{en:'A North Indian blend of warming spices — cinnamon, clove, cardamom, and more — with the exact recipe varying by region and household.',hi:'दालचीनी, लौंग, इलायची जैसे गर्म मसालों का उत्तर भारतीय मिश्रण — हर क्षेत्र और घर की अपनी रेसिपी होती है।'},
     benefits:{en:'The blend of warming spices is traditionally believed to aid digestion and circulation.',hi:'गर्म मसालों का यह मिश्रण परंपरागत रूप से पाचन और रक्त संचार में सहायक माना जाता है।'},
     uses:{en:"Sprinkled in near the end of cooking so its more delicate aromatic notes aren't boiled away.",hi:'पकाने के अंत में छिड़का जाता है ताकि इसकी नाज़ुक खुशबू उबलकर उड़ न जाए।'},
     tip:{en:'Every family has its own ratio — start with a good store-bought blend, then adjust to your taste over time.',hi:'हर परिवार का अपना अनुपात होता है — अच्छे बाज़ारू मिश्रण से शुरू करें, फिर धीरे-धीरे अपने स्वाद के अनुसार बदलें।'} },
-  { id:'hing', emoji:'✨',
+  { id:'hing', wiki:'Asafoetida', emoji:'✨',
     name:{en:'Asafoetida (Hing)',hi:'हींग'},
     desc:{en:'Pungent raw, but mellow and savory once it touches hot oil. A pinch goes a very long way.',hi:'कच्ची तीखी गंध, पर गरम तेल में पड़ते ही सौम्य और स्वादिष्ट। एक चुटकी ही बहुत है।'},
     origin:{en:'A dried resin from a plant native to Afghanistan and Iran, historically traded into India along ancient trade routes.',hi:'अफ़ग़ानिस्तान और ईरान के पौधे की सूखी गोंद, जो प्राचीन व्यापार मार्गों से भारत आई।'},
@@ -705,7 +717,7 @@ const SPICES = [
     benefits:{en:'Used in Ayurveda to freshen breath and settle the stomach after a heavy meal.',hi:'आयुर्वेद में मुँह की ताज़गी और भारी भोजन के बाद पेट शांत करने के लिए उपयोग होती है।'},
     uses:{en:'Whole pods flavor rice and chai; ground cardamom appears in desserts and in garam masala blends.',hi:'साबुत इलायची चावल और चाय में; पिसी इलायची मिठाइयों और गरम मसाले में।'},
     tip:{en:'Lightly crush whole pods with the back of a spoon before adding, to release the essential oils inside.',hi:'डालने से पहले चम्मच की पीठ से हल्का कुचलें, ताकि अंदर के सुगंधित तेल निकल आएँ।'} },
-  { id:'chilipowder', emoji:'🔴',
+  { id:'chilipowder', wiki:'Chili_powder', emoji:'🔴',
     name:{en:'Red Chili Powder',hi:'लाल मिर्च पाउडर'},
     desc:{en:'Brings heat and deep red color. Adjust the amount to control spice level.',hi:'तीखापन और गहरा लाल रंग देता है। मात्रा घटा-बढ़ाकर तीखापन नियंत्रित करें।'},
     origin:{en:'Chilies arrived in India from the Americas in the 16th century via Portuguese traders and were rapidly adopted across the subcontinent.',hi:'मिर्च 16वीं सदी में पुर्तगाली व्यापारियों के ज़रिये अमेरिका से भारत आई और पूरे उपमहाद्वीप में तेज़ी से अपनाई गई।'},
@@ -719,7 +731,7 @@ const SPICES = [
     benefits:{en:'Contains piperine, which is traditionally paired with turmeric to help the body absorb curcumin.',hi:'इसमें पिपेरिन होता है, जिसे परंपरागत रूप से हल्दी के साथ लिया जाता है ताकि शरीर करक्यूमिन बेहतर सोख सके।'},
     uses:{en:'Whole peppercorns in rice dishes and rasam; freshly ground over curries, soups, and eggs.',hi:'साबुत काली मिर्च चावल के व्यंजनों और रसम में; ताज़ी पिसी हुई करी, सूप और अंडों पर।'},
     tip:{en:'Grind fresh just before using — pre-ground pepper loses its aroma within weeks.',hi:'इस्तेमाल से ठीक पहले ताज़ा पीसें — पहले से पिसी मिर्च की खुशबू हफ़्तों में उड़ जाती है।'} },
-  { id:'cloves', emoji:'🟫',
+  { id:'cloves', wiki:'Clove', emoji:'🟫',
     name:{en:'Cloves (Laung)',hi:'लौंग'},
     desc:{en:'Intensely aromatic flower buds with a warm, almost numbing sweetness.',hi:'बेहद खुशबूदार फूल की कलियाँ, जिनमें गर्म, हल्की सुन्न करने वाली मिठास होती है।'},
     origin:{en:'Originally from the Maluku "Spice Islands" of Indonesia, now grown in South India, especially Kerala and Tamil Nadu.',hi:'मूल रूप से इंडोनेशिया के मालुकु "मसाला द्वीपों" से, अब दक्षिण भारत में — विशेषकर केरल और तमिलनाडु में — उगाई जाती है।'},
@@ -747,14 +759,14 @@ const SPICES = [
     benefits:{en:'Chewed after meals as a natural mouth freshener and to ease digestion.',hi:'भोजन के बाद प्राकृतिक माउथ फ्रेशनर और पाचन में आराम के लिए चबाई जाती है।'},
     uses:{en:'In pickling spice blends, Kashmiri and Bengali cuisine, and the five-spice mix panch phoron.',hi:'अचार के मसालों, कश्मीरी और बंगाली व्यंजनों, और पंचफोरन (पाँच मसालों के मिश्रण) में।'},
     tip:{en:'Dry-roast lightly before grinding to deepen the sweetness and remove any raw edge.',hi:'पीसने से पहले हल्का सूखा भूनें — मिठास गहरी होती है और कच्चापन निकल जाता है।'} },
-  { id:'curryleaves', emoji:'🍃',
+  { id:'curryleaves', wiki:'Curry_tree', emoji:'🍃',
     name:{en:'Curry Leaves (Kadi Patta)',hi:'कड़ी पत्ता'},
     desc:{en:'Glossy aromatic leaves that crackle in hot oil — the soul of South Indian tempering.',hi:'चमकदार खुशबूदार पत्तियाँ जो गरम तेल में चटकती हैं — दक्षिण भारतीय तड़के की आत्मा।'},
     origin:{en:'Native to India and Sri Lanka; the tree grows in courtyards across South India.',hi:'भारत और श्रीलंका की मूल निवासी; दक्षिण भारत के आँगनों में इसका पेड़ आम है।'},
     benefits:{en:'Rich in antioxidants and traditionally associated with healthy hair and digestion.',hi:'एंटीऑक्सीडेंट से भरपूर, और परंपरागत रूप से स्वस्थ बालों व पाचन से जुड़ी हुई।'},
     uses:{en:'Fried in oil at the start of sambar, rasam, upma, and coconut chutneys — added fresh, not dried.',hi:'सांभर, रसम, उपमा और नारियल चटनी की शुरुआत में तेल में तली जाती हैं — सूखी नहीं, ताज़ी डालें।'},
     tip:{en:'Fresh leaves beat dried ones by a mile. Freeze extras in a zip bag; they go straight from freezer to hot oil.',hi:'ताज़ी पत्तियाँ सूखी से कहीं बेहतर हैं। बची हुई ज़िप बैग में फ्रीज़ करें — सीधे फ्रीज़र से गरम तेल में डाल सकते हैं।'} },
-  { id:'ajwain', emoji:'🌼',
+  { id:'ajwain', wiki:'Ajwain', emoji:'🌼',
     name:{en:'Carom Seeds (Ajwain)',hi:'अजवाइन'},
     desc:{en:'Tiny seeds with a sharp thyme-like punch, used in doughs and fried snacks.',hi:'छोटे दाने जिनमें तीखा अजवायन-सा स्वाद होता है — आटे और तले नाश्तों में इस्तेमाल।'},
     origin:{en:'Cultivated mainly in Rajasthan and Gujarat; a staple of home remedies across North India.',hi:'मुख्यतः राजस्थान और गुजरात में उगाई जाती है; उत्तर भारत के घरेलू नुस्खों की मुख्य सामग्री।'},
@@ -1451,68 +1463,68 @@ function renderProgress(){
 
 /* ---------------- CREATE TAB ---------------- */
 const CREATE_INGREDIENTS = [
-  { id:'oil', emoji:'🛢️', group:'base', name:{en:'Oil',hi:'तेल'}, color:'#e8c26a' },
-  { id:'ghee', emoji:'🧈', group:'base', name:{en:'Ghee',hi:'घी'}, color:'#f0cf7e' },
-  { id:'mustardoil', emoji:'🫗', group:'base', name:{en:'Mustard Oil',hi:'सरसों का तेल'}, color:'#d9a840' },
-  { id:'butter', emoji:'🧈', group:'base', name:{en:'Butter',hi:'मक्खन'}, color:'#f2d488' },
+  { id:'oil', wiki:'Cooking_oil', emoji:'🛢️', group:'base', name:{en:'Oil',hi:'तेल'}, color:'#e8c26a' },
+  { id:'ghee', wiki:'Ghee', emoji:'🧈', group:'base', name:{en:'Ghee',hi:'घी'}, color:'#f0cf7e' },
+  { id:'mustardoil', wiki:'Mustard_oil', emoji:'🫗', group:'base', name:{en:'Mustard Oil',hi:'सरसों का तेल'}, color:'#d9a840' },
+  { id:'butter', wiki:'Butter', emoji:'🧈', group:'base', name:{en:'Butter',hi:'मक्खन'}, color:'#f2d488' },
   { id:'cumin', emoji:'🌰', group:'tempering', name:{en:'Cumin Seeds',hi:'जीरा'}, color:'#d8b160' },
   { id:'mustard', emoji:'⚫', group:'tempering', name:{en:'Mustard Seeds',hi:'राई'}, color:'#c9a552' },
   { id:'curryleaves', emoji:'🍃', group:'tempering', name:{en:'Curry Leaves',hi:'कड़ी पत्ता'}, color:'#a8a055' },
   { id:'hing', emoji:'✨', group:'tempering', name:{en:'Hing',hi:'हींग'}, color:'#d8b160' },
-  { id:'driedredchili', emoji:'🌶️', group:'tempering', name:{en:'Dried Red Chili',hi:'सूखी लाल मिर्च'}, color:'#b5543a' },
-  { id:'bayleaf', emoji:'🍂', group:'tempering', name:{en:'Bay Leaf',hi:'तेज पत्ता'}, color:'#b09a5a' },
-  { id:'cinnamonstick', emoji:'🪵', group:'tempering', name:{en:'Cinnamon Stick',hi:'दालचीनी'}, color:'#a5763c' },
+  { id:'driedredchili', wiki:'Chili_pepper', emoji:'🌶️', group:'tempering', name:{en:'Dried Red Chili',hi:'सूखी लाल मिर्च'}, color:'#b5543a' },
+  { id:'bayleaf', wiki:'Bay_leaf', emoji:'🍂', group:'tempering', name:{en:'Bay Leaf',hi:'तेज पत्ता'}, color:'#b09a5a' },
+  { id:'cinnamonstick', wiki:'Cinnamon', emoji:'🪵', group:'tempering', name:{en:'Cinnamon Stick',hi:'दालचीनी'}, color:'#a5763c' },
   { id:'cloves', emoji:'🟫', group:'tempering', name:{en:'Cloves',hi:'लौंग'}, color:'#8a5a30' },
-  { id:'cardamompods', emoji:'💚', group:'tempering', name:{en:'Cardamom Pods',hi:'इलायची'}, color:'#b3a860' },
-  { id:'methiseeds', emoji:'🌱', group:'tempering', name:{en:'Fenugreek Seeds',hi:'मेथी दाना'}, color:'#b09a4e' },
+  { id:'cardamompods', wiki:'Cardamom', emoji:'💚', group:'tempering', name:{en:'Cardamom Pods',hi:'इलायची'}, color:'#b3a860' },
+  { id:'methiseeds', wiki:'Fenugreek', emoji:'🌱', group:'tempering', name:{en:'Fenugreek Seeds',hi:'मेथी दाना'}, color:'#b09a4e' },
   { id:'ajwain', emoji:'🌼', group:'tempering', name:{en:'Ajwain',hi:'अजवाइन'}, color:'#c2a858' },
-  { id:'onion', emoji:'🧅', group:'aromatics', name:{en:'Onion',hi:'प्याज़'}, color:'#cf9c55' },
-  { id:'gingergarlic', emoji:'🧄', group:'aromatics', name:{en:'Ginger-Garlic',hi:'अदरक-लहसुन'}, color:'#c99a50' },
-  { id:'ginger', emoji:'🫚', group:'aromatics', name:{en:'Fresh Ginger',hi:'ताज़ा अदरक'}, color:'#c9a050' },
-  { id:'greenchili', emoji:'🌶️', group:'aromatics', name:{en:'Green Chili',hi:'हरी मिर्च'}, color:'#b3984e' },
-  { id:'tomato', emoji:'🍅', group:'mains', name:{en:'Tomato',hi:'टमाटर'}, color:'#c9542b' },
-  { id:'potato', emoji:'🥔', group:'mains', name:{en:'Potato',hi:'आलू'}, color:'#cf9440' },
-  { id:'cauliflower', emoji:'🥦', group:'mains', name:{en:'Cauliflower',hi:'गोभी'}, color:'#c2a870' },
-  { id:'eggplant', emoji:'🍆', group:'mains', name:{en:'Eggplant',hi:'बैंगन'}, color:'#8a5a70' },
-  { id:'bhindi', emoji:'🥒', group:'mains', name:{en:'Okra (Bhindi)',hi:'भिंडी'}, color:'#8a9a4e' },
-  { id:'paneer', emoji:'🧀', group:'mains', name:{en:'Paneer',hi:'पनीर'}, color:'#d9954f' },
-  { id:'chicken', emoji:'🍗', group:'mains', name:{en:'Chicken',hi:'चिकन'}, color:'#b56b35' },
-  { id:'mutton', emoji:'🥩', group:'mains', name:{en:'Mutton',hi:'मटन'}, color:'#96522e' },
-  { id:'fish', emoji:'🐟', group:'mains', name:{en:'Fish',hi:'मछली'}, color:'#b98a4e' },
-  { id:'prawns', emoji:'🦐', group:'mains', name:{en:'Prawns',hi:'झींगे'}, color:'#cc7a48' },
-  { id:'egg', emoji:'🥚', group:'mains', name:{en:'Eggs',hi:'अंडे'}, color:'#d9b060' },
-  { id:'chickpeas', emoji:'🫘', group:'mains', name:{en:'Chickpeas (Chana)',hi:'काबुली चने'}, color:'#c29450' },
-  { id:'rajmabeans', emoji:'🥜', group:'mains', name:{en:'Kidney Beans (Rajma)',hi:'राजमा'}, color:'#9a4a35' },
-  { id:'daltoor', emoji:'🥘', group:'mains', name:{en:'Toor Dal',hi:'अरहर दाल'}, color:'#d9a83a' },
-  { id:'peas', emoji:'🫛', group:'mains', name:{en:'Green Peas',hi:'हरी मटर'}, color:'#a68f45' },
-  { id:'mushroom', emoji:'🍄', group:'mains', name:{en:'Mushroom',hi:'मशरूम'}, color:'#a87f4d' },
-  { id:'spinach', emoji:'🥬', group:'mains', name:{en:'Spinach',hi:'पालक'}, color:'#5b7b3a' },
-  { id:'bellpepper', emoji:'🫑', group:'mains', name:{en:'Bell Pepper',hi:'शिमला मिर्च'}, color:'#8a9a48' },
-  { id:'carrot', emoji:'🥕', group:'mains', name:{en:'Carrot',hi:'गाजर'}, color:'#cc7a3a' },
-  { id:'corn', emoji:'🌽', group:'mains', name:{en:'Corn',hi:'मकई'}, color:'#d9b850' },
+  { id:'onion', wiki:'Onion', emoji:'🧅', group:'aromatics', name:{en:'Onion',hi:'प्याज़'}, color:'#cf9c55' },
+  { id:'gingergarlic', wiki:'Garlic', emoji:'🧄', group:'aromatics', name:{en:'Ginger-Garlic',hi:'अदरक-लहसुन'}, color:'#c99a50' },
+  { id:'ginger', wiki:'Ginger', emoji:'🫚', group:'aromatics', name:{en:'Fresh Ginger',hi:'ताज़ा अदरक'}, color:'#c9a050' },
+  { id:'greenchili', wiki:'Chili_pepper', emoji:'🌶️', group:'aromatics', name:{en:'Green Chili',hi:'हरी मिर्च'}, color:'#b3984e' },
+  { id:'tomato', wiki:'Tomato', emoji:'🍅', group:'mains', name:{en:'Tomato',hi:'टमाटर'}, color:'#c9542b' },
+  { id:'potato', wiki:'Potato', emoji:'🥔', group:'mains', name:{en:'Potato',hi:'आलू'}, color:'#cf9440' },
+  { id:'cauliflower', wiki:'Cauliflower', emoji:'🥦', group:'mains', name:{en:'Cauliflower',hi:'गोभी'}, color:'#c2a870' },
+  { id:'eggplant', wiki:'Eggplant', emoji:'🍆', group:'mains', name:{en:'Eggplant',hi:'बैंगन'}, color:'#8a5a70' },
+  { id:'bhindi', wiki:'Okra', emoji:'🥒', group:'mains', name:{en:'Okra (Bhindi)',hi:'भिंडी'}, color:'#8a9a4e' },
+  { id:'paneer', wiki:'Paneer', emoji:'🧀', group:'mains', name:{en:'Paneer',hi:'पनीर'}, color:'#d9954f' },
+  { id:'chicken', wiki:'Chicken_as_food', emoji:'🍗', group:'mains', name:{en:'Chicken',hi:'चिकन'}, color:'#b56b35' },
+  { id:'mutton', wiki:'Lamb_and_mutton', emoji:'🥩', group:'mains', name:{en:'Mutton',hi:'मटन'}, color:'#96522e' },
+  { id:'fish', wiki:'Fish_as_food', emoji:'🐟', group:'mains', name:{en:'Fish',hi:'मछली'}, color:'#b98a4e' },
+  { id:'prawns', wiki:'Prawn', emoji:'🦐', group:'mains', name:{en:'Prawns',hi:'झींगे'}, color:'#cc7a48' },
+  { id:'egg', wiki:'Egg_(food)', emoji:'🥚', group:'mains', name:{en:'Eggs',hi:'अंडे'}, color:'#d9b060' },
+  { id:'chickpeas', wiki:'Chickpea', emoji:'🫘', group:'mains', name:{en:'Chickpeas (Chana)',hi:'काबुली चने'}, color:'#c29450' },
+  { id:'rajmabeans', wiki:'Kidney_bean', emoji:'🥜', group:'mains', name:{en:'Kidney Beans (Rajma)',hi:'राजमा'}, color:'#9a4a35' },
+  { id:'daltoor', wiki:'Pigeon_pea', emoji:'🥘', group:'mains', name:{en:'Toor Dal',hi:'अरहर दाल'}, color:'#d9a83a' },
+  { id:'peas', wiki:'Pea', emoji:'🫛', group:'mains', name:{en:'Green Peas',hi:'हरी मटर'}, color:'#a68f45' },
+  { id:'mushroom', wiki:'Mushroom', emoji:'🍄', group:'mains', name:{en:'Mushroom',hi:'मशरूम'}, color:'#a87f4d' },
+  { id:'spinach', wiki:'Spinach', emoji:'🥬', group:'mains', name:{en:'Spinach',hi:'पालक'}, color:'#5b7b3a' },
+  { id:'bellpepper', wiki:'Bell_pepper', emoji:'🫑', group:'mains', name:{en:'Bell Pepper',hi:'शिमला मिर्च'}, color:'#8a9a48' },
+  { id:'carrot', wiki:'Carrot', emoji:'🥕', group:'mains', name:{en:'Carrot',hi:'गाजर'}, color:'#cc7a3a' },
+  { id:'corn', wiki:'Corn_on_the_cob', emoji:'🌽', group:'mains', name:{en:'Corn',hi:'मकई'}, color:'#d9b850' },
   { id:'turmeric', emoji:'🟡', group:'powders', name:{en:'Turmeric',hi:'हल्दी'}, color:'#dfa832' },
   { id:'chilipowder', emoji:'🔴', group:'powders', name:{en:'Red Chili Powder',hi:'लाल मिर्च'}, color:'#b5442a' },
-  { id:'kashmirichili', emoji:'🌹', group:'powders', name:{en:'Kashmiri Chili',hi:'कश्मीरी मिर्च'}, color:'#c04832' },
-  { id:'corianderpow', emoji:'🌿', group:'powders', name:{en:'Coriander Powder',hi:'धनिया पाउडर'}, color:'#b08b3e' },
-  { id:'cuminpowder', emoji:'🟤', group:'powders', name:{en:'Cumin Powder',hi:'जीरा पाउडर'}, color:'#a5824a' },
+  { id:'kashmirichili', wiki:'Kashmiri_cuisine', emoji:'🌹', group:'powders', name:{en:'Kashmiri Chili',hi:'कश्मीरी मिर्च'}, color:'#c04832' },
+  { id:'corianderpow', wiki:'Coriander', emoji:'🌿', group:'powders', name:{en:'Coriander Powder',hi:'धनिया पाउडर'}, color:'#b08b3e' },
+  { id:'cuminpowder', wiki:'Cumin', emoji:'🟤', group:'powders', name:{en:'Cumin Powder',hi:'जीरा पाउडर'}, color:'#a5824a' },
   { id:'garammasala', emoji:'🟤', group:'powders', name:{en:'Garam Masala',hi:'गरम मसाला'}, color:'#8f5a2e' },
-  { id:'blackpepperpow', emoji:'⚪', group:'powders', name:{en:'Black Pepper',hi:'काली मिर्च'}, color:'#7a6a4e' },
-  { id:'amchur', emoji:'🥭', group:'powders', name:{en:'Amchur (Dry Mango)',hi:'अमचूर'}, color:'#c9a848' },
-  { id:'salt', emoji:'🧂', group:'powders', name:{en:'Salt',hi:'नमक'}, color:null },
-  { id:'water', emoji:'💧', group:'liquids', name:{en:'Water',hi:'पानी'}, color:'#c08a4e' },
-  { id:'cream', emoji:'🥛', group:'liquids', name:{en:'Cream',hi:'क्रीम'}, color:'#e2926b' },
-  { id:'coconutmilk', emoji:'🥥', group:'liquids', name:{en:'Coconut Milk',hi:'नारियल दूध'}, color:'#e0b284' },
-  { id:'yogurt', emoji:'🥣', group:'liquids', name:{en:'Yogurt',hi:'दही'}, color:'#ddb277' },
-  { id:'milk', emoji:'🍼', group:'liquids', name:{en:'Milk',hi:'दूध'}, color:'#e5c290' },
-  { id:'tamarind', emoji:'🟫', group:'liquids', name:{en:'Tamarind Water',hi:'इमली का पानी'}, color:'#7a4a26' },
-  { id:'cashewpaste', emoji:'🌰', group:'liquids', name:{en:'Cashew Paste',hi:'काजू पेस्ट'}, color:'#dcb582' },
-  { id:'kasurimethi', emoji:'🌾', group:'finish', name:{en:'Kasuri Methi',hi:'कसूरी मेथी'}, color:null },
-  { id:'corianderleaves', emoji:'☘️', group:'finish', name:{en:'Coriander Leaves',hi:'हरा धनिया'}, color:null },
-  { id:'mintleaves', emoji:'🌿', group:'finish', name:{en:'Mint Leaves',hi:'पुदीना'}, color:null },
-  { id:'lemon', emoji:'🍋', group:'finish', name:{en:'Lemon',hi:'नींबू'}, color:null },
-  { id:'birista', emoji:'🧅', group:'finish', name:{en:'Fried Onions (Birista)',hi:'बिरिस्ता (तले प्याज़)'}, color:'#b5813a' },
-  { id:'coconutgrated', emoji:'🥥', group:'finish', name:{en:'Grated Coconut',hi:'कसा नारियल'}, color:null },
-  { id:'jaggery', emoji:'🍯', group:'finish', name:{en:'Jaggery',hi:'गुड़'}, color:'#b57a30' },
+  { id:'blackpepperpow', wiki:'Black_pepper', emoji:'⚪', group:'powders', name:{en:'Black Pepper',hi:'काली मिर्च'}, color:'#7a6a4e' },
+  { id:'amchur', wiki:'Amchoor', emoji:'🥭', group:'powders', name:{en:'Amchur (Dry Mango)',hi:'अमचूर'}, color:'#c9a848' },
+  { id:'salt', wiki:'Salt', emoji:'🧂', group:'powders', name:{en:'Salt',hi:'नमक'}, color:null },
+  { id:'water', wiki:'Water', emoji:'💧', group:'liquids', name:{en:'Water',hi:'पानी'}, color:'#c08a4e' },
+  { id:'cream', wiki:'Cream', emoji:'🥛', group:'liquids', name:{en:'Cream',hi:'क्रीम'}, color:'#e2926b' },
+  { id:'coconutmilk', wiki:'Coconut_milk', emoji:'🥥', group:'liquids', name:{en:'Coconut Milk',hi:'नारियल दूध'}, color:'#e0b284' },
+  { id:'yogurt', wiki:'Yogurt', emoji:'🥣', group:'liquids', name:{en:'Yogurt',hi:'दही'}, color:'#ddb277' },
+  { id:'milk', wiki:'Milk', emoji:'🍼', group:'liquids', name:{en:'Milk',hi:'दूध'}, color:'#e5c290' },
+  { id:'tamarind', wiki:'Tamarind', emoji:'🟫', group:'liquids', name:{en:'Tamarind Water',hi:'इमली का पानी'}, color:'#7a4a26' },
+  { id:'cashewpaste', wiki:'Cashew', emoji:'🌰', group:'liquids', name:{en:'Cashew Paste',hi:'काजू पेस्ट'}, color:'#dcb582' },
+  { id:'kasurimethi', wiki:'Fenugreek', emoji:'🌾', group:'finish', name:{en:'Kasuri Methi',hi:'कसूरी मेथी'}, color:null },
+  { id:'corianderleaves', wiki:'Coriander', emoji:'☘️', group:'finish', name:{en:'Coriander Leaves',hi:'हरा धनिया'}, color:null },
+  { id:'mintleaves', wiki:'Mentha', emoji:'🌿', group:'finish', name:{en:'Mint Leaves',hi:'पुदीना'}, color:null },
+  { id:'lemon', wiki:'Lemon', emoji:'🍋', group:'finish', name:{en:'Lemon',hi:'नींबू'}, color:null },
+  { id:'birista', wiki:'Onion', emoji:'🧅', group:'finish', name:{en:'Fried Onions (Birista)',hi:'बिरिस्ता (तले प्याज़)'}, color:'#b5813a' },
+  { id:'coconutgrated', wiki:'Coconut', emoji:'🥥', group:'finish', name:{en:'Grated Coconut',hi:'कसा नारियल'}, color:null },
+  { id:'jaggery', wiki:'Jaggery', emoji:'🍯', group:'finish', name:{en:'Jaggery',hi:'गुड़'}, color:'#b57a30' },
 ];
 
 let pot = [];
@@ -1536,13 +1548,17 @@ function renderCreate(){
     { key:'finish', label:T('grpFinish') },
   ];
   document.getElementById('ingredientPalette').innerHTML = groups.map(g => {
-    const chips = CREATE_INGREDIENTS.filter(i => i.group === g.key).map(i =>
-      `<button class="ing-chip" onclick="addToPot('${i.id}')">${i.emoji} ${L(i.name)}</button>`
-    ).join('');
+    const chips = CREATE_INGREDIENTS.filter(i => i.group === g.key).map(i => {
+      const img = i.wiki
+        ? `<span class="chip-img-wrap"><img class="chip-img" data-wiki="${i.wiki}" alt="" onerror="this.parentElement.style.display='none'">${i.emoji}</span>`
+        : `<span class="chip-emoji">${i.emoji}</span>`;
+      return `<button class="ing-chip" onclick="addToPot('${i.id}')">${img}<span class="chip-label">${L(i.name)}</span></button>`;
+    }).join('');
     return `<div class="ing-group"><div class="ing-group-title">${g.label}</div><div class="ing-chips">${chips}</div></div>`;
   }).join('');
   if (!pot.length) document.getElementById('panLog').textContent = T('panEmptyMsg');
   updateGravy();
+  loadThumbs(document.getElementById('ingredientPalette'));
 }
 
 function addToPot(id){
