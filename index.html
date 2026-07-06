@@ -157,14 +157,31 @@
   .recipe-row h3{ font-family: var(--font-display); font-size:1.02rem; color:var(--maroon); }
   .recipe-row .meta{ font-size:0.8rem; color: rgba(42,24,16,0.55); margin-top:0.15rem; }
   .recipe-row .badge-cooked{ background: var(--leaf); color:#fff; font-size:0.68rem; font-weight:600; padding:0.2rem 0.6rem; border-radius:100px; }
-  .diet-group-title{
+  .diet-group{ margin-bottom: 0.9rem; }
+  .diet-group-header{
+    width:100%; display:flex; align-items:center; gap:0.7rem;
     font-family: var(--font-display); font-weight:700; font-size:1.05rem;
-    margin: 1.4rem 0 0.7rem; padding-left:0.75rem; border-left:4px solid var(--turmeric);
+    background: var(--white); border:1px solid rgba(107,30,35,0.08);
+    border-left:5px solid var(--turmeric); border-radius: var(--radius);
+    padding: 0.9rem 1.1rem; cursor:pointer; box-shadow: var(--shadow);
+    transition: all 0.2s ease; text-align:left;
   }
-  .diet-group-title:first-child{ margin-top:0.3rem; }
-  .diet-vegan{ color: var(--leaf-dark); border-left-color: var(--leaf); }
-  .diet-veg{ color: var(--leaf-dark); border-left-color: var(--turmeric); }
-  .diet-nonveg{ color: var(--maroon); border-left-color: var(--chili); }
+  .diet-group-header:hover{ transform: translateX(2px); }
+  .diet-group-header span:first-child{ flex:1; }
+  .diet-count{
+    background: var(--cream-2); color: var(--maroon-dark); font-size:0.75rem;
+    font-weight:700; padding:0.2rem 0.65rem; border-radius:100px;
+  }
+  .diet-chevron{ font-size:0.9rem; color: var(--maroon); transition: transform 0.25s ease; }
+  .diet-group.open .diet-chevron{ transform: rotate(180deg); }
+  .diet-vegan{ color: var(--leaf-dark); border-left-color: var(--leaf) !important; }
+  .diet-veg{ color: var(--leaf-dark); border-left-color: var(--turmeric) !important; }
+  .diet-nonveg{ color: var(--maroon); border-left-color: var(--chili) !important; }
+  .diet-group-body{
+    max-height:0; overflow:hidden; transition: max-height 0.35s ease;
+    padding: 0 0.2rem;
+  }
+  .diet-group.open .diet-group-body{ max-height: 3000px; padding-top:0.8rem; }
 
   /* QUIZ */
   .quiz-card{ background: var(--white); border-radius: var(--radius); padding:1.5rem; box-shadow: var(--shadow); text-align:center; }
@@ -976,8 +993,23 @@ function renderRecipes(){
         ${badge}
       </div>`;
     }).join('');
-    return `<h3 class="diet-group-title diet-${g.diet}">${g.label}</h3>${rows}`;
+    const open = openDietGroups.has(g.diet);
+    return `<div class="diet-group ${open ? 'open' : ''}" id="group-${g.diet}">
+      <button class="diet-group-header diet-${g.diet}" onclick="toggleDietGroup('${g.diet}')">
+        <span>${g.label}</span>
+        <span class="diet-count">${items.length}</span>
+        <span class="diet-chevron">▾</span>
+      </button>
+      <div class="diet-group-body">${rows}</div>
+    </div>`;
   }).join('');
+}
+
+const openDietGroups = new Set(['vegan']);
+function toggleDietGroup(diet){
+  if (openDietGroups.has(diet)) openDietGroups.delete(diet);
+  else openDietGroups.add(diet);
+  renderRecipes();
 }
 
 let currentRecipeStep = 0;
