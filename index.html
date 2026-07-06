@@ -294,56 +294,85 @@
     border:1px solid rgba(107,30,35,0.06); padding: 1.4rem 1.2rem 1.2rem; margin-bottom:1.2rem;
     text-align:center;
   }
-  .pan-wrap{ position:relative; width:250px; height:150px; margin:0 auto; }
+  .pan-wrap{ position:relative; width:280px; height:240px; margin:0 auto; }
   .pan-wrap.cooking{ animation: panShake 0.4s ease-in-out infinite; }
-  @keyframes panShake{ 0%,100%{ transform: translateX(0) rotate(0); } 25%{ transform: translateX(-2px) rotate(-0.6deg); } 75%{ transform: translateX(2px) rotate(0.6deg); } }
-  .pan{ position:relative; width:230px; height:110px; margin:0 auto; }
-  .pan-body{
-    position:absolute; bottom:12px; left:0; width:100%; height:74px;
-    background: linear-gradient(180deg, #4a2f20, #241209);
-    border-radius: 0 0 115px 115px; z-index:1;
+  @keyframes panShake{ 0%,100%{ transform: translateX(0) rotate(0); } 25%{ transform: translateX(-2px) rotate(-0.4deg); } 75%{ transform: translateX(2px) rotate(0.4deg); } }
+  .pan-top{
+    position:absolute; top:12px; left:50%; transform:translateX(-50%);
+    width:212px; height:212px; border-radius:50%;
+    background: radial-gradient(circle at 32% 26%, #5c3b25, #33200f 55%, #170a03 92%);
+    box-shadow:
+      0 16px 34px rgba(42,24,16,0.4),
+      inset 0 -8px 18px rgba(0,0,0,0.55),
+      inset 0 8px 14px rgba(255,255,255,0.07);
+    transition: box-shadow 0.5s ease;
   }
-  .pan-handle{
-    position:absolute; top:26px; right:-38px; width:52px; height:11px;
-    background: linear-gradient(90deg, #4a2f20, #6b1e23); border-radius:100px; z-index:0;
+  .pan-wrap.cooking .pan-top{
+    box-shadow:
+      0 16px 34px rgba(42,24,16,0.4),
+      0 0 46px rgba(235,120,40,0.55),
+      inset 0 -8px 18px rgba(0,0,0,0.55),
+      inset 0 8px 14px rgba(255,255,255,0.07);
   }
+  .pan-rim{
+    position:absolute; inset:7px; border-radius:50%; pointer-events:none; z-index:3;
+    border:2px solid rgba(255,255,255,0.07);
+    box-shadow: inset 0 3px 6px rgba(255,255,255,0.05);
+  }
+  .pan-hdl{
+    position:absolute; top:50%; width:44px; height:22px;
+    border:7px solid #1d0f06; border-radius:100px; background:transparent;
+    transform:translateY(-50%); z-index:0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.35);
+  }
+  .hdl-l{ left:-36px; } .hdl-r{ right:-36px; }
   .pan-gravy{
-    position:absolute; top:18px; left:12px; right:12px; height:46px;
-    border-radius:50%; z-index:2; overflow:hidden;
-    background: #8a7a68; opacity:0.45;
+    position:absolute; inset:26px; border-radius:50%; z-index:2; overflow:hidden;
+    background: #8a7a68; opacity:0.4;
+    box-shadow: inset 0 6px 16px rgba(0,0,0,0.5), inset 0 -3px 8px rgba(255,255,255,0.06);
     transition: background 0.7s ease, opacity 0.7s ease;
   }
   .pan-gravy.filled{ opacity:1; }
   .pan-gravy .bit{
-    position:absolute; font-size:0.95rem; animation: bitBob 2.6s ease-in-out infinite;
+    position:absolute; font-size:1rem; animation: bitBob 2.6s ease-in-out infinite;
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3));
   }
-  @keyframes bitBob{ 0%,100%{ transform: translateY(0) rotate(-4deg); } 50%{ transform: translateY(-3px) rotate(4deg); } }
+  @keyframes bitBob{ 0%,100%{ transform: translateY(0) rotate(-5deg); } 50%{ transform: translateY(-3px) rotate(5deg); } }
+  .pan-gravy .bubble{
+    position:absolute; border-radius:50%; background: rgba(255,245,225,0.5);
+    pointer-events:none; animation: bubblePop 0.9s ease-out forwards;
+  }
+  @keyframes bubblePop{ 0%{ transform: scale(0.2); opacity:0.7; } 100%{ transform: scale(1.7); opacity:0; } }
+  .spoon-rot{
+    position:absolute; inset:0; z-index:4; pointer-events:none;
+    transform: rotate(205deg); transition: transform 0.4s ease;
+  }
+  .pan-wrap.cooking .spoon-rot{ animation: stir 1.3s linear infinite; }
+  @keyframes stir{ from{ transform: rotate(205deg); } to{ transform: rotate(565deg); } }
+  .spoon-handle{
+    position:absolute; left:calc(50% - 5px); top:50%; width:10px; height:78px;
+    background: linear-gradient(90deg, #9a6534, #6b4520);
+    border-radius:8px; box-shadow: 2px 2px 4px rgba(0,0,0,0.35);
+  }
+  .spoon-bowl{
+    position:absolute; left:calc(50% - 12px); top:calc(50% + 66px); width:24px; height:30px;
+    background: radial-gradient(circle at 38% 32%, #a8763f, #6b4520);
+    border-radius:50%; box-shadow: 2px 3px 5px rgba(0,0,0,0.35), inset 0 -3px 5px rgba(0,0,0,0.3);
+  }
   .drop-item{
-    position:absolute; top:-40px; font-size:1.5rem; z-index:5; pointer-events:none;
-    animation: dropFall 0.65s cubic-bezier(.4,0,.7,1) forwards;
+    position:absolute; top:-26px; font-size:1.5rem; z-index:5; pointer-events:none;
+    animation: dropFall 0.7s cubic-bezier(.4,0,.7,1) forwards;
   }
   @keyframes dropFall{
     0%{ transform: translateY(0) scale(1); opacity:1; }
-    80%{ transform: translateY(62px) scale(0.75); opacity:1; }
-    100%{ transform: translateY(70px) scale(0.5); opacity:0; }
+    80%{ transform: translateY(118px) scale(0.72); opacity:1; }
+    100%{ transform: translateY(130px) scale(0.45); opacity:0; }
   }
   .pan-steam{
-    position:absolute; width:12px; height:12px; border-radius:50%; z-index:4;
-    background: rgba(255,255,255,0.6); filter: blur(3px); pointer-events:none;
+    position:absolute; width:13px; height:13px; border-radius:50%; z-index:6;
+    background: rgba(255,255,255,0.55); filter: blur(3px); pointer-events:none;
     animation: steamRise 1.4s ease-out forwards;
   }
-  .flame-row{ position:absolute; bottom:0; left:50%; transform:translateX(-50%); display:flex; gap:8px; z-index:0; }
-  .flame{
-    width:12px; height:20px; border-radius:50% 50% 40% 40%;
-    background: radial-gradient(circle at 50% 80%, #f4cb7c, #e8912a 55%, #c0392b);
-    animation: flick 0.5s ease-in-out infinite alternate;
-    transform-origin: bottom center;
-  }
-  .flame.f2{ height:26px; animation-delay:0.15s; }
-  .flame.f3{ animation-delay:0.3s; }
-  .pan-wrap.cooking .flame{ height:32px; }
-  .pan-wrap.cooking .flame.f2{ height:40px; }
-  @keyframes flick{ from{ transform: scaleY(1) scaleX(1); } to{ transform: scaleY(1.25) scaleX(0.85); } }
   .pan-log{
     min-height:1.4rem; font-size:0.9rem; font-weight:500; color: var(--maroon-dark);
     margin: 0.9rem 0 0.8rem;
@@ -462,13 +491,15 @@
 
       <div class="kitchen-stage">
         <div class="pan-wrap" id="panWrap">
-          <div class="pan">
+          <div class="pan-top">
             <div class="pan-gravy" id="panGravy"></div>
-            <div class="pan-body"></div>
-            <div class="pan-handle"></div>
-          </div>
-          <div class="flame-row">
-            <span class="flame f1"></span><span class="flame f2"></span><span class="flame f3"></span>
+            <div class="pan-rim"></div>
+            <div class="spoon-rot">
+              <div class="spoon-handle"></div>
+              <div class="spoon-bowl"></div>
+            </div>
+            <div class="pan-hdl hdl-l"></div>
+            <div class="pan-hdl hdl-r"></div>
           </div>
         </div>
         <div class="pan-log" id="panLog"></div>
@@ -1488,7 +1519,7 @@ function addToPot(id){
   const drop = document.createElement('div');
   drop.className = 'drop-item';
   drop.textContent = ing.emoji;
-  drop.style.left = (85 + Math.random()*70) + 'px';
+  drop.style.left = (105 + Math.random()*70) + 'px';
   wrap.appendChild(drop);
   setTimeout(()=>drop.remove(), 700);
   // steam / sizzle for tempering into hot base
@@ -1496,8 +1527,8 @@ function addToPot(id){
     for (let i=0;i<3;i++){
       const s = document.createElement('div');
       s.className = 'pan-steam';
-      s.style.left = (80 + Math.random()*80) + 'px';
-      s.style.top = '20px';
+      s.style.left = (85 + Math.random()*110) + 'px';
+      s.style.top = (55 + Math.random()*50) + 'px';
       wrap.appendChild(s);
       setTimeout(()=>s.remove(), 1450);
     }
@@ -1526,7 +1557,7 @@ function updateGravy(){
   // floating bits: last 7 solid ingredients
   const bits = pot.filter(p => ['tempering','aromatics','mains','finish'].includes(p.group)).slice(-7);
   gravy.innerHTML = bits.map((b,i) =>
-    `<span class="bit" style="left:${12 + (i*27)%170}px; top:${8 + (i*13)%22}px; animation-delay:${(i*0.35).toFixed(2)}s">${b.emoji}</span>`
+    `<span class="bit" style="left:${24 + (i*37)%108}px; top:${22 + (i*43)%105}px; animation-delay:${(i*0.35).toFixed(2)}s">${b.emoji}</span>`
   ).join('');
 }
 
@@ -1544,14 +1575,23 @@ function cookDish(){
   const wrap = document.getElementById('panWrap');
   wrap.classList.add('cooking');
   // steam burst while cooking
+  const gravy = document.getElementById('panGravy');
   const steamer = setInterval(() => {
     const s = document.createElement('div');
     s.className = 'pan-steam';
-    s.style.left = (70 + Math.random()*100) + 'px';
-    s.style.top = '18px';
+    s.style.left = (75 + Math.random()*130) + 'px';
+    s.style.top = (45 + Math.random()*70) + 'px';
     wrap.appendChild(s);
     setTimeout(()=>s.remove(), 1450);
-  }, 220);
+    const b = document.createElement('div');
+    b.className = 'bubble';
+    const size = 7 + Math.random()*9;
+    b.style.width = b.style.height = size + 'px';
+    b.style.left = (18 + Math.random()*118) + 'px';
+    b.style.top = (18 + Math.random()*118) + 'px';
+    gravy.appendChild(b);
+    setTimeout(()=>b.remove(), 950);
+  }, 180);
   setTimeout(() => {
     clearInterval(steamer);
     wrap.classList.remove('cooking');
