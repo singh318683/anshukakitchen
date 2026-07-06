@@ -343,11 +343,22 @@
     pointer-events:none; animation: bubblePop 0.9s ease-out forwards;
   }
   @keyframes bubblePop{ 0%{ transform: scale(0.2); opacity:0.7; } 100%{ transform: scale(1.7); opacity:0; } }
+  .sizzle-ring{
+    position:absolute; width:22px; height:22px; border-radius:50%;
+    border:2.5px solid rgba(255,245,200,0.85); pointer-events:none;
+    transform:translate(-50%,-50%);
+    animation: sizzleExpand 0.65s ease-out forwards;
+  }
+  .sizzle-ring.liquid-ring{ width:30px; height:30px; border-color:rgba(180,220,255,0.7); }
+  @keyframes sizzleExpand{
+    0%{ transform:translate(-50%,-50%) scale(0.2); opacity:1; }
+    100%{ transform:translate(-50%,-50%) scale(4.5); opacity:0; }
+  }
   .spoon-rot{
     position:absolute; inset:0; z-index:4; pointer-events:none;
     transform: rotate(205deg); transition: transform 0.4s ease;
   }
-  .pan-wrap.cooking .spoon-rot{ animation: stir 1.3s linear infinite; }
+  .pan-wrap.cooking .spoon-rot{ animation: stir 0.85s linear infinite; }
   @keyframes stir{ from{ transform: rotate(205deg); } to{ transform: rotate(565deg); } }
   .spoon-handle{
     position:absolute; left:calc(50% - 5px); top:50%; width:10px; height:78px;
@@ -369,9 +380,10 @@
     100%{ transform: translateY(130px) scale(0.45); opacity:0; }
   }
   .pan-steam{
-    position:absolute; width:13px; height:13px; border-radius:50%; z-index:6;
-    background: rgba(255,255,255,0.55); filter: blur(3px); pointer-events:none;
-    animation: steamRise 1.4s ease-out forwards;
+    position:absolute; width:14px; height:14px; border-radius:50%; z-index:6;
+    background: radial-gradient(circle, rgba(255,255,255,0.7), rgba(255,255,255,0.1));
+    filter: blur(4px); pointer-events:none;
+    animation: steamRise 1.5s ease-out forwards;
   }
   .pan-log{
     min-height:1.4rem; font-size:0.9rem; font-weight:500; color: var(--maroon-dark);
@@ -516,7 +528,7 @@
         </div>
         <div class="pan-log" id="panLog"></div>
         <div class="pan-actions">
-          <button class="btn btn-primary" id="cookBtn" onclick="cookDish()" data-i18n="cookIt">🔥 Cook It!</button>
+          <button class="btn btn-primary" id="cookBtn" onclick="cookDish()" data-i18n="cookIt" style="transition:opacity 0.2s ease">🔥 Cook It!</button>
           <button class="btn btn-ghost" onclick="resetPot()" data-i18n="resetPan">Empty Pan</button>
         </div>
       </div>
@@ -595,6 +607,13 @@ const UI = {
   grpPowders:{en:'Ground Spices',hi:'पिसे मसाले'},
   grpLiquids:{en:'Liquids',hi:'तरल'},
   grpFinish:{en:'Finishing Touches',hi:'आख़िरी छुअन'},
+  grpGrains:{en:'Breads & Rice',hi:'रोटी और चावल'},
+  grpDairy:{en:'Dairy',hi:'डेयरी'},
+  grpNuts:{en:'Nuts & Dry Fruits',hi:'मेवे और सूखे मेवे'},
+  grpSweet:{en:'Sweeteners & Flavourings',hi:'मिठास और खुशबू'},
+  grpVeggies2:{en:'More Vegetables',hi:'और सब्ज़ियाँ'},
+  grpLentils:{en:'Lentils & Legumes',hi:'दालें और फलियाँ'},
+  grpCondiments:{en:'Chutneys & Pastes',hi:'चटनी और पेस्ट'},
   spicesTitle:{en:'Essential Spices',hi:'ज़रूरी मसाले'},
   spicesSub:{en:'Tap each one to learn it.',hi:'हर एक को सीखने के लिए टैप करें।'},
   techTitle:{en:'Core Techniques',hi:'मुख्य तकनीकें'},
@@ -1543,8 +1562,15 @@ function renderCreate(){
     { key:'tempering', label:T('grpTempering') },
     { key:'aromatics', label:T('grpAromatics') },
     { key:'mains', label:T('grpMains') },
+    { key:'veggies2', label:T('grpVeggies2') },
+    { key:'lentils', label:T('grpLentils') },
     { key:'powders', label:T('grpPowders') },
     { key:'liquids', label:T('grpLiquids') },
+    { key:'dairy', label:T('grpDairy') },
+    { key:'grains', label:T('grpGrains') },
+    { key:'nuts', label:T('grpNuts') },
+    { key:'sweet', label:T('grpSweet') },
+    { key:'condiments', label:T('grpCondiments') },
     { key:'finish', label:T('grpFinish') },
   ];
   document.getElementById('ingredientPalette').innerHTML = groups.map(g => {
@@ -1564,28 +1590,69 @@ function renderCreate(){
 function addToPot(id){
   const ing = CREATE_INGREDIENTS.find(i => i.id === id);
   pot.push(ing);
-  // drop animation
   const wrap = document.getElementById('panWrap');
+  const gravy = document.getElementById('panGravy');
+  const hasFat = pot.some(p => p.group === 'base');
+
+  // Drop animation
   const drop = document.createElement('div');
   drop.className = 'drop-item';
   drop.textContent = ing.emoji;
-  drop.style.left = (105 + Math.random()*70) + 'px';
+  drop.style.left = (95 + Math.random()*80) + 'px';
   wrap.appendChild(drop);
   setTimeout(()=>drop.remove(), 700);
-  // steam / sizzle for tempering into hot base
-  if (ing.group === 'tempering' && pot.some(p=>p.group==='base')){
-    for (let i=0;i<3;i++){
+
+  // Sizzle ripple ring in pan
+  if (ing.group === 'tempering' && hasFat){
+    const ring = document.createElement('div');
+    ring.className = 'sizzle-ring';
+    ring.style.left = (35 + Math.random()*90) + 'px';
+    ring.style.top = (35 + Math.random()*90) + 'px';
+    gravy.appendChild(ring);
+    setTimeout(()=>ring.remove(), 700);
+    // burst of steam
+    for(let i=0;i<5;i++){
+      setTimeout(()=>{
+        const s = document.createElement('div');
+        s.className = 'pan-steam';
+        s.style.left = (80 + Math.random()*120) + 'px';
+        s.style.top = (50 + Math.random()*60) + 'px';
+        wrap.appendChild(s);
+        setTimeout(()=>s.remove(), 1400);
+      }, i*90);
+    }
+  } else if (ing.group === 'liquids' && pot.length > 3){
+    // liquid pour — slow ripple
+    const ring = document.createElement('div');
+    ring.className = 'sizzle-ring liquid-ring';
+    ring.style.left = '55px'; ring.style.top = '55px';
+    gravy.appendChild(ring);
+    setTimeout(()=>ring.remove(), 900);
+    for(let i=0;i<2;i++){
       const s = document.createElement('div');
       s.className = 'pan-steam';
-      s.style.left = (85 + Math.random()*110) + 'px';
+      s.style.left = (90 + Math.random()*80) + 'px';
+      s.style.top = (55 + Math.random()*40) + 'px';
+      wrap.appendChild(s);
+      setTimeout(()=>s.remove(), 1400);
+    }
+  } else if (ing.group === 'aromatics' && hasFat){
+    // small sizzle
+    for(let i=0;i<3;i++){
+      const s = document.createElement('div');
+      s.className = 'pan-steam';
+      s.style.left = (90 + Math.random()*80) + 'px';
       s.style.top = (55 + Math.random()*50) + 'px';
       wrap.appendChild(s);
-      setTimeout(()=>s.remove(), 1450);
+      setTimeout(()=>s.remove(), 1400);
     }
   }
-  const sizzle = ing.group === 'tempering' && pot.some(p=>p.group==='base');
+
+  const sizzle = ing.group === 'tempering' && hasFat;
+  const pour = ing.group === 'liquids';
+  const msg = sizzle ? ' — ' + T('sizzles') : pour ? ' — 💧' : '!';
   document.getElementById('panLog').innerHTML =
-    `${ing.emoji} <b>${L(ing.name)}</b> ${T('addedWord')}${sizzle ? ' — ' + T('sizzles') : '!'}`;
+    `${ing.emoji} <b>${L(ing.name)}</b> ${T('addedWord')}${msg}`;
   setTimeout(updateGravy, 350);
 }
 
@@ -1623,30 +1690,67 @@ function cookDish(){
     return;
   }
   const wrap = document.getElementById('panWrap');
-  wrap.classList.add('cooking');
-  // steam burst while cooking
   const gravy = document.getElementById('panGravy');
+  const btn = document.getElementById('cookBtn');
+  btn.disabled = true;
+  wrap.classList.add('cooking');
+
+  const phases = [
+    {msg: lang==='en' ? '🔥 Heating up...' : '🔥 आँच तेज़ हो रही है...', delay:0},
+    {msg: lang==='en' ? '🌀 Stirring the masala...' : '🌀 मसाला भुन रहा है...', delay:800},
+    {msg: lang==='en' ? '♨️ Simmering...' : '♨️ धीमी आँच पर पक रहा है...', delay:1700},
+    {msg: lang==='en' ? '✨ Finishing touches...' : '✨ आख़िरी छुअन...', delay:2700},
+  ];
+  phases.forEach(p => setTimeout(()=>{ document.getElementById('panLog').innerHTML = p.msg; }, p.delay));
+
+  // Darken gravy as it cooks
+  let cookStep = 0;
+  const gravyDarken = setInterval(()=>{
+    cookStep++;
+    gravy.style.filter = `brightness(${Math.max(0.65, 1 - cookStep*0.06)})`;
+  }, 300);
+
   const steamer = setInterval(() => {
-    const s = document.createElement('div');
-    s.className = 'pan-steam';
-    s.style.left = (75 + Math.random()*130) + 'px';
-    s.style.top = (45 + Math.random()*70) + 'px';
-    wrap.appendChild(s);
-    setTimeout(()=>s.remove(), 1450);
-    const b = document.createElement('div');
-    b.className = 'bubble';
-    const size = 7 + Math.random()*9;
-    b.style.width = b.style.height = size + 'px';
-    b.style.left = (18 + Math.random()*118) + 'px';
-    b.style.top = (18 + Math.random()*118) + 'px';
-    gravy.appendChild(b);
-    setTimeout(()=>b.remove(), 950);
-  }, 180);
+    // heavy steam
+    for(let i=0;i<2;i++){
+      const s = document.createElement('div');
+      s.className = 'pan-steam';
+      s.style.width = s.style.height = (14+Math.random()*10)+'px';
+      s.style.left = (65 + Math.random()*150) + 'px';
+      s.style.top = (38 + Math.random()*80) + 'px';
+      wrap.appendChild(s);
+      setTimeout(()=>s.remove(), 1500);
+    }
+    // bubbles
+    for(let i=0;i<3;i++){
+      const b = document.createElement('div');
+      b.className = 'bubble';
+      const size = 6 + Math.random()*12;
+      b.style.width = b.style.height = size + 'px';
+      b.style.left = (12 + Math.random()*130) + 'px';
+      b.style.top = (12 + Math.random()*130) + 'px';
+      gravy.appendChild(b);
+      setTimeout(()=>b.remove(), 800);
+    }
+    // occasional sizzle ring
+    if (Math.random() > 0.6){
+      const ring = document.createElement('div');
+      ring.className = 'sizzle-ring';
+      ring.style.left = (30+Math.random()*100)+'px';
+      ring.style.top = (30+Math.random()*100)+'px';
+      gravy.appendChild(ring);
+      setTimeout(()=>ring.remove(), 700);
+    }
+  }, 150);
+
   setTimeout(() => {
     clearInterval(steamer);
+    clearInterval(gravyDarken);
+    gravy.style.filter = '';
     wrap.classList.remove('cooking');
+    btn.disabled = false;
     showDishResult();
-  }, 2400);
+  }, 3500);
 }
 
 function showDishResult(){
