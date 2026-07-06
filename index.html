@@ -1453,32 +1453,66 @@ function renderProgress(){
 const CREATE_INGREDIENTS = [
   { id:'oil', emoji:'🛢️', group:'base', name:{en:'Oil',hi:'तेल'}, color:'#e8c26a' },
   { id:'ghee', emoji:'🧈', group:'base', name:{en:'Ghee',hi:'घी'}, color:'#f0cf7e' },
+  { id:'mustardoil', emoji:'🫗', group:'base', name:{en:'Mustard Oil',hi:'सरसों का तेल'}, color:'#d9a840' },
+  { id:'butter', emoji:'🧈', group:'base', name:{en:'Butter',hi:'मक्खन'}, color:'#f2d488' },
   { id:'cumin', emoji:'🌰', group:'tempering', name:{en:'Cumin Seeds',hi:'जीरा'}, color:'#d8b160' },
   { id:'mustard', emoji:'⚫', group:'tempering', name:{en:'Mustard Seeds',hi:'राई'}, color:'#c9a552' },
   { id:'curryleaves', emoji:'🍃', group:'tempering', name:{en:'Curry Leaves',hi:'कड़ी पत्ता'}, color:'#a8a055' },
   { id:'hing', emoji:'✨', group:'tempering', name:{en:'Hing',hi:'हींग'}, color:'#d8b160' },
+  { id:'driedredchili', emoji:'🌶️', group:'tempering', name:{en:'Dried Red Chili',hi:'सूखी लाल मिर्च'}, color:'#b5543a' },
+  { id:'bayleaf', emoji:'🍂', group:'tempering', name:{en:'Bay Leaf',hi:'तेज पत्ता'}, color:'#b09a5a' },
+  { id:'cinnamonstick', emoji:'🪵', group:'tempering', name:{en:'Cinnamon Stick',hi:'दालचीनी'}, color:'#a5763c' },
+  { id:'cloves', emoji:'🟫', group:'tempering', name:{en:'Cloves',hi:'लौंग'}, color:'#8a5a30' },
+  { id:'cardamompods', emoji:'💚', group:'tempering', name:{en:'Cardamom Pods',hi:'इलायची'}, color:'#b3a860' },
+  { id:'methiseeds', emoji:'🌱', group:'tempering', name:{en:'Fenugreek Seeds',hi:'मेथी दाना'}, color:'#b09a4e' },
+  { id:'ajwain', emoji:'🌼', group:'tempering', name:{en:'Ajwain',hi:'अजवाइन'}, color:'#c2a858' },
   { id:'onion', emoji:'🧅', group:'aromatics', name:{en:'Onion',hi:'प्याज़'}, color:'#cf9c55' },
   { id:'gingergarlic', emoji:'🧄', group:'aromatics', name:{en:'Ginger-Garlic',hi:'अदरक-लहसुन'}, color:'#c99a50' },
+  { id:'ginger', emoji:'🫚', group:'aromatics', name:{en:'Fresh Ginger',hi:'ताज़ा अदरक'}, color:'#c9a050' },
   { id:'greenchili', emoji:'🌶️', group:'aromatics', name:{en:'Green Chili',hi:'हरी मिर्च'}, color:'#b3984e' },
   { id:'tomato', emoji:'🍅', group:'mains', name:{en:'Tomato',hi:'टमाटर'}, color:'#c9542b' },
   { id:'potato', emoji:'🥔', group:'mains', name:{en:'Potato',hi:'आलू'}, color:'#cf9440' },
+  { id:'cauliflower', emoji:'🥦', group:'mains', name:{en:'Cauliflower',hi:'गोभी'}, color:'#c2a870' },
+  { id:'eggplant', emoji:'🍆', group:'mains', name:{en:'Eggplant',hi:'बैंगन'}, color:'#8a5a70' },
+  { id:'bhindi', emoji:'🥒', group:'mains', name:{en:'Okra (Bhindi)',hi:'भिंडी'}, color:'#8a9a4e' },
   { id:'paneer', emoji:'🧀', group:'mains', name:{en:'Paneer',hi:'पनीर'}, color:'#d9954f' },
   { id:'chicken', emoji:'🍗', group:'mains', name:{en:'Chicken',hi:'चिकन'}, color:'#b56b35' },
+  { id:'mutton', emoji:'🥩', group:'mains', name:{en:'Mutton',hi:'मटन'}, color:'#96522e' },
+  { id:'fish', emoji:'🐟', group:'mains', name:{en:'Fish',hi:'मछली'}, color:'#b98a4e' },
+  { id:'prawns', emoji:'🦐', group:'mains', name:{en:'Prawns',hi:'झींगे'}, color:'#cc7a48' },
+  { id:'egg', emoji:'🥚', group:'mains', name:{en:'Eggs',hi:'अंडे'}, color:'#d9b060' },
+  { id:'chickpeas', emoji:'🫘', group:'mains', name:{en:'Chickpeas (Chana)',hi:'काबुली चने'}, color:'#c29450' },
+  { id:'rajmabeans', emoji:'🥜', group:'mains', name:{en:'Kidney Beans (Rajma)',hi:'राजमा'}, color:'#9a4a35' },
+  { id:'daltoor', emoji:'🥘', group:'mains', name:{en:'Toor Dal',hi:'अरहर दाल'}, color:'#d9a83a' },
   { id:'peas', emoji:'🫛', group:'mains', name:{en:'Green Peas',hi:'हरी मटर'}, color:'#a68f45' },
   { id:'mushroom', emoji:'🍄', group:'mains', name:{en:'Mushroom',hi:'मशरूम'}, color:'#a87f4d' },
   { id:'spinach', emoji:'🥬', group:'mains', name:{en:'Spinach',hi:'पालक'}, color:'#5b7b3a' },
+  { id:'bellpepper', emoji:'🫑', group:'mains', name:{en:'Bell Pepper',hi:'शिमला मिर्च'}, color:'#8a9a48' },
+  { id:'carrot', emoji:'🥕', group:'mains', name:{en:'Carrot',hi:'गाजर'}, color:'#cc7a3a' },
+  { id:'corn', emoji:'🌽', group:'mains', name:{en:'Corn',hi:'मकई'}, color:'#d9b850' },
   { id:'turmeric', emoji:'🟡', group:'powders', name:{en:'Turmeric',hi:'हल्दी'}, color:'#dfa832' },
   { id:'chilipowder', emoji:'🔴', group:'powders', name:{en:'Red Chili Powder',hi:'लाल मिर्च'}, color:'#b5442a' },
+  { id:'kashmirichili', emoji:'🌹', group:'powders', name:{en:'Kashmiri Chili',hi:'कश्मीरी मिर्च'}, color:'#c04832' },
   { id:'corianderpow', emoji:'🌿', group:'powders', name:{en:'Coriander Powder',hi:'धनिया पाउडर'}, color:'#b08b3e' },
+  { id:'cuminpowder', emoji:'🟤', group:'powders', name:{en:'Cumin Powder',hi:'जीरा पाउडर'}, color:'#a5824a' },
   { id:'garammasala', emoji:'🟤', group:'powders', name:{en:'Garam Masala',hi:'गरम मसाला'}, color:'#8f5a2e' },
+  { id:'blackpepperpow', emoji:'⚪', group:'powders', name:{en:'Black Pepper',hi:'काली मिर्च'}, color:'#7a6a4e' },
+  { id:'amchur', emoji:'🥭', group:'powders', name:{en:'Amchur (Dry Mango)',hi:'अमचूर'}, color:'#c9a848' },
   { id:'salt', emoji:'🧂', group:'powders', name:{en:'Salt',hi:'नमक'}, color:null },
   { id:'water', emoji:'💧', group:'liquids', name:{en:'Water',hi:'पानी'}, color:'#c08a4e' },
   { id:'cream', emoji:'🥛', group:'liquids', name:{en:'Cream',hi:'क्रीम'}, color:'#e2926b' },
   { id:'coconutmilk', emoji:'🥥', group:'liquids', name:{en:'Coconut Milk',hi:'नारियल दूध'}, color:'#e0b284' },
   { id:'yogurt', emoji:'🥣', group:'liquids', name:{en:'Yogurt',hi:'दही'}, color:'#ddb277' },
+  { id:'milk', emoji:'🍼', group:'liquids', name:{en:'Milk',hi:'दूध'}, color:'#e5c290' },
+  { id:'tamarind', emoji:'🟫', group:'liquids', name:{en:'Tamarind Water',hi:'इमली का पानी'}, color:'#7a4a26' },
+  { id:'cashewpaste', emoji:'🌰', group:'liquids', name:{en:'Cashew Paste',hi:'काजू पेस्ट'}, color:'#dcb582' },
   { id:'kasurimethi', emoji:'🌾', group:'finish', name:{en:'Kasuri Methi',hi:'कसूरी मेथी'}, color:null },
   { id:'corianderleaves', emoji:'☘️', group:'finish', name:{en:'Coriander Leaves',hi:'हरा धनिया'}, color:null },
+  { id:'mintleaves', emoji:'🌿', group:'finish', name:{en:'Mint Leaves',hi:'पुदीना'}, color:null },
   { id:'lemon', emoji:'🍋', group:'finish', name:{en:'Lemon',hi:'नींबू'}, color:null },
+  { id:'birista', emoji:'🧅', group:'finish', name:{en:'Fried Onions (Birista)',hi:'बिरिस्ता (तले प्याज़)'}, color:'#b5813a' },
+  { id:'coconutgrated', emoji:'🥥', group:'finish', name:{en:'Grated Coconut',hi:'कसा नारियल'}, color:null },
+  { id:'jaggery', emoji:'🍯', group:'finish', name:{en:'Jaggery',hi:'गुड़'}, color:'#b57a30' },
 ];
 
 let pot = [];
@@ -1643,24 +1677,46 @@ function showDishResult(){
 
   // name the dish
   let main = '';
-  if (has('chicken')) main = en ? 'Chicken' : 'चिकन';
+  if (has('chicken') && has('yogurt')) main = en ? 'Chicken Korma' : 'चिकन कोरमा';
+  else if (has('chicken') && has('cream') && has('tomato')) main = en ? 'Butter Chicken' : 'बटर चिकन';
+  else if (has('chicken') && has('coconutmilk')) main = en ? 'Chicken Coconut Curry' : 'चिकन नारियल करी';
+  else if (has('chicken')) main = en ? 'Chicken Masala' : 'चिकन मसाला';
+  else if (has('mutton') && has('yogurt')) main = en ? 'Mutton Korma' : 'मटन कोरमा';
+  else if (has('mutton')) main = en ? 'Mutton Curry' : 'मटन करी';
+  else if (has('prawns') && has('coconutmilk')) main = en ? 'Prawn Coconut Curry' : 'झींगा नारियल करी';
+  else if (has('prawns')) main = en ? 'Prawn Masala' : 'झींगा मसाला';
+  else if (has('fish') && has('tamarind')) main = en ? 'Fish Tamarind Curry' : 'मछली इमली करी';
+  else if (has('fish') && has('coconutmilk')) main = en ? 'Fish Coconut Curry' : 'मछली नारियल करी';
+  else if (has('fish')) main = en ? 'Fish Fry Masala' : 'मछली मसाला';
+  else if (has('egg') && has('tomato')) main = en ? 'Egg Curry' : 'अंडा करी';
+  else if (has('egg')) main = en ? 'Egg Bhurji' : 'अंडा भुर्जी';
   else if (has('paneer') && has('peas')) main = en ? 'Matar Paneer' : 'मटर पनीर';
   else if (has('paneer') && has('spinach')) main = en ? 'Palak Paneer' : 'पालक पनीर';
-  else if (has('paneer')) main = en ? 'Paneer' : 'पनीर';
-  else if (has('mushroom')) main = en ? 'Mushroom' : 'मशरूम';
-  else if (has('potato')) main = en ? 'Aloo' : 'आलू';
-  else if (has('spinach')) main = en ? 'Palak' : 'पालक';
-  else if (has('peas')) main = en ? 'Matar' : 'मटर';
-  else if (has('tomato')) main = en ? 'Tamatar' : 'टमाटर';
+  else if (has('paneer') && has('cream') && has('tomato')) main = en ? 'Paneer Butter Masala' : 'पनीर बटर मसाला';
+  else if (has('paneer') && has('bellpepper')) main = en ? 'Kadai Paneer' : 'कड़ाही पनीर';
+  else if (has('paneer')) main = en ? 'Paneer Masala' : 'पनीर मसाला';
+  else if (has('mushroom') && has('cream')) main = en ? 'Cream of Mushroom' : 'मलाई मशरूम';
+  else if (has('mushroom')) main = en ? 'Mushroom Masala' : 'मशरूम मसाला';
+  else if (has('chickpeas')) main = en ? 'Chana Masala' : 'छोले मसाला';
+  else if (has('rajmabeans')) main = en ? 'Rajma' : 'राजमा';
+  else if (has('daltoor') && has('tamarind')) main = en ? 'Dal Rasam' : 'रसम';
+  else if (has('daltoor')) main = en ? 'Dal Tadka' : 'दाल तड़का';
+  else if (has('potato') && has('cauliflower')) main = en ? 'Aloo Gobi' : 'आलू गोभी';
+  else if (has('potato') && has('peas')) main = en ? 'Aloo Matar' : 'आलू मटर';
+  else if (has('potato')) main = en ? 'Aloo Masala' : 'आलू मसाला';
+  else if (has('eggplant')) main = en ? 'Baingan Masala' : 'बैंगन मसाला';
+  else if (has('bhindi')) main = en ? 'Bhindi Masala' : 'भिंडी मसाला';
+  else if (has('spinach') && has('coconutmilk')) main = en ? 'Saag Coconut' : 'साग नारियल';
+  else if (has('spinach')) main = en ? 'Palak Masala' : 'पालक मसाला';
+  else if (has('peas') && has('tomato')) main = en ? 'Matar Tamatar' : 'मटर टमाटर';
+  else if (has('corn')) main = en ? 'Corn Masala' : 'मकई मसाला';
+  else if (has('carrot')) main = en ? 'Gajar Masala' : 'गाजर मसाला';
+  else if (has('tomato') && has('cashewpaste')) main = en ? 'Makhani Gravy' : 'मखनी ग्रेवी';
+  else if (has('tomato')) main = en ? 'Tamatar Shorba' : 'टमाटर शोरबा';
 
-  let style = '';
-  if (has('cream') && has('tomato')) style = en ? 'Makhani' : 'मखनी';
-  else if (has('coconutmilk')) style = en ? 'Coconut Curry' : 'नारियल करी';
-  else if (has('yogurt')) style = en ? 'Korma' : 'कोरमा';
-  else if (main) style = en ? 'Masala' : 'मसाला';
-
-  let dishName = (main && style && main !== style) ? `${main} ${style}` : (main || (en ? 'Mystery Tadka' : 'रहस्यमयी तड़का'));
-  if (main.includes(en?'Matar Paneer':'मटर पनीर') || main.includes(en?'Palak Paneer':'पालक पनीर')) dishName = main;
+  let dishName = main || (en ? 'Mystery Tadka' : 'रहस्यमयी तड़का');
+  if (!main && pot.some(p => p.group === 'tempering') && !pot.some(p => p.group === 'mains'))
+    dishName = en ? 'Aromatic Tadka Oil' : 'ख़ुशबूदार तड़के का तेल';
 
   const stars = Math.max(1, Math.min(5, Math.round(score / 10 * 5)));
   const starStr = '⭐'.repeat(stars) + '☆'.repeat(5 - stars);
