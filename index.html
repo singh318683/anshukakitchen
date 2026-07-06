@@ -218,6 +218,7 @@
   .diet-vegan{ color: var(--leaf-dark); border-left-color: var(--leaf) !important; }
   .diet-veg{ color: var(--leaf-dark); border-left-color: var(--turmeric) !important; }
   .diet-nonveg{ color: var(--maroon); border-left-color: var(--chili) !important; }
+  .diet-keto{ color: #2d6a4f; border-left-color: #52b788 !important; }
   .diet-group-body{
     max-height:0; overflow:hidden; transition: max-height 0.35s ease;
     padding: 0 0.2rem;
@@ -817,6 +818,7 @@ const UI = {
   dietVegan:{en:'🌱 Vegan',hi:'🌱 वीगन'},
   dietVeg:{en:'🥬 Vegetarian',hi:'🥬 शाकाहारी'},
   dietNonveg:{en:'🍗 Non-Vegetarian',hi:'🍗 मांसाहारी'},
+  dietKeto:{en:'🥑 Keto',hi:'🥑 कीटो'},
   howToDo:{en:'How to do it:',hi:'कैसे करें:'},
   usedIn:{en:'Used in:',hi:'किन व्यंजनों में:'},
   regionNote:{en:'Regional note:',hi:'क्षेत्रीय जानकारी:'},
@@ -1273,6 +1275,57 @@ const RECIPES = [
       hi:['500 ग्राम चिकन','2 प्याज़, कटे','2 टमाटर, कटे','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','चेट्टिनाड मसाला: 2 बड़े चम्मच धनिया बीज, 1 छोटा चम्मच सौंफ, 1 छोटा चम्मच काली मिर्च, 4 सूखी लाल मिर्च, 1 छोटा चम्मच जीरा, 2 बड़े चम्मच कसा नारियल — सूखा भूनकर पिसा','10 कड़ी पत्ते','4 बड़े चम्मच तेल, नमक']},
     steps:{en:['Dry roast all Chettinad masala ingredients until fragrant and grind to a powder.','Fry curry leaves and onions in oil until golden; add ginger-garlic paste.','Add tomatoes and cook soft, then add the ground Chettinad masala.','Add chicken and sear, coating it in the dark, peppery masala.','Add a cup of water, cover, and simmer 25-30 minutes; the gravy should be thick and clinging.'],
       hi:['चेट्टिनाड मसाले की सारी सामग्री खुशबू आने तक सूखा भूनें और पीसकर पाउडर बनाएँ।','तेल में कड़ी पत्ता और प्याज़ सुनहरा भूनें; अदरक-लहसुन पेस्ट डालें।','टमाटर डालकर नरम पकाएँ, फिर पिसा चेट्टिनाड मसाला डालें।','चिकन डालकर भूनें, गहरे काली-मिर्च वाले मसाले में लपेटें।','एक कप पानी डालें, ढककर 25-30 मिनट पकाएँ; ग्रेवी गाढ़ी और लिपटने वाली होनी चाहिए।']} },
+  /* ---------- KETO ---------- */
+  { id:'ketobutterchicken', emoji:'🧈', diet:'keto', wiki:'Butter_chicken', name:{en:'Keto Butter Chicken',hi:'कीटो बटर चिकन'}, category:{en:'Curry',hi:'करी'}, time:45,
+    ingredients:{en:['500g boneless chicken','1 cup heavy cream','4 tomatoes, pureed','3 tbsp butter','1 tbsp ginger-garlic paste','1 tsp garam masala','1 tsp kasuri methi','1 tsp red chili powder','Salt (no sugar, no flour)'],
+      hi:['500 ग्राम बिना हड्डी चिकन','1 कप भारी क्रीम','4 टमाटर की प्यूरी','3 बड़े चम्मच मक्खन','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','1 छोटा चम्मच गरम मसाला','1 छोटा चम्मच कसूरी मेथी','1 छोटा चम्मच लाल मिर्च पाउडर','नमक (चीनी और मैदा नहीं)']},
+    steps:{en:['Marinate chicken in ginger-garlic paste, chili powder, and salt for 1 hour.','Pan-sear the chicken in butter until charred at edges; set aside.','Cook tomato puree in butter until oil separates; blend smooth.','Add heavy cream, garam masala, and salt; simmer gently — skip sugar entirely.','Add chicken and kasuri methi; simmer 8 minutes on low.'],
+      hi:['चिकन को अदरक-लहसुन पेस्ट, मिर्च पाउडर और नमक में 1 घंटा मैरिनेट करें।','मक्खन में चिकन किनारे झुलसने तक भूनें; अलग रखें।','टमाटर प्यूरी को मक्खन में तेल अलग होने तक पकाएँ; बारीक पीसें।','भारी क्रीम, गरम मसाला और नमक डालें; धीमी आँच पर पकाएँ — चीनी बिल्कुल नहीं।','चिकन और कसूरी मेथी डालें; 8 मिनट धीमी आँच पर पकाएँ।']} },
+  { id:'ketosaagchicken', emoji:'🥬', diet:'keto', wiki:'Saag', name:{en:'Keto Saag Chicken',hi:'कीटो साग चिकन'}, category:{en:'Curry',hi:'करी'}, time:45,
+    ingredients:{en:['500g chicken, bone-in pieces','400g spinach, blanched and pureed','2 onions, chopped','1 tbsp ginger-garlic paste','2 tbsp ghee','1 tsp cumin seeds','1 tsp garam masala','2 tbsp heavy cream','Salt, red chili powder'],
+      hi:['500 ग्राम चिकन, हड्डी सहित','400 ग्राम पालक, उबालकर पीसा','2 प्याज़, कटे','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','2 बड़े चम्मच घी','1 छोटा चम्मच जीरा','1 छोटा चम्मच गरम मसाला','2 बड़े चम्मच भारी क्रीम','नमक, लाल मिर्च पाउडर']},
+    steps:{en:['Heat ghee, sizzle cumin, fry onions golden; add ginger-garlic paste.','Add chicken pieces and sear on high 5 minutes.','Add chili powder, salt, and spinach puree; stir well.','Cover and simmer 20-25 minutes until chicken is cooked through.','Finish with cream and garam masala; do not add flour or cornstarch.'],
+      hi:['घी गरम करें, जीरा चटकाएँ, प्याज़ सुनहरा भूनें; अदरक-लहसुन पेस्ट डालें।','चिकन डालकर तेज़ आँच पर 5 मिनट भूनें।','मिर्च पाउडर, नमक और पालक प्यूरी डालें; अच्छी तरह मिलाएँ।','ढककर 20-25 मिनट पकाएँ जब तक चिकन पूरी तरह न पक जाए।','क्रीम और गरम मसाला से पूरा करें; मैदा या कॉर्नस्टार्च बिल्कुल नहीं।']} },
+  { id:'ketopaneermasala', emoji:'🧀', diet:'keto', wiki:'Paneer_butter_masala', name:{en:'Keto Paneer Masala',hi:'कीटो पनीर मसाला'}, category:{en:'Curry',hi:'करी'}, time:30,
+    ingredients:{en:['300g paneer, cubed','3 tomatoes, pureed','2 tbsp butter','1 tbsp ginger-garlic paste','1/2 cup heavy cream','1 tsp garam masala','1 tsp kashmiri chili powder','1 tsp kasuri methi','Salt'],
+      hi:['300 ग्राम पनीर, कटा','3 टमाटर की प्यूरी','2 बड़े चम्मच मक्खन','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','1/2 कप भारी क्रीम','1 छोटा चम्मच गरम मसाला','1 छोटा चम्मच कश्मीरी मिर्च','1 छोटा चम्मच कसूरी मेथी','नमक']},
+    steps:{en:['Pan-fry paneer cubes in butter until golden on all sides; set aside.','Cook tomato puree in butter with ginger-garlic paste until oil separates.','Blend gravy smooth, return to pan, add cream and Kashmiri chili.','Simmer gently, add paneer and crushed kasuri methi.','No sugar, no flour — rich fat content makes this naturally keto.'],
+      hi:['पनीर को मक्खन में चारों ओर सुनहरा होने तक तलें; अलग रखें।','मक्खन में अदरक-लहसुन पेस्ट के साथ टमाटर प्यूरी तेल अलग होने तक पकाएँ।','ग्रेवी पीसें, वापस डालें, क्रीम और कश्मीरी मिर्च मिलाएँ।','धीमी आँच पर पकाएँ, पनीर और मसली कसूरी मेथी डालें।','चीनी नहीं, मैदा नहीं — उच्च वसा सामग्री इसे स्वाभाविक रूप से कीटो बनाती है।']} },
+  { id:'ketoeggsalad', emoji:'🥗', diet:'keto', wiki:'Egg_salad', name:{en:'Masala Egg Salad',hi:'मसाला अंडा सलाद'}, category:{en:'Salad',hi:'सलाद'}, time:15,
+    ingredients:{en:['6 hard boiled eggs, halved','2 tbsp mayonnaise','1 tsp mustard','1/4 red onion, finely diced','1 green chili, minced','1/2 tsp chaat masala','1/2 tsp cumin powder','Coriander leaves, salt, lemon'],
+      hi:['6 उबले अंडे, आधे कटे','2 बड़े चम्मच मेयोनेज़','1 छोटा चम्मच सरसों','1/4 लाल प्याज़, बारीक कटा','1 हरी मिर्च, कटी','1/2 छोटा चम्मच चाट मसाला','1/2 छोटा चम्मच जीरा पाउडर','हरा धनिया, नमक, नींबू']},
+    steps:{en:['Halve the boiled eggs and scoop yolks into a bowl.','Mix yolks with mayo, mustard, chaat masala, cumin, salt, and lemon.','Fold in red onion and green chili.','Spoon the mixture back into the egg white halves.','Top with coriander leaves and a pinch of Kashmiri chili; serve chilled.'],
+      hi:['उबले अंडे आधे काटें और ज़र्दी कटोरे में निकालें।','ज़र्दी को मेयोनेज़, सरसों, चाट मसाला, जीरा, नमक और नींबू से मिलाएँ।','लाल प्याज़ और हरी मिर्च मिलाएँ।','मिश्रण वापस अंडे की सफ़ेदी में भरें।','हरे धनिये और चुटकी कश्मीरी मिर्च से सजाएँ; ठंडा परोसें।']} },
+  { id:'ketochicken65', emoji:'🌶️', diet:'keto', wiki:'Chicken_65', name:{en:'Keto Chicken 65',hi:'कीटो चिकन 65'}, category:{en:'Starter',hi:'स्टार्टर'}, time:35,
+    ingredients:{en:['500g boneless chicken, cubed','1/2 cup yogurt (full fat)','1 tbsp ginger-garlic paste','2 tsp red chili powder','1 egg','2 tbsp almond flour (not cornflour)','10 curry leaves','2 green chilies','Oil for shallow frying, salt'],
+      hi:['500 ग्राम बिना हड्डी चिकन, टुकड़े','1/2 कप पूर्ण वसा दही','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','2 छोटे चम्मच लाल मिर्च पाउडर','1 अंडा','2 बड़े चम्मच बादाम का आटा (कॉर्नफ्लोर नहीं)','10 कड़ी पत्ते','2 हरी मिर्च','उथले तलने के लिए तेल, नमक']},
+    steps:{en:['Marinate chicken in yogurt, ginger-garlic, chili powder, egg, almond flour, and salt for 30 min.','Shallow fry in oil on medium-high until deep red and cooked through.','In 1 tbsp oil crackle curry leaves and green chilies.','Add 2 tbsp full-fat yogurt with a pinch of chili; sizzle 30 seconds.','Toss fried chicken in this tempering and serve immediately.'],
+      hi:['चिकन को दही, अदरक-लहसुन, मिर्च पाउडर, अंडा, बादाम आटा और नमक में 30 मिनट मैरिनेट करें।','मध्यम-तेज़ आँच पर तेल में उथला तलें जब तक गहरा लाल और पका न हो।','1 बड़े चम्मच तेल में कड़ी पत्ता और हरी मिर्च चटकाएँ।','चुटकी मिर्च के साथ 2 बड़े चम्मच पूर्ण वसा दही डालें; 30 सेकंड भूनें।','तला चिकन इस तड़के में लपेटकर तुरंत परोसें।']} },
+  { id:'ketoeggcurry', emoji:'🥚', diet:'keto', wiki:'Egg_curry', name:{en:'Keto Egg Curry',hi:'कीटो अंडा करी'}, category:{en:'Curry',hi:'करी'}, time:25,
+    ingredients:{en:['6 eggs, hard boiled','2 onions, finely chopped','3 tomatoes, pureed','1 tbsp ginger-garlic paste','2 tbsp ghee','1 tsp cumin seeds','1 tsp garam masala','1/2 cup coconut cream','Salt, coriander leaves'],
+      hi:['6 अंडे, उबले','2 प्याज़, बारीक कटे','3 टमाटर की प्यूरी','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','2 बड़े चम्मच घी','1 छोटा चम्मच जीरा','1 छोटा चम्मच गरम मसाला','1/2 कप नारियल क्रीम','नमक, हरा धनिया']},
+    steps:{en:['Shallow fry boiled eggs in ghee until lightly golden; set aside.','Sizzle cumin in ghee, fry onions golden, add ginger-garlic paste.','Add tomato puree and spices; bhuna until oil separates.','Add coconut cream and a little water; simmer into a rich gravy.','Add eggs, simmer 5 minutes; garnish with coriander — no thickeners needed.'],
+      hi:['घी में उबले अंडों को हल्का सुनहरा होने तक भूनें; अलग रखें।','घी में जीरा चटकाएँ, प्याज़ सुनहरा भूनें, अदरक-लहसुन पेस्ट डालें।','टमाटर प्यूरी और मसाले डालें; तेल अलग होने तक भूनें।','नारियल क्रीम और थोड़ा पानी डालें; गाढ़ी ग्रेवी बनने तक पकाएँ।','अंडे डालें, 5 मिनट पकाएँ; हरे धनिये से सजाएँ — कोई गाढ़ा करने वाला नहीं।']} },
+  { id:'ketomuttoncurry', emoji:'🥩', diet:'keto', wiki:'Mutton_curry', name:{en:'Keto Mutton Curry',hi:'कीटो मटन करी'}, category:{en:'Curry',hi:'करी'}, time:70,
+    ingredients:{en:['750g mutton, bone-in','3 onions, sliced','2 tomatoes, pureed','2 tbsp ginger-garlic paste','1/2 cup full-fat yogurt','3 tbsp ghee','1 tsp turmeric','2 tsp coriander powder','1 tsp garam masala','Whole spices, salt'],
+      hi:['750 ग्राम मटन, हड्डी सहित','3 प्याज़, कटे','2 टमाटर की प्यूरी','2 बड़े चम्मच अदरक-लहसुन पेस्ट','1/2 कप पूर्ण वसा दही','3 बड़े चम्मच घी','1 छोटा चम्मच हल्दी','2 छोटे चम्मच धनिया पाउडर','1 छोटा चम्मच गरम मसाला','साबुत मसाले, नमक']},
+    steps:{en:['Marinate mutton in yogurt, turmeric, and salt for 1 hour.','Fry whole spices and onions in ghee until deep golden brown.','Add ginger-garlic paste, tomato puree, and spices; bhuna until oil separates.','Add mutton and sear 10 minutes; add 1 cup hot water.','Pressure cook 40-50 minutes until tender — naturally keto, high fat, zero carbs.'],
+      hi:['मटन को दही, हल्दी और नमक में 1 घंटा मैरिनेट करें।','घी में साबुत मसाले और प्याज़ गहरा भूरा होने तक भूनें।','अदरक-लहसुन पेस्ट, टमाटर प्यूरी और मसाले डालें; तेल अलग होने तक भूनें।','मटन डालकर 10 मिनट भूनें; 1 कप गरम पानी डालें।','40-50 मिनट प्रेशर कुक करें — स्वाभाविक रूप से कीटो, उच्च वसा, शून्य कार्ब।']} },
+  { id:'ketoprawncurry', emoji:'🦐', diet:'keto', wiki:'Prawn_curry', name:{en:'Keto Prawn Coconut Curry',hi:'कीटो झींगा नारियल करी'}, category:{en:'Curry',hi:'करी'}, time:25,
+    ingredients:{en:['400g prawns, cleaned','1 cup coconut cream','2 onions, chopped','2 tomatoes, chopped','1 tbsp ginger-garlic paste','1 tsp mustard seeds','10 curry leaves','1 tsp turmeric','1 tsp red chili powder','2 tbsp coconut oil','Salt'],
+      hi:['400 ग्राम झींगे, साफ़','1 कप नारियल क्रीम','2 प्याज़, कटे','2 टमाटर, कटे','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','1 छोटा चम्मच राई','10 कड़ी पत्ते','1 छोटा चम्मच हल्दी','1 छोटा चम्मच लाल मिर्च पाउडर','2 बड़े चम्मच नारियल का तेल','नमक']},
+    steps:{en:['Pop mustard seeds and curry leaves in coconut oil; fry onions golden.','Add ginger-garlic paste, tomatoes, turmeric, and chili; cook until soft.','Pour in coconut cream and bring to a gentle simmer.','Add prawns and cook just 4-5 minutes until they curl pink.','High fat, zero carbs — serve over cauliflower rice for full keto.'],
+      hi:['नारियल के तेल में राई और कड़ी पत्ता चटकाएँ; प्याज़ सुनहरा भूनें।','अदरक-लहसुन पेस्ट, टमाटर, हल्दी और मिर्च डालें; नरम होने तक पकाएँ।','नारियल क्रीम डालें और हल्का उबाल आने दें।','झींगे डालें और बस 4-5 मिनट पकाएँ जब तक गुलाबी न हो जाएँ।','उच्च वसा, शून्य कार्ब — पूर्ण कीटो के लिए फूलगोभी चावल के साथ परोसें।']} },
+  { id:'ketocauliflowerrice', emoji:'🥦', diet:'keto', wiki:'Cauliflower', name:{en:'Masala Cauliflower Rice',hi:'मसाला फूलगोभी चावल'}, category:{en:'Rice Alt',hi:'चावल का विकल्प'}, time:20,
+    ingredients:{en:['1 large cauliflower, grated or pulsed','1 onion, finely chopped','1 tsp cumin seeds','1/2 tsp turmeric','1 tsp coriander powder','2 tbsp ghee','Salt, coriander leaves'],
+      hi:['1 बड़ी गोभी, कद्दूकस या पल्स की हुई','1 प्याज़, बारीक कटा','1 छोटा चम्मच जीरा','1/2 छोटा चम्मच हल्दी','1 छोटा चम्मच धनिया पाउडर','2 बड़े चम्मच घी','नमक, हरा धनिया']},
+    steps:{en:['Pulse cauliflower in a food processor to rice-sized granules — do not over-process.','Heat ghee, sizzle cumin, fry onion until translucent.','Add turmeric and coriander powder; stir 30 seconds.','Add cauliflower "rice" and toss on high heat for 3-4 minutes.','Season with salt, garnish with coriander — use as a rice substitute under any keto curry.'],
+      hi:['गोभी को फूड प्रोसेसर में चावल के आकार के दानों तक पल्स करें — ज़्यादा न करें।','घी गरम करें, जीरा चटकाएँ, प्याज़ पारदर्शी होने तक भूनें।','हल्दी और धनिया पाउडर डालें; 30 सेकंड चलाएँ।','गोभी "चावल" डालें और तेज़ आँच पर 3-4 मिनट चलाएँ।','नमक डालें, हरे धनिये से सजाएँ — किसी भी कीटो करी के नीचे चावल की जगह उपयोग करें।']} },
+  { id:'ketopaneergrilled', emoji:'🔥', diet:'keto', wiki:'Paneer_tikka', name:{en:'Grilled Keto Paneer Tikka',hi:'ग्रिल्ड कीटो पनीर टिक्का'}, category:{en:'Starter',hi:'स्टार्टर'}, time:35,
+    ingredients:{en:['300g paneer, thick cubes','1 cup full-fat yogurt','1 tbsp ginger-garlic paste','1 tsp kashmiri chili powder','1 tsp garam masala','1 tbsp mustard oil','1 bell pepper + 1 onion, cubed','Salt, lemon'],
+      hi:['300 ग्राम पनीर, मोटे टुकड़े','1 कप पूर्ण वसा दही','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','1 छोटा चम्मच कश्मीरी मिर्च','1 छोटा चम्मच गरम मसाला','1 बड़ा चम्मच सरसों का तेल','1 शिमला मिर्च + 1 प्याज़, कटे','नमक, नींबू']},
+    steps:{en:['Whisk yogurt with ginger-garlic paste, kashmiri chili, garam masala, mustard oil, and salt.','Marinate paneer, pepper, and onion cubes for 1+ hour.','Thread onto skewers and grill or air-fry at high heat until charred.','Squeeze lemon, serve with mint-yogurt dip.','Full fat, zero carbs — ideal keto starter.'],
+      hi:['दही को अदरक-लहसुन पेस्ट, कश्मीरी मिर्च, गरम मसाला, सरसों के तेल और नमक से फेंटें।','पनीर, शिमला मिर्च और प्याज़ को 1+ घंटा मैरिनेट करें।','सीखों पर लगाकर तेज़ आँच पर ग्रिल या एयर-फ्राई करें जब तक झुलसे।','नींबू निचोड़ें, पुदीना-दही डिप के साथ परोसें।','पूर्ण वसा, शून्य कार्ब — आदर्श कीटो स्टार्टर।']} },
 ];
 
 const QUIZ_POOL = [
@@ -1483,7 +1536,7 @@ const RECIPE_DIFFICULTY = {
   'tandoorichicken':'hard','chickenkorma':'hard','kadaichicken':'medium','chicken65':'medium',
   'chillichicken':'medium','roganjosh':'hard','muttoncurry':'hard','keemamatar':'medium',
   'seekhkebab':'medium','fishcurry':'easy','fishfry':'easy','prawnmasala':'easy',
-  'eggcurry':'easy','chickenchettinad':'hard',
+  'eggcurry':'easy','chickenchettinad':'hard','ketobutterchicken':'medium','ketosaagchicken':'medium','ketopaneermasala':'easy','ketoeggsalad':'easy','ketochicken65':'medium','ketoeggcurry':'easy','ketomuttoncurry':'hard','ketoprawncurry':'easy','ketocauliflowerrice':'easy','ketopaneergrilled':'medium',
 };
 const DIFF_LABEL = {easy:{en:'Easy',hi:'आसान'},medium:{en:'Medium',hi:'मध्यम'},hard:{en:'Hard',hi:'कठिन'}};
 const DIFF_COLOR = {easy:'var(--leaf)',medium:'var(--turmeric)',hard:'var(--chili)'};
@@ -1520,6 +1573,7 @@ function renderRecipes(){
     { diet:'vegan', label:T('dietVegan') },
     { diet:'veg', label:T('dietVeg') },
     { diet:'nonveg', label:T('dietNonveg') },
+    { diet:'keto', label:T('dietKeto') },
   ];
   list.innerHTML = groups.map(g => {
     const items = RECIPES.filter(r => r.diet === g.diet);
@@ -1556,7 +1610,7 @@ function renderRecipes(){
   loadThumbs(list);
 }
 
-const openDietGroups = new Set(['vegan']);
+const openDietGroups = new Set(['vegan','keto']);
 function toggleDietGroup(diet){
   if (openDietGroups.has(diet)) openDietGroups.delete(diet);
   else openDietGroups.add(diet);
