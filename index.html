@@ -254,7 +254,7 @@
     <!-- LEARN TAB -->
     <section id="tab-learn" class="tab-panel active">
       <h2 class="section-title">Essential Spices</h2>
-      <p class="section-sub">Tap each one to learn it — the first 3 are free.</p>
+      <p class="section-sub">Tap each one to learn it.</p>
       <div class="card-grid" id="spiceGrid"></div>
 
       <h2 class="section-title">Core Techniques</h2>
@@ -341,13 +341,13 @@ const RECIPES = [
   { id:'daltadka', emoji:'🥘', name:'Dal Tadka', category:'Curry', time:'35 min',
     ingredients:['1 cup yellow lentils (toor dal)','1 tomato, chopped','1/2 tsp turmeric','2 tbsp ghee','1 tsp cumin seeds','2 dried red chilies','3 cloves garlic, sliced','Pinch of asafoetida','Salt to taste'],
     steps:['Pressure cook dal with turmeric, tomato, salt, and water until soft.','Mash the cooked dal to a smooth consistency.','In a separate pan, heat ghee and add cumin seeds until they pop.','Add garlic, dried chilies, and asafoetida, frying until fragrant.','Pour this tadka over the dal and simmer for 5 minutes.'] },
-  { id:'aloogobi', emoji:'🥔', name:'Aloo Gobi', category:'Curry', time:'30 min', locked:true,
+  { id:'aloogobi', emoji:'🥔', name:'Aloo Gobi', category:'Curry', time:'30 min',
     ingredients:['2 potatoes, cubed','1 small cauliflower, cut into florets','1 tsp cumin seeds','1/2 tsp turmeric','1 tsp coriander powder','1/2 tsp red chili powder','2 tbsp oil','Salt, coriander leaves to garnish'],
     steps:['Heat oil and add cumin seeds until they sizzle.','Add potatoes and cauliflower, stir to coat in oil.','Add turmeric, coriander powder, chili powder, and salt.','Cover and cook on low heat, stirring occasionally, until vegetables are tender.','Garnish with coriander leaves before serving.'] },
-  { id:'paneerbm', emoji:'🧀', name:'Paneer Butter Masala', category:'Curry', time:'40 min', locked:true,
+  { id:'paneerbm', emoji:'🧀', name:'Paneer Butter Masala', category:'Curry', time:'40 min',
     ingredients:['200g paneer, cubed','3 tomatoes, pureed','1 onion, chopped','2 tbsp butter','1 tsp garam masala','1/2 cup cream','Ginger-garlic paste, salt'],
     steps:['Saute onions until golden, add ginger-garlic paste.','Add tomato puree and cook until oil separates.','Blend to a smooth gravy, return to pan with butter.','Add garam masala and cream, simmer gently.','Add paneer cubes and simmer for 5 minutes without boiling hard.'] },
-  { id:'gulabjamun', emoji:'🍮', name:'Gulab Jamun', category:'Dessert', time:'45 min', locked:true,
+  { id:'gulabjamun', emoji:'🍮', name:'Gulab Jamun', category:'Dessert', time:'45 min',
     ingredients:['1 cup milk powder','2 tbsp flour','1/4 tsp baking soda','2 tbsp ghee','Milk as needed','2 cups sugar for syrup','Cardamom, rosewater'],
     steps:['Mix milk powder, flour, and baking soda, then bind with ghee and milk into a soft dough.','Roll into smooth, crack-free balls.','Deep fry on low heat until evenly golden brown.','Prepare sugar syrup with cardamom and a dash of rosewater.','Soak the fried balls in warm syrup for at least an hour before serving.'] },
 ];
@@ -453,7 +453,7 @@ function showLockedModal(){
 function renderLearn(){
   const spiceGrid = document.getElementById('spiceGrid');
   spiceGrid.innerHTML = SPICES.map((s,i) => {
-    const locked = i >= 3 && !state.learned.includes(s.id);
+    const locked = false;
     const learned = state.learned.includes(s.id);
     return `<div class="item-card ${learned?'learned':''} ${locked?'locked':''}" onclick="${locked ? 'showLockedModal()' : `learnItem('${s.id}','${s.emoji}','${s.name.replace(/'/g,"\\'")}')`}">
       <div class="check">✓</div>
@@ -465,7 +465,7 @@ function renderLearn(){
 
   const techGrid = document.getElementById('techniqueGrid');
   techGrid.innerHTML = TECHNIQUES.map((t,i) => {
-    const locked = i >= 2 && !state.learned.includes(t.id);
+    const locked = false;
     const learned = state.learned.includes(t.id);
     return `<div class="item-card ${learned?'learned':''} ${locked?'locked':''}" onclick="${locked ? 'showLockedModal()' : `learnItem('${t.id}','${t.emoji}','${t.name.replace(/'/g,"\\'")}')`}">
       <div class="check">✓</div>
