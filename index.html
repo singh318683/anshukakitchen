@@ -217,6 +217,8 @@
   .step-box .step-num{ font-family: var(--font-display); font-weight:700; color: var(--chili); font-size:0.85rem; margin-bottom:0.2rem; }
   .step-nav{ display:flex; justify-content:space-between; gap:0.6rem; margin-top:1rem; }
   .lock-note{ font-size:0.9rem; color: rgba(42,24,16,0.7); line-height:1.5; margin-bottom:1rem; }
+.spice-detail p{ font-size:0.9rem; line-height:1.55; margin-bottom:0.85rem; color: rgba(42,24,16,0.85); }
+.spice-detail strong{ color: var(--maroon); font-family: var(--font-display); font-weight:600; font-size:0.85rem; display:block; margin-bottom:0.15rem; }
 
   footer{ text-align:center; font-size:0.8rem; color: rgba(42,24,16,0.5); padding: 1.5rem 1rem 0; font-family: var(--font-utility); }
 </style>
@@ -314,14 +316,46 @@
 <script>
 /* ---------------- DATA ---------------- */
 const SPICES = [
-  { id:'turmeric', emoji:'🟡', name:'Turmeric (Haldi)', desc:'Earthy and slightly bitter. Gives dishes their golden color and is almost always added early in cooking.' },
-  { id:'cumin', emoji:'🌰', name:'Cumin Seeds (Jeera)', desc:'Nutty and warm. Usually the first thing to hit hot oil at the start of a tadka.' },
-  { id:'mustard', emoji:'⚫', name:'Mustard Seeds (Rai)', desc:'Pop and crackle loudly in hot oil, releasing a sharp nutty flavor — the classic sound of tadka starting.' },
-  { id:'coriander', emoji:'🌿', name:'Coriander Powder (Dhania)', desc:'Mild and citrusy. The quiet workhorse behind most North Indian curry bases.' },
-  { id:'garammasala', emoji:'🟤', name:'Garam Masala', desc:'A warm ground spice blend added near the end of cooking to round out the flavor.' },
-  { id:'hing', emoji:'✨', name:'Asafoetida (Hing)', desc:'Pungent raw, but mellow and savory once it touches hot oil. A pinch goes a very long way.' },
-  { id:'cardamom', emoji:'💚', name:'Cardamom (Elaichi)', desc:'Sweet and floral. Shows up in both savory curries and chai or dessert.' },
-  { id:'chilipowder', emoji:'🔴', name:'Red Chili Powder', desc:'Brings heat and deep red color. Adjust the amount to control spice level.' },
+  { id:'turmeric', emoji:'🟡', name:'Turmeric (Haldi)', desc:'Earthy and slightly bitter. Gives dishes their golden color and is almost always added early in cooking.',
+    origin:'Native to South Asia and cultivated in India for thousands of years, mostly grown in Telangana, Andhra Pradesh, and Tamil Nadu.',
+    benefits:'Contains curcumin, prized in Ayurveda for its anti-inflammatory and antioxidant properties. Often taken as "haldi doodh" (turmeric milk) when unwell.',
+    uses:'The base color and flavor note in nearly every curry, dal, and rice dish across India.',
+    tip:'A little goes a long way — too much turns a dish bitter. Add it early so it cooks into the oil instead of tasting raw.' },
+  { id:'cumin', emoji:'🌰', name:'Cumin Seeds (Jeera)', desc:'Nutty and warm. Usually the first thing to hit hot oil at the start of a tadka.',
+    origin:'Native to the eastern Mediterranean and South Asia; India is now both the largest grower and consumer of cumin in the world.',
+    benefits:'Traditionally used to aid digestion after meals, and is a good source of iron.',
+    uses:'The starting spice for most tadkas, and ground into cumin powder for spice blends and marinades.',
+    tip:'Toast briefly in oil just until it sizzles and turns fragrant — burnt cumin turns bitter fast.' },
+  { id:'mustard', emoji:'⚫', name:'Mustard Seeds (Rai)', desc:'Pop and crackle loudly in hot oil, releasing a sharp nutty flavor — the classic sound of tadka starting.',
+    origin:'Grown widely across India, especially the west and south, for both seeds and mustard oil.',
+    benefits:'A source of selenium and magnesium; mustard oil is also traditionally used in massage.',
+    uses:'Essential to South Indian tempering for sambar, rasam, and coconut-based curries.',
+    tip:'Add to hot oil and stand back or cover the pan briefly — the seeds pop and can jump out.' },
+  { id:'coriander', emoji:'🌿', name:'Coriander Powder (Dhania)', desc:'Mild and citrusy. The quiet workhorse behind most North Indian curry bases.',
+    origin:'Grown throughout India; the seeds and the fresh leaves (cilantro) come from the same plant but are used very differently.',
+    benefits:'Gentle on digestion, and commonly paired with cumin to balance heavier spices in a blend.',
+    uses:'A base spice in most curry powders, adding body and a mild citrus note without much heat.',
+    tip:'Toast whole coriander seeds and grind them fresh for noticeably more flavor than pre-ground powder.' },
+  { id:'garammasala', emoji:'🟤', name:'Garam Masala', desc:'A warm ground spice blend added near the end of cooking to round out the flavor.',
+    origin:'A North Indian blend of warming spices — cinnamon, clove, cardamom, and more — with the exact recipe varying by region and household.',
+    benefits:'The blend of warming spices is traditionally believed to aid digestion and circulation.',
+    uses:'Sprinkled in near the end of cooking so its more delicate aromatic notes aren\\'t boiled away.',
+    tip:'Every family has its own ratio — start with a good store-bought blend, then adjust to your taste over time.' },
+  { id:'hing', emoji:'✨', name:'Asafoetida (Hing)', desc:'Pungent raw, but mellow and savory once it touches hot oil. A pinch goes a very long way.',
+    origin:'A dried resin from a plant native to Afghanistan and Iran, historically traded into India along ancient trade routes.',
+    benefits:'Traditionally used to reduce bloating, especially when cooking lentils and beans.',
+    uses:'A pinch added to hot oil at the very start of tempering, especially in dals and vegetable dishes.',
+    tip:'Keep it in an airtight container — its raw smell is strong and can seep into other spices nearby.' },
+  { id:'cardamom', emoji:'💚', name:'Cardamom (Elaichi)', desc:'Sweet and floral. Shows up in both savory curries and chai or dessert.',
+    origin:'Native to the forests of the Western Ghats in South India, though Guatemala is now also a major grower.',
+    benefits:'Used in Ayurveda to freshen breath and settle the stomach after a heavy meal.',
+    uses:'Whole pods flavor rice and chai; ground cardamom appears in desserts and in garam masala blends.',
+    tip:'Lightly crush whole pods with the back of a spoon before adding, to release the essential oils inside.' },
+  { id:'chilipowder', emoji:'🔴', name:'Red Chili Powder', desc:'Brings heat and deep red color. Adjust the amount to control spice level.',
+    origin:'Chilies arrived in India from the Americas in the 16th century via Portuguese traders and were rapidly adopted across the subcontinent.',
+    benefits:'Contains capsaicin, which is linked to a temporary boost in metabolism.',
+    uses:'The primary source of heat and red color in most curries, marinades, and pickles.',
+    tip:'Add it with the other dry spices early in cooking so it loses its raw, sharp edge.' },
 ];
 
 const TECHNIQUES = [
@@ -455,7 +489,7 @@ function renderLearn(){
   spiceGrid.innerHTML = SPICES.map((s,i) => {
     const locked = false;
     const learned = state.learned.includes(s.id);
-    return `<div class="item-card ${learned?'learned':''} ${locked?'locked':''}" onclick="${locked ? 'showLockedModal()' : `learnItem('${s.id}','${s.emoji}','${s.name.replace(/'/g,"\\'")}')`}">
+    return `<div class="item-card ${learned?'learned':''} ${locked?'locked':''}" onclick="openSpiceDetail('${s.id}')">
       <div class="check">✓</div>
       <span class="emoji">${s.emoji}</span>
       <h3>${s.name}</h3>
@@ -487,6 +521,26 @@ function learnItem(id, emoji, name){
   } else {
     triggerTadka(`${emoji} You already know ${name}!`);
   }
+}
+
+function openSpiceDetail(id){
+  const s = SPICES.find(x => x.id === id);
+  const learned = state.learned.includes(id);
+  openModal(`
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h2>${s.emoji} ${s.name}</h2>
+    <div class="modal-meta">Essential Spice</div>
+    <div class="spice-detail">
+      <p><strong>What it's like:</strong> ${s.desc}</p>
+      <p><strong>Origin:</strong> ${s.origin}</p>
+      <p><strong>Traditional benefits:</strong> ${s.benefits}</p>
+      <p><strong>Common uses:</strong> ${s.uses}</p>
+      <p><strong>Cooking tip:</strong> ${s.tip}</p>
+    </div>
+    <button class="btn btn-primary btn-block" onclick="learnItem('${s.id}','${s.emoji}','${s.name.replace(/'/g,"\\'")}'); closeModal();">
+      ${learned ? '✓ Learned — Review Again' : 'Mark as Learned (+10 XP)'}
+    </button>
+  `);
 }
 
 /* ---------------- RECIPES TAB ---------------- */
