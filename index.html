@@ -275,6 +275,93 @@
   .spice-detail p{ font-size:0.9rem; line-height:1.55; margin-bottom:0.85rem; color: rgba(42,24,16,0.85); }
   .spice-detail strong{ color: var(--maroon); font-family: var(--font-display); font-weight:600; font-size:0.85rem; display:block; margin-bottom:0.15rem; }
 
+  /* CREATE — KITCHEN */
+  .kitchen-stage{
+    background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow);
+    border:1px solid rgba(107,30,35,0.06); padding: 1.4rem 1.2rem 1.2rem; margin-bottom:1.2rem;
+    text-align:center;
+  }
+  .pan-wrap{ position:relative; width:250px; height:150px; margin:0 auto; }
+  .pan-wrap.cooking{ animation: panShake 0.4s ease-in-out infinite; }
+  @keyframes panShake{ 0%,100%{ transform: translateX(0) rotate(0); } 25%{ transform: translateX(-2px) rotate(-0.6deg); } 75%{ transform: translateX(2px) rotate(0.6deg); } }
+  .pan{ position:relative; width:230px; height:110px; margin:0 auto; }
+  .pan-body{
+    position:absolute; bottom:12px; left:0; width:100%; height:74px;
+    background: linear-gradient(180deg, #4a2f20, #241209);
+    border-radius: 0 0 115px 115px; z-index:1;
+  }
+  .pan-handle{
+    position:absolute; top:26px; right:-38px; width:52px; height:11px;
+    background: linear-gradient(90deg, #4a2f20, #6b1e23); border-radius:100px; z-index:0;
+  }
+  .pan-gravy{
+    position:absolute; top:18px; left:12px; right:12px; height:46px;
+    border-radius:50%; z-index:2; overflow:hidden;
+    background: #8a7a68; opacity:0.45;
+    transition: background 0.7s ease, opacity 0.7s ease;
+  }
+  .pan-gravy.filled{ opacity:1; }
+  .pan-gravy .bit{
+    position:absolute; font-size:0.95rem; animation: bitBob 2.6s ease-in-out infinite;
+  }
+  @keyframes bitBob{ 0%,100%{ transform: translateY(0) rotate(-4deg); } 50%{ transform: translateY(-3px) rotate(4deg); } }
+  .drop-item{
+    position:absolute; top:-40px; font-size:1.5rem; z-index:5; pointer-events:none;
+    animation: dropFall 0.65s cubic-bezier(.4,0,.7,1) forwards;
+  }
+  @keyframes dropFall{
+    0%{ transform: translateY(0) scale(1); opacity:1; }
+    80%{ transform: translateY(62px) scale(0.75); opacity:1; }
+    100%{ transform: translateY(70px) scale(0.5); opacity:0; }
+  }
+  .pan-steam{
+    position:absolute; width:12px; height:12px; border-radius:50%; z-index:4;
+    background: rgba(255,255,255,0.6); filter: blur(3px); pointer-events:none;
+    animation: steamRise 1.4s ease-out forwards;
+  }
+  .flame-row{ position:absolute; bottom:0; left:50%; transform:translateX(-50%); display:flex; gap:8px; z-index:0; }
+  .flame{
+    width:12px; height:20px; border-radius:50% 50% 40% 40%;
+    background: radial-gradient(circle at 50% 80%, #f4cb7c, #e8912a 55%, #c0392b);
+    animation: flick 0.5s ease-in-out infinite alternate;
+    transform-origin: bottom center;
+  }
+  .flame.f2{ height:26px; animation-delay:0.15s; }
+  .flame.f3{ animation-delay:0.3s; }
+  .pan-wrap.cooking .flame{ height:32px; }
+  .pan-wrap.cooking .flame.f2{ height:40px; }
+  @keyframes flick{ from{ transform: scaleY(1) scaleX(1); } to{ transform: scaleY(1.25) scaleX(0.85); } }
+  .pan-log{
+    min-height:1.4rem; font-size:0.9rem; font-weight:500; color: var(--maroon-dark);
+    margin: 0.9rem 0 0.8rem;
+  }
+  .pan-log b{ color: var(--chili); }
+  .pan-actions{ display:flex; gap:0.7rem; justify-content:center; }
+  .ing-group{ margin-bottom:1.1rem; }
+  .ing-group-title{
+    font-family: var(--font-display); font-weight:700; font-size:0.95rem;
+    color: var(--maroon); margin-bottom:0.5rem; padding-left:0.6rem;
+    border-left:3px solid var(--turmeric);
+  }
+  .ing-chips{ display:flex; flex-wrap:wrap; gap:0.5rem; }
+  .ing-chip{
+    display:inline-flex; align-items:center; gap:0.4rem;
+    font-family: var(--font-body); font-weight:600; font-size:0.87rem; color: var(--ember);
+    background: var(--white); border:1px solid rgba(107,30,35,0.1); border-radius:100px;
+    padding:0.45rem 0.9rem; cursor:pointer; box-shadow: 0 2px 8px rgba(42,24,16,0.1);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .ing-chip:hover{ transform: translateY(-2px); box-shadow: 0 5px 14px rgba(42,24,16,0.18); }
+  .ing-chip:active{ transform: scale(0.94); }
+  .result-dish{ text-align:center; padding: 0.6rem 0 0.4rem; }
+  .result-dish .dish-emoji{ font-size:3.4rem; display:inline-block; animation: dishReveal 0.7s cubic-bezier(.2,.9,.3,1.4); }
+  @keyframes dishReveal{ 0%{ transform: scale(0.3) rotate(-15deg); opacity:0; } 100%{ transform:none; opacity:1; } }
+  .result-dish h3{ font-family: var(--font-display); font-size:1.35rem; color: var(--maroon); margin:0.5rem 0 0.2rem; }
+  .result-stars{ font-size:1.3rem; letter-spacing:0.15em; margin-bottom:0.8rem; }
+  .result-feedback{ text-align:left; }
+  .result-feedback p{ font-size:0.88rem; line-height:1.5; padding:0.35rem 0; color: rgba(42,24,16,0.85); border-bottom:1px dashed rgba(107,30,35,0.12); }
+  .result-feedback p:last-child{ border-bottom:none; }
+
   footer{ text-align:center; font-size:0.8rem; color: rgba(42,24,16,0.5); padding: 1.5rem 1rem 0; font-family: var(--font-utility); }
 </style>
 </head>
@@ -295,6 +382,7 @@
     <nav class="tabs">
       <button class="tab-btn active" data-tab="learn"><span class="tab-ico">📖</span><span data-i18n="tabLearn">Learn</span></button>
       <button class="tab-btn" data-tab="recipes"><span class="tab-ico">🍛</span><span data-i18n="tabRecipes">Recipes</span></button>
+      <button class="tab-btn" data-tab="create"><span class="tab-ico">👨‍🍳</span><span data-i18n="tabCreate">Create</span></button>
       <button class="tab-btn" data-tab="quiz"><span class="tab-ico">🔍</span><span data-i18n="tabQuiz">Quiz</span></button>
       <button class="tab-btn" data-tab="progress"><span class="tab-ico">🏆</span><span data-i18n="tabProgress">Progress</span></button>
     </nav>
@@ -354,6 +442,32 @@
       <div id="recipeList"></div>
     </section>
 
+    <!-- CREATE TAB -->
+    <section id="tab-create" class="tab-panel">
+      <h2 class="section-title" data-i18n="createTitle">Create Your Own Recipe</h2>
+      <p class="section-sub" data-i18n="createSub">Tap ingredients to add them to the pan, then cook!</p>
+
+      <div class="kitchen-stage">
+        <div class="pan-wrap" id="panWrap">
+          <div class="pan">
+            <div class="pan-gravy" id="panGravy"></div>
+            <div class="pan-body"></div>
+            <div class="pan-handle"></div>
+          </div>
+          <div class="flame-row">
+            <span class="flame f1"></span><span class="flame f2"></span><span class="flame f3"></span>
+          </div>
+        </div>
+        <div class="pan-log" id="panLog"></div>
+        <div class="pan-actions">
+          <button class="btn btn-primary" id="cookBtn" onclick="cookDish()" data-i18n="cookIt">🔥 Cook It!</button>
+          <button class="btn btn-ghost" onclick="resetPot()" data-i18n="resetPan">Empty Pan</button>
+        </div>
+      </div>
+
+      <div id="ingredientPalette"></div>
+    </section>
+
     <!-- QUIZ TAB -->
     <section id="tab-quiz" class="tab-panel">
       <h2 class="section-title" data-i18n="quizTitle">Spice Detective</h2>
@@ -407,6 +521,24 @@ const UI = {
   tabQuiz:{en:'Quiz',hi:'क्विज़'},
   tabProgress:{en:'Progress',hi:'प्रगति'},
   tagline:{en:'Learn · Cook · Master',hi:'सीखें · पकाएँ · महारत पाएँ'},
+  tabCreate:{en:'Create',hi:'बनाएँ'},
+  createTitle:{en:'Create Your Own Recipe',hi:'अपनी रेसिपी बनाएँ'},
+  createSub:{en:'Tap ingredients to add them to the pan, then cook!',hi:'सामग्री टैप करके कढ़ाई में डालें, फिर पकाएँ!'},
+  cookIt:{en:'🔥 Cook It!',hi:'🔥 पकाएँ!'},
+  resetPan:{en:'Empty Pan',hi:'कढ़ाई खाली करें'},
+  panEmptyMsg:{en:'The pan is waiting. Start with oil or ghee!',hi:'कढ़ाई इंतज़ार में है। तेल या घी से शुरू करें!'},
+  panEmptyCook:{en:'Add some ingredients before cooking!',hi:'पकाने से पहले कुछ सामग्री तो डालें!'},
+  sizzles:{en:'it sizzles and pops!',hi:'चटपट की आवाज़ आई!'},
+  addedWord:{en:'added',hi:'डाला'},
+  yourDish:{en:'Your Creation',hi:'आपकी रचना'},
+  cookAnother:{en:'Cook Another Dish',hi:'एक और व्यंजन पकाएँ'},
+  grpBase:{en:'Base (start here)',hi:'आधार (यहाँ से शुरू करें)'},
+  grpTempering:{en:'Tempering Spices',hi:'तड़के के मसाले'},
+  grpAromatics:{en:'Aromatics',hi:'ख़ुशबूदार सामग्री'},
+  grpMains:{en:'Mains & Vegetables',hi:'मुख्य सामग्री और सब्ज़ियाँ'},
+  grpPowders:{en:'Ground Spices',hi:'पिसे मसाले'},
+  grpLiquids:{en:'Liquids',hi:'तरल'},
+  grpFinish:{en:'Finishing Touches',hi:'आख़िरी छुअन'},
   spicesTitle:{en:'Essential Spices',hi:'ज़रूरी मसाले'},
   spicesSub:{en:'Tap each one to learn it.',hi:'हर एक को सीखने के लिए टैप करें।'},
   techTitle:{en:'Core Techniques',hi:'मुख्य तकनीकें'},
@@ -468,6 +600,7 @@ function setLang(l){
   renderRecipes();
   renderQuiz();
   renderProgress();
+  renderCreate();
   closeModal();
 }
 
@@ -914,7 +1047,7 @@ const QUIZ_POOL = [
 ];
 
 /* ---------------- STATE ---------------- */
-const DEFAULT_STATE = { xp:0, learned:[], cooked:[], quizIndex:0, quizStreak:0, quizCorrect:0, streak:0, lastPlay:null, badges:[] };
+const DEFAULT_STATE = { xp:0, learned:[], cooked:[], quizIndex:0, quizStreak:0, quizCorrect:0, streak:0, lastPlay:null, badges:[], dishesCreated:0 };
 let state;
 try {
   const saved = localStorage.getItem('anshu_ka_kitchen_state');
@@ -972,6 +1105,7 @@ const BADGE_DEFS = [
   { id:'chai_master', emoji:'🍽️', name:{en:'First Dish',hi:'पहला व्यंजन'}, check: s => s.cooked.length >= 1 },
   { id:'spice_detective', emoji:'🔍', name:{en:'Spice Detective',hi:'मसाला जासूस'}, check: s => s.quizCorrect >= 5 },
   { id:'curry_connoisseur', emoji:'🥘', name:{en:'Curry Connoisseur',hi:'करी के उस्ताद'}, check: s => s.cooked.length >= 3 },
+  { id:'creator', emoji:'👨‍🍳', name:{en:'Recipe Creator',hi:'रेसिपी रचयिता'}, check: s => (s.dishesCreated||0) >= 1 },
 ];
 
 function refreshBadges(){
@@ -1245,6 +1379,231 @@ function renderProgress(){
   }).join('');
 }
 
+/* ---------------- CREATE TAB ---------------- */
+const CREATE_INGREDIENTS = [
+  { id:'oil', emoji:'🛢️', group:'base', name:{en:'Oil',hi:'तेल'}, color:'#e8c26a' },
+  { id:'ghee', emoji:'🧈', group:'base', name:{en:'Ghee',hi:'घी'}, color:'#f0cf7e' },
+  { id:'cumin', emoji:'🌰', group:'tempering', name:{en:'Cumin Seeds',hi:'जीरा'}, color:'#d8b160' },
+  { id:'mustard', emoji:'⚫', group:'tempering', name:{en:'Mustard Seeds',hi:'राई'}, color:'#c9a552' },
+  { id:'curryleaves', emoji:'🍃', group:'tempering', name:{en:'Curry Leaves',hi:'कड़ी पत्ता'}, color:'#a8a055' },
+  { id:'hing', emoji:'✨', group:'tempering', name:{en:'Hing',hi:'हींग'}, color:'#d8b160' },
+  { id:'onion', emoji:'🧅', group:'aromatics', name:{en:'Onion',hi:'प्याज़'}, color:'#cf9c55' },
+  { id:'gingergarlic', emoji:'🧄', group:'aromatics', name:{en:'Ginger-Garlic',hi:'अदरक-लहसुन'}, color:'#c99a50' },
+  { id:'greenchili', emoji:'🌶️', group:'aromatics', name:{en:'Green Chili',hi:'हरी मिर्च'}, color:'#b3984e' },
+  { id:'tomato', emoji:'🍅', group:'mains', name:{en:'Tomato',hi:'टमाटर'}, color:'#c9542b' },
+  { id:'potato', emoji:'🥔', group:'mains', name:{en:'Potato',hi:'आलू'}, color:'#cf9440' },
+  { id:'paneer', emoji:'🧀', group:'mains', name:{en:'Paneer',hi:'पनीर'}, color:'#d9954f' },
+  { id:'chicken', emoji:'🍗', group:'mains', name:{en:'Chicken',hi:'चिकन'}, color:'#b56b35' },
+  { id:'peas', emoji:'🫛', group:'mains', name:{en:'Green Peas',hi:'हरी मटर'}, color:'#a68f45' },
+  { id:'mushroom', emoji:'🍄', group:'mains', name:{en:'Mushroom',hi:'मशरूम'}, color:'#a87f4d' },
+  { id:'spinach', emoji:'🥬', group:'mains', name:{en:'Spinach',hi:'पालक'}, color:'#5b7b3a' },
+  { id:'turmeric', emoji:'🟡', group:'powders', name:{en:'Turmeric',hi:'हल्दी'}, color:'#dfa832' },
+  { id:'chilipowder', emoji:'🔴', group:'powders', name:{en:'Red Chili Powder',hi:'लाल मिर्च'}, color:'#b5442a' },
+  { id:'corianderpow', emoji:'🌿', group:'powders', name:{en:'Coriander Powder',hi:'धनिया पाउडर'}, color:'#b08b3e' },
+  { id:'garammasala', emoji:'🟤', group:'powders', name:{en:'Garam Masala',hi:'गरम मसाला'}, color:'#8f5a2e' },
+  { id:'salt', emoji:'🧂', group:'powders', name:{en:'Salt',hi:'नमक'}, color:null },
+  { id:'water', emoji:'💧', group:'liquids', name:{en:'Water',hi:'पानी'}, color:'#c08a4e' },
+  { id:'cream', emoji:'🥛', group:'liquids', name:{en:'Cream',hi:'क्रीम'}, color:'#e2926b' },
+  { id:'coconutmilk', emoji:'🥥', group:'liquids', name:{en:'Coconut Milk',hi:'नारियल दूध'}, color:'#e0b284' },
+  { id:'yogurt', emoji:'🥣', group:'liquids', name:{en:'Yogurt',hi:'दही'}, color:'#ddb277' },
+  { id:'kasurimethi', emoji:'🌾', group:'finish', name:{en:'Kasuri Methi',hi:'कसूरी मेथी'}, color:null },
+  { id:'corianderleaves', emoji:'☘️', group:'finish', name:{en:'Coriander Leaves',hi:'हरा धनिया'}, color:null },
+  { id:'lemon', emoji:'🍋', group:'finish', name:{en:'Lemon',hi:'नींबू'}, color:null },
+];
+
+let pot = [];
+
+function mixColor(c1, c2){
+  const p = x => parseInt(x,16);
+  const h = x => x.toString(16).padStart(2,'0');
+  const r1=p(c1.slice(1,3)), g1=p(c1.slice(3,5)), b1=p(c1.slice(5,7));
+  const r2=p(c2.slice(1,3)), g2=p(c2.slice(3,5)), b2=p(c2.slice(5,7));
+  return '#' + h(Math.round((r1+r2)/2)) + h(Math.round((g1+g2)/2)) + h(Math.round((b1+b2)/2));
+}
+
+function renderCreate(){
+  const groups = [
+    { key:'base', label:T('grpBase') },
+    { key:'tempering', label:T('grpTempering') },
+    { key:'aromatics', label:T('grpAromatics') },
+    { key:'mains', label:T('grpMains') },
+    { key:'powders', label:T('grpPowders') },
+    { key:'liquids', label:T('grpLiquids') },
+    { key:'finish', label:T('grpFinish') },
+  ];
+  document.getElementById('ingredientPalette').innerHTML = groups.map(g => {
+    const chips = CREATE_INGREDIENTS.filter(i => i.group === g.key).map(i =>
+      `<button class="ing-chip" onclick="addToPot('${i.id}')">${i.emoji} ${L(i.name)}</button>`
+    ).join('');
+    return `<div class="ing-group"><div class="ing-group-title">${g.label}</div><div class="ing-chips">${chips}</div></div>`;
+  }).join('');
+  if (!pot.length) document.getElementById('panLog').textContent = T('panEmptyMsg');
+  updateGravy();
+}
+
+function addToPot(id){
+  const ing = CREATE_INGREDIENTS.find(i => i.id === id);
+  pot.push(ing);
+  // drop animation
+  const wrap = document.getElementById('panWrap');
+  const drop = document.createElement('div');
+  drop.className = 'drop-item';
+  drop.textContent = ing.emoji;
+  drop.style.left = (85 + Math.random()*70) + 'px';
+  wrap.appendChild(drop);
+  setTimeout(()=>drop.remove(), 700);
+  // steam / sizzle for tempering into hot base
+  if (ing.group === 'tempering' && pot.some(p=>p.group==='base')){
+    for (let i=0;i<3;i++){
+      const s = document.createElement('div');
+      s.className = 'pan-steam';
+      s.style.left = (80 + Math.random()*80) + 'px';
+      s.style.top = '20px';
+      wrap.appendChild(s);
+      setTimeout(()=>s.remove(), 1450);
+    }
+  }
+  const sizzle = ing.group === 'tempering' && pot.some(p=>p.group==='base');
+  document.getElementById('panLog').innerHTML =
+    `${ing.emoji} <b>${L(ing.name)}</b> ${T('addedWord')}${sizzle ? ' — ' + T('sizzles') : '!'}`;
+  setTimeout(updateGravy, 350);
+}
+
+function updateGravy(){
+  const gravy = document.getElementById('panGravy');
+  if (!pot.length){
+    gravy.classList.remove('filled');
+    gravy.style.background = '#8a7a68';
+    gravy.innerHTML = '';
+    return;
+  }
+  gravy.classList.add('filled');
+  let color = null;
+  pot.forEach(p => {
+    if (!p.color) return;
+    color = color ? mixColor(color, p.color) : p.color;
+  });
+  gravy.style.background = `radial-gradient(circle at 40% 35%, ${color || '#c9a552'}, ${mixColor(color || '#c9a552', '#5a3218')})`;
+  // floating bits: last 7 solid ingredients
+  const bits = pot.filter(p => ['tempering','aromatics','mains','finish'].includes(p.group)).slice(-7);
+  gravy.innerHTML = bits.map((b,i) =>
+    `<span class="bit" style="left:${12 + (i*27)%170}px; top:${8 + (i*13)%22}px; animation-delay:${(i*0.35).toFixed(2)}s">${b.emoji}</span>`
+  ).join('');
+}
+
+function resetPot(){
+  pot = [];
+  document.getElementById('panLog').textContent = T('panEmptyMsg');
+  updateGravy();
+}
+
+function cookDish(){
+  if (!pot.length){
+    document.getElementById('panLog').textContent = T('panEmptyCook');
+    return;
+  }
+  const wrap = document.getElementById('panWrap');
+  wrap.classList.add('cooking');
+  // steam burst while cooking
+  const steamer = setInterval(() => {
+    const s = document.createElement('div');
+    s.className = 'pan-steam';
+    s.style.left = (70 + Math.random()*100) + 'px';
+    s.style.top = '18px';
+    wrap.appendChild(s);
+    setTimeout(()=>s.remove(), 1450);
+  }, 220);
+  setTimeout(() => {
+    clearInterval(steamer);
+    wrap.classList.remove('cooking');
+    showDishResult();
+  }, 2400);
+}
+
+function showDishResult(){
+  const ids = pot.map(p => p.id);
+  const has = id => ids.includes(id);
+  const idx = id => ids.indexOf(id);
+  const groupIdx = g => pot.findIndex(p => p.group === g);
+
+  let score = 0;
+  const fb = [];
+  const en = lang === 'en';
+
+  // base first
+  if (!has('oil') && !has('ghee')){
+    fb.push(en ? '🔥 No oil or ghee — your spices burnt on a dry pan!' : '🔥 तेल या घी नहीं डाला — मसाले सूखी कढ़ाई में जल गए!');
+  } else if (groupIdx('base') === 0){
+    score += 2; fb.push(en ? '✅ Started with a fat base, just like a pro.' : '✅ तेल/घी से शुरुआत — बिल्कुल उस्तादों की तरह।');
+  } else {
+    score += 1; fb.push(en ? '⚠️ Oil went in late — start with the fat next time.' : '⚠️ तेल देर से डाला — अगली बार शुरुआत तेल से करें।');
+  }
+  // tempering
+  const ti = groupIdx('tempering');
+  if (ti > -1){
+    if (groupIdx('base') > -1 && ti > groupIdx('base')){ score += 2; fb.push(en ? '✅ Whole spices bloomed in hot fat — a proper tadka!' : '✅ साबुत मसाले गरम तेल में खिले — असली तड़का!'); }
+    else { score += 1; }
+  } else {
+    fb.push(en ? '💡 No tempering — a tadka would have added real depth.' : '💡 तड़का नहीं लगा — तड़के से असली गहराई आती।');
+  }
+  // aromatics before mains
+  const ai = groupIdx('aromatics'), mi = groupIdx('mains');
+  if (ai > -1 && mi > -1 && ai < mi){ score += 1; fb.push(en ? '✅ Aromatics before mains — flavor built in the right order.' : '✅ पहले ख़ुशबूदार सामग्री, फिर मुख्य — सही क्रम में स्वाद बना।'); }
+  // has a main
+  if (mi > -1){ score += 2; } else { fb.push(en ? '🤔 No main ingredient — this is more of a tadka than a dish!' : '🤔 कोई मुख्य सामग्री नहीं — यह व्यंजन कम, तड़का ज़्यादा है!'); }
+  // salt
+  if (has('salt')){ score += 1; } else { fb.push(en ? '🧂 You forgot salt — the silent hero of every dish!' : '🧂 नमक भूल गए — हर व्यंजन का ख़ामोश हीरो!'); }
+  // powders
+  if (pot.some(p => p.group === 'powders' && p.id !== 'salt')) score += 1;
+  // liquid
+  if (pot.some(p => p.group === 'liquids')) score += 1;
+  // finish
+  if (pot.some(p => p.group === 'finish')){ score += 1; fb.push(en ? '✅ A finishing touch — restaurant move!' : '✅ आख़िरी छुअन — रेस्टोरेंट वाला अंदाज़!'); }
+  // garam masala timing bonus
+  if (has('garammasala') && idx('garammasala') >= pot.length - 3){ score += 1; fb.push(en ? '✅ Garam masala near the end — its aroma survives!' : '✅ गरम मसाला अंत में — खुशबू बची रही!'); }
+
+  // name the dish
+  let main = '';
+  if (has('chicken')) main = en ? 'Chicken' : 'चिकन';
+  else if (has('paneer') && has('peas')) main = en ? 'Matar Paneer' : 'मटर पनीर';
+  else if (has('paneer') && has('spinach')) main = en ? 'Palak Paneer' : 'पालक पनीर';
+  else if (has('paneer')) main = en ? 'Paneer' : 'पनीर';
+  else if (has('mushroom')) main = en ? 'Mushroom' : 'मशरूम';
+  else if (has('potato')) main = en ? 'Aloo' : 'आलू';
+  else if (has('spinach')) main = en ? 'Palak' : 'पालक';
+  else if (has('peas')) main = en ? 'Matar' : 'मटर';
+  else if (has('tomato')) main = en ? 'Tamatar' : 'टमाटर';
+
+  let style = '';
+  if (has('cream') && has('tomato')) style = en ? 'Makhani' : 'मखनी';
+  else if (has('coconutmilk')) style = en ? 'Coconut Curry' : 'नारियल करी';
+  else if (has('yogurt')) style = en ? 'Korma' : 'कोरमा';
+  else if (main) style = en ? 'Masala' : 'मसाला';
+
+  let dishName = (main && style && main !== style) ? `${main} ${style}` : (main || (en ? 'Mystery Tadka' : 'रहस्यमयी तड़का'));
+  if (main.includes(en?'Matar Paneer':'मटर पनीर') || main.includes(en?'Palak Paneer':'पालक पनीर')) dishName = main;
+
+  const stars = Math.max(1, Math.min(5, Math.round(score / 10 * 5)));
+  const starStr = '⭐'.repeat(stars) + '☆'.repeat(5 - stars);
+  const dishEmoji = stars >= 4 ? '🍛' : stars >= 3 ? '🥘' : '🍲';
+
+  state.dishesCreated = (state.dishesCreated || 0) + 1;
+  addXP(20);
+  refreshBadges();
+
+  openModal(`
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="result-dish">
+      <span class="dish-emoji">${dishEmoji}</span>
+      <div class="modal-meta">${T('yourDish')} · +20 XP</div>
+      <h3>${dishName}</h3>
+      <div class="result-stars">${starStr}</div>
+    </div>
+    <div class="result-feedback">${fb.map(f => `<p>${f}</p>`).join('')}</div>
+    <button class="btn btn-primary btn-block" onclick="resetPot(); closeModal();">${T('cookAnother')}</button>
+  `);
+}
+
 /* ---------------- TABS ---------------- */
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -1261,6 +1620,7 @@ document.getElementById('langHi').classList.toggle('active', lang === 'hi');
 applyStaticI18n();
 renderLearn();
 renderRecipes();
+renderCreate();
 initQuiz();
 renderProgress();
 refreshBadges();
