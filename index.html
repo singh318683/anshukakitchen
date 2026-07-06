@@ -185,6 +185,19 @@
   .recipe-row h3{ font-family: var(--font-display); font-size:1.02rem; color:var(--maroon); }
   .recipe-row .meta{ font-size:0.8rem; color: rgba(42,24,16,0.55); margin-top:0.15rem; }
   .recipe-row .badge-cooked{ background: var(--leaf); color:#fff; font-size:0.68rem; font-weight:600; padding:0.2rem 0.6rem; border-radius:100px; }
+  .thumb-wrap{ position:relative; width:54px; height:54px; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+  .recipe-thumb{
+    position:absolute; inset:0; width:54px; height:54px; object-fit:cover;
+    border-radius:12px; opacity:0; transition: opacity 0.4s ease;
+    box-shadow: 0 2px 8px rgba(42,24,16,0.2);
+  }
+  .recipe-thumb.loaded{ opacity:1; }
+  .modal-banner{
+    width:100%; height:160px; object-fit:cover; border-radius:14px;
+    margin-bottom:0.9rem; opacity:0; transition: opacity 0.4s ease;
+    display:block;
+  }
+  .modal-banner.loaded{ opacity:1; }
   .diet-group{ margin-bottom: 0.9rem; }
   .diet-group-header{
     width:100%; display:flex; align-items:center; gap:0.7rem;
@@ -815,204 +828,204 @@ const TECHNIQUES = [
 
 const RECIPES = [
   /* ---------- VEGAN ---------- */
-  { id:'chanamasala', emoji:'🫘', diet:'vegan', name:{en:'Chana Masala (Chole)',hi:'छोले मसाला'}, category:{en:'Curry',hi:'करी'}, time:40,
+  { id:'chanamasala', wiki:'Chana_masala', emoji:'🫘', diet:'vegan', name:{en:'Chana Masala (Chole)',hi:'छोले मसाला'}, category:{en:'Curry',hi:'करी'}, time:40,
     ingredients:{en:['2 cups chickpeas, soaked overnight','2 onions, finely chopped','2 tomatoes, pureed','1 tbsp ginger-garlic paste','1 tsp cumin seeds','2 tsp chana masala powder','1/2 tsp turmeric','1 tsp red chili powder','3 tbsp oil','Salt, coriander leaves'],
       hi:['2 कप काबुली चने, रातभर भिगोए हुए','2 प्याज़, बारीक कटे','2 टमाटर की प्यूरी','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','1 छोटा चम्मच जीरा','2 छोटे चम्मच छोले मसाला','1/2 छोटा चम्मच हल्दी','1 छोटा चम्मच लाल मिर्च पाउडर','3 बड़े चम्मच तेल','नमक, हरा धनिया']},
     steps:{en:['Pressure cook soaked chickpeas with salt until soft but not mushy.','Heat oil, add cumin seeds, then onions — fry until deep golden.','Add ginger-garlic paste, tomato puree, and all dry spices; bhuna until oil separates.','Add chickpeas with a cup of their cooking water and simmer 10-15 minutes.','Mash a few chickpeas against the pan to thicken, garnish with coriander.'],
       hi:['भिगोए चनों को नमक के साथ नरम होने तक प्रेशर कुक करें, गलने न दें।','तेल गरम करें, जीरा डालें, फिर प्याज़ — गहरा सुनहरा होने तक भूनें।','अदरक-लहसुन पेस्ट, टमाटर प्यूरी और सारे सूखे मसाले डालें; तेल अलग होने तक भूनें।','चने और एक कप उनका पानी डालकर 10-15 मिनट पकाएँ।','कुछ चने कढ़ाई में मसलकर ग्रेवी गाढ़ी करें, हरे धनिये से सजाएँ।']} },
-  { id:'aloogobi', emoji:'🥔', diet:'vegan', name:{en:'Aloo Gobi',hi:'आलू गोभी'}, category:{en:'Curry',hi:'करी'}, time:30,
+  { id:'aloogobi', wiki:'Aloo_gobi', emoji:'🥔', diet:'vegan', name:{en:'Aloo Gobi',hi:'आलू गोभी'}, category:{en:'Curry',hi:'करी'}, time:30,
     ingredients:{en:['2 potatoes, cubed','1 small cauliflower, cut into florets','1 tsp cumin seeds','1/2 tsp turmeric','1 tsp coriander powder','1/2 tsp red chili powder','2 tbsp oil','Salt, coriander leaves'],
       hi:['2 आलू, कटे हुए','1 छोटी गोभी, फूल अलग किए हुए','1 छोटा चम्मच जीरा','1/2 छोटा चम्मच हल्दी','1 छोटा चम्मच धनिया पाउडर','1/2 छोटा चम्मच लाल मिर्च पाउडर','2 बड़े चम्मच तेल','नमक, हरा धनिया']},
     steps:{en:['Heat oil and add cumin seeds until they sizzle.','Add potatoes and cauliflower, stir to coat in oil.','Add turmeric, coriander powder, chili powder, and salt.','Cover and cook on low heat, stirring occasionally, until tender.','Garnish with coriander leaves before serving.'],
       hi:['तेल गरम करें और जीरा चटकने तक डालें।','आलू और गोभी डालकर तेल में अच्छी तरह मिलाएँ।','हल्दी, धनिया पाउडर, मिर्च पाउडर और नमक डालें।','ढककर धीमी आँच पर पकाएँ, बीच-बीच में चलाएँ, जब तक नरम न हो जाएँ।','परोसने से पहले हरे धनिये से सजाएँ।']} },
-  { id:'masaladosa', emoji:'🥞', diet:'vegan', name:{en:'Masala Dosa',hi:'मसाला डोसा'}, category:{en:'South Indian',hi:'दक्षिण भारतीय'}, time:45,
+  { id:'masaladosa', wiki:'Masala_dosa', emoji:'🥞', diet:'vegan', name:{en:'Masala Dosa',hi:'मसाला डोसा'}, category:{en:'South Indian',hi:'दक्षिण भारतीय'}, time:45,
     ingredients:{en:['3 cups dosa batter (fermented rice-urad dal)','3 potatoes, boiled and mashed','1 onion, sliced','1 tsp mustard seeds','8-10 curry leaves','2 green chilies','1/2 tsp turmeric','2 tbsp oil','Salt'],
       hi:['3 कप डोसा बैटर (खमीर उठा चावल-उड़द दाल)','3 आलू, उबले और मसले हुए','1 प्याज़, कटा हुआ','1 छोटा चम्मच राई','8-10 कड़ी पत्ते','2 हरी मिर्च','1/2 छोटा चम्मच हल्दी','2 बड़े चम्मच तेल','नमक']},
     steps:{en:['For the filling: pop mustard seeds and curry leaves in oil, add onions and green chilies.','Add turmeric, mashed potatoes, and salt; mix and set aside.','Heat a flat tawa, spread a ladle of batter thin in circles.','Drizzle oil around the edges and cook until golden and crisp.','Place potato filling in the center, fold, and serve with chutney and sambar.'],
       hi:['भरावन के लिए: तेल में राई और कड़ी पत्ता चटकाएँ, प्याज़ और हरी मिर्च डालें।','हल्दी, मसले आलू और नमक डालकर मिलाएँ, अलग रखें।','तवा गरम करें, एक कलछी बैटर गोल घुमाते हुए पतला फैलाएँ।','किनारों पर तेल डालें और सुनहरा-कुरकुरा होने तक सेकें।','बीच में आलू का भरावन रखें, मोड़ें, और चटनी-सांभर के साथ परोसें।']} },
-  { id:'bainganbharta', emoji:'🍆', diet:'vegan', name:{en:'Baingan Bharta',hi:'बैंगन भर्ता'}, category:{en:'Curry',hi:'करी'}, time:35,
+  { id:'bainganbharta', wiki:'Baingan_bharta', emoji:'🍆', diet:'vegan', name:{en:'Baingan Bharta',hi:'बैंगन भर्ता'}, category:{en:'Curry',hi:'करी'}, time:35,
     ingredients:{en:['1 large eggplant','2 onions, chopped','2 tomatoes, chopped','1 tbsp ginger-garlic paste','2 green chilies','1 tsp cumin seeds','1/2 tsp red chili powder','3 tbsp oil','Salt, coriander leaves'],
       hi:['1 बड़ा बैंगन','2 प्याज़, कटे हुए','2 टमाटर, कटे हुए','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','2 हरी मिर्च','1 छोटा चम्मच जीरा','1/2 छोटा चम्मच लाल मिर्च पाउडर','3 बड़े चम्मच तेल','नमक, हरा धनिया']},
     steps:{en:['Roast the whole eggplant directly over a flame until the skin chars and flesh softens.','Cool, peel off the charred skin, and mash the smoky flesh.','Heat oil, sizzle cumin, fry onions and green chilies until golden.','Add ginger-garlic paste, tomatoes, and spices; cook until soft.','Fold in the mashed eggplant, cook 5 minutes, and finish with coriander.'],
       hi:['साबुत बैंगन को सीधे आँच पर तब तक भूनें जब तक छिलका जल जाए और गूदा नरम हो जाए।','ठंडा करके जला छिलका उतारें और धुएँदार गूदे को मसलें।','तेल गरम करें, जीरा चटकाएँ, प्याज़ और हरी मिर्च सुनहरा होने तक भूनें।','अदरक-लहसुन पेस्ट, टमाटर और मसाले डालकर नरम होने तक पकाएँ।','मसला बैंगन मिलाएँ, 5 मिनट पकाएँ, हरे धनिये से पूरा करें।']} },
-  { id:'idlisambar', emoji:'⚪', diet:'vegan', name:{en:'Idli-Sambar',hi:'इडली-सांभर'}, category:{en:'South Indian',hi:'दक्षिण भारतीय'}, time:40,
+  { id:'idlisambar', wiki:'Idli', emoji:'⚪', diet:'vegan', name:{en:'Idli-Sambar',hi:'इडली-सांभर'}, category:{en:'South Indian',hi:'दक्षिण भारतीय'}, time:40,
     ingredients:{en:['3 cups idli batter (fermented)','1 cup toor dal','2 cups mixed vegetables (drumstick, carrot, pumpkin)','2 tbsp sambar powder','1 small ball tamarind, soaked','1 tsp mustard seeds','8-10 curry leaves','2 dried red chilies','2 tbsp oil','Salt'],
       hi:['3 कप इडली बैटर (खमीर उठा)','1 कप अरहर दाल','2 कप मिली-जुली सब्ज़ियाँ (सहजन, गाजर, कद्दू)','2 बड़े चम्मच सांभर पाउडर','1 छोटी गोली इमली, भिगोई हुई','1 छोटा चम्मच राई','8-10 कड़ी पत्ते','2 सूखी लाल मिर्च','2 बड़े चम्मच तेल','नमक']},
     steps:{en:['Steam ladlefuls of idli batter in a greased idli stand for 10-12 minutes.','Pressure cook toor dal until soft and mash it smooth.','Boil vegetables with tamarind water, sambar powder, and salt; add the dal.','Temper mustard seeds, curry leaves, and red chilies in oil; pour over the sambar.','Serve hot idlis dunked in sambar with coconut chutney.'],
       hi:['इडली स्टैंड में घी लगाकर बैटर भरें और 10-12 मिनट भाप में पकाएँ।','अरहर दाल को नरम होने तक प्रेशर कुक करके मैश करें।','सब्ज़ियों को इमली पानी, सांभर पाउडर और नमक के साथ उबालें; दाल मिलाएँ।','तेल में राई, कड़ी पत्ता और सूखी मिर्च का तड़का बनाकर सांभर पर डालें।','गरम इडली को सांभर और नारियल चटनी के साथ परोसें।']} },
-  { id:'rajma', emoji:'🔴', diet:'vegan', name:{en:'Rajma',hi:'राजमा'}, category:{en:'Curry',hi:'करी'}, time:45,
+  { id:'rajma', wiki:'Rajma', emoji:'🔴', diet:'vegan', name:{en:'Rajma',hi:'राजमा'}, category:{en:'Curry',hi:'करी'}, time:45,
     ingredients:{en:['2 cups kidney beans, soaked overnight','2 onions, finely chopped','3 tomatoes, pureed','1 tbsp ginger-garlic paste','1 tsp cumin seeds','2 tsp rajma masala','1/2 tsp turmeric','1 tsp red chili powder','3 tbsp oil','Salt, coriander leaves'],
       hi:['2 कप राजमा, रातभर भिगोया हुआ','2 प्याज़, बारीक कटे','3 टमाटर की प्यूरी','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','1 छोटा चम्मच जीरा','2 छोटे चम्मच राजमा मसाला','1/2 छोटा चम्मच हल्दी','1 छोटा चम्मच लाल मिर्च पाउडर','3 बड़े चम्मच तेल','नमक, हरा धनिया']},
     steps:{en:['Pressure cook soaked rajma with salt until completely soft.','Heat oil, sizzle cumin, fry onions until deep golden.','Add ginger-garlic paste, tomato puree, and spices; bhuna until oil separates.','Add rajma with its cooking water and simmer 15-20 minutes until the gravy thickens.','Mash a few beans for body, garnish with coriander, and serve with rice.'],
       hi:['भिगोए राजमा को नमक के साथ पूरी तरह नरम होने तक प्रेशर कुक करें।','तेल गरम करें, जीरा चटकाएँ, प्याज़ गहरा सुनहरा होने तक भूनें।','अदरक-लहसुन पेस्ट, टमाटर प्यूरी और मसाले डालें; तेल अलग होने तक भूनें।','राजमा और उसका पानी डालकर 15-20 मिनट पकाएँ जब तक ग्रेवी गाढ़ी न हो जाए।','कुछ दाने मसलकर गाढ़ापन लाएँ, हरे धनिये से सजाएँ, चावल के साथ परोसें।']} },
-  { id:'mushroommasala', emoji:'🍄', diet:'vegan', name:{en:'Mushroom Masala',hi:'मशरूम मसाला'}, category:{en:'Curry',hi:'करी'}, time:30,
+  { id:'mushroommasala', wiki:'Mushroom_masala', emoji:'🍄', diet:'vegan', name:{en:'Mushroom Masala',hi:'मशरूम मसाला'}, category:{en:'Curry',hi:'करी'}, time:30,
     ingredients:{en:['400g mushrooms, quartered','2 onions, finely chopped','2 tomatoes, pureed','1 tbsp ginger-garlic paste','1 tsp cumin seeds','1 tsp coriander powder','1/2 tsp garam masala','1/2 tsp red chili powder','3 tbsp oil','Salt, coriander leaves'],
       hi:['400 ग्राम मशरूम, चार टुकड़ों में कटे','2 प्याज़, बारीक कटे','2 टमाटर की प्यूरी','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','1 छोटा चम्मच जीरा','1 छोटा चम्मच धनिया पाउडर','1/2 छोटा चम्मच गरम मसाला','1/2 छोटा चम्मच लाल मिर्च पाउडर','3 बड़े चम्मच तेल','नमक, हरा धनिया']},
     steps:{en:['Heat oil, sizzle cumin, and fry onions until golden.','Add ginger-garlic paste, tomato puree, and dry spices; bhuna until oil separates.','Add mushrooms and toss on high heat for 2-3 minutes.','Add a splash of water, cover, and simmer 8-10 minutes.','Finish with garam masala and coriander leaves.'],
       hi:['तेल गरम करें, जीरा चटकाएँ, प्याज़ सुनहरा होने तक भूनें।','अदरक-लहसुन पेस्ट, टमाटर प्यूरी और सूखे मसाले डालें; तेल अलग होने तक भूनें।','मशरूम डालकर तेज़ आँच पर 2-3 मिनट चलाएँ।','थोड़ा पानी डालें, ढककर 8-10 मिनट पकाएँ।','गरम मसाला और हरे धनिये से पूरा करें।']} },
-  { id:'vegpulao', emoji:'🍚', diet:'vegan', name:{en:'Veg Pulao',hi:'वेज पुलाव'}, category:{en:'Rice',hi:'चावल'}, time:30,
+  { id:'vegpulao', wiki:'Pulao', emoji:'🍚', diet:'vegan', name:{en:'Veg Pulao',hi:'वेज पुलाव'}, category:{en:'Rice',hi:'चावल'}, time:30,
     ingredients:{en:['1.5 cups basmati rice','2 cups mixed vegetables (carrot, peas, beans, potato)','1 onion, sliced','1 tsp cumin seeds','Whole spices: 1 bay leaf, 2 cardamom, 4 cloves, 1 inch cinnamon','3 tbsp oil','3 cups water','Salt'],
       hi:['1.5 कप बासमती चावल','2 कप मिली-जुली सब्ज़ियाँ (गाजर, मटर, बीन्स, आलू)','1 प्याज़, कटा हुआ','1 छोटा चम्मच जीरा','साबुत मसाले: 1 तेज पत्ता, 2 इलायची, 4 लौंग, 1 इंच दालचीनी','3 बड़े चम्मच तेल','3 कप पानी','नमक']},
     steps:{en:['Rinse and soak rice for 20 minutes.','Heat oil, sizzle cumin and whole spices, then fry onions until golden.','Add vegetables and saute for 3-4 minutes.','Add drained rice, water, and salt; bring to a boil.','Cover and cook on low 12-15 minutes; fluff gently before serving.'],
       hi:['चावल धोकर 20 मिनट भिगोएँ।','तेल गरम करें, जीरा और साबुत मसाले चटकाएँ, फिर प्याज़ सुनहरा होने तक भूनें।','सब्ज़ियाँ डालकर 3-4 मिनट भूनें।','छाने चावल, पानी और नमक डालकर उबाल आने दें।','ढककर धीमी आँच पर 12-15 मिनट पकाएँ; परोसने से पहले हल्के हाथ से चलाएँ।']} },
   /* ---------- VEGETARIAN ---------- */
-  { id:'paneerbm', emoji:'🧀', diet:'veg', name:{en:'Paneer Butter Masala',hi:'पनीर बटर मसाला'}, category:{en:'Curry',hi:'करी'}, time:40,
+  { id:'paneerbm', wiki:'Paneer_butter_masala', emoji:'🧀', diet:'veg', name:{en:'Paneer Butter Masala',hi:'पनीर बटर मसाला'}, category:{en:'Curry',hi:'करी'}, time:40,
     ingredients:{en:['250g paneer, cubed','4 tomatoes, pureed','1 onion, chopped','3 tbsp butter','1 tbsp ginger-garlic paste','1 tsp garam masala','1 tsp kasuri methi','1/2 cup cream','1 tsp red chili powder','Salt, sugar to balance'],
       hi:['250 ग्राम पनीर, कटा हुआ','4 टमाटर की प्यूरी','1 प्याज़, कटा हुआ','3 बड़े चम्मच मक्खन','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','1 छोटा चम्मच गरम मसाला','1 छोटा चम्मच कसूरी मेथी','1/2 कप क्रीम','1 छोटा चम्मच लाल मिर्च पाउडर','नमक, संतुलन के लिए चीनी']},
     steps:{en:['Saute onions in butter until golden, add ginger-garlic paste.','Add tomato puree and chili powder; cook until oil separates.','Blend to a silky gravy and return to the pan with more butter.','Add cream, garam masala, salt, and a pinch of sugar; simmer gently.','Add paneer and crushed kasuri methi; simmer 5 minutes without hard boiling.'],
       hi:['मक्खन में प्याज़ सुनहरा होने तक भूनें, अदरक-लहसुन पेस्ट डालें।','टमाटर प्यूरी और मिर्च पाउडर डालें; तेल अलग होने तक पकाएँ।','पीसकर रेशमी ग्रेवी बनाएँ और मक्खन के साथ वापस कढ़ाई में डालें।','क्रीम, गरम मसाला, नमक और चुटकी चीनी डालकर धीमी आँच पर पकाएँ।','पनीर और मसली कसूरी मेथी डालें; 5 मिनट धीमी आँच पर पकाएँ, तेज़ उबाल न आने दें।']} },
-  { id:'palakpaneer', emoji:'🥬', diet:'veg', name:{en:'Palak Paneer',hi:'पालक पनीर'}, category:{en:'Curry',hi:'करी'}, time:35,
+  { id:'palakpaneer', wiki:'Palak_paneer', emoji:'🥬', diet:'veg', name:{en:'Palak Paneer',hi:'पालक पनीर'}, category:{en:'Curry',hi:'करी'}, time:35,
     ingredients:{en:['250g paneer, cubed','500g spinach, blanched','1 onion, chopped','2 tomatoes, chopped','1 tbsp ginger-garlic paste','1 tsp cumin seeds','1/2 tsp garam masala','2 tbsp cream','3 tbsp oil or ghee','Salt'],
       hi:['250 ग्राम पनीर, कटा हुआ','500 ग्राम पालक, उबालकर ठंडा किया','1 प्याज़, कटा हुआ','2 टमाटर, कटे हुए','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','1 छोटा चम्मच जीरा','1/2 छोटा चम्मच गरम मसाला','2 बड़े चम्मच क्रीम','3 बड़े चम्मच तेल या घी','नमक']},
     steps:{en:['Blanch spinach in boiling water for 2 minutes, cool in ice water, and blend to a smooth puree.','Heat oil, sizzle cumin, and fry onions until golden; add ginger-garlic paste.','Add tomatoes and cook until soft, then pour in the spinach puree.','Season with salt and garam masala; simmer 5 minutes.','Add paneer cubes and cream; simmer 3-4 more minutes and serve.'],
       hi:['पालक को 2 मिनट उबलते पानी में डालें, बर्फ़ के पानी में ठंडा करें, और पीसकर चिकनी प्यूरी बनाएँ।','तेल गरम करें, जीरा चटकाएँ, प्याज़ सुनहरा होने तक भूनें; अदरक-लहसुन पेस्ट डालें।','टमाटर डालकर नरम होने तक पकाएँ, फिर पालक प्यूरी डालें।','नमक और गरम मसाला डालकर 5 मिनट पकाएँ।','पनीर और क्रीम डालें; 3-4 मिनट और पकाकर परोसें।']} },
-  { id:'dalmakhani', emoji:'🖤', diet:'veg', name:{en:'Dal Makhani',hi:'दाल मखनी'}, category:{en:'Curry',hi:'करी'}, time:60,
+  { id:'dalmakhani', wiki:'Dal_makhani', emoji:'🖤', diet:'veg', name:{en:'Dal Makhani',hi:'दाल मखनी'}, category:{en:'Curry',hi:'करी'}, time:60,
     ingredients:{en:['1 cup whole black lentils (urad), soaked overnight','1/4 cup kidney beans, soaked','3 tomatoes, pureed','1 tbsp ginger-garlic paste','3 tbsp butter','1/4 cup cream','1 tsp red chili powder','1/2 tsp garam masala','Salt'],
       hi:['1 कप साबुत उड़द दाल, रातभर भिगोई','1/4 कप राजमा, भिगोया हुआ','3 टमाटर की प्यूरी','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','3 बड़े चम्मच मक्खन','1/4 कप क्रीम','1 छोटा चम्मच लाल मिर्च पाउडर','1/2 छोटा चम्मच गरम मसाला','नमक']},
     steps:{en:['Pressure cook urad dal and rajma with salt until completely soft.','In butter, cook ginger-garlic paste, then tomato puree and chili powder until oil separates.','Add the cooked dal and simmer on the lowest heat for at least 30 minutes, mashing gently.','Stir in cream and garam masala.','Finish with a final knob of butter; the longer it simmers, the better it tastes.'],
       hi:['उड़द दाल और राजमा को नमक के साथ पूरी तरह नरम होने तक प्रेशर कुक करें।','मक्खन में अदरक-लहसुन पेस्ट, फिर टमाटर प्यूरी और मिर्च पाउडर तेल अलग होने तक पकाएँ।','पकी दाल डालकर सबसे धीमी आँच पर कम से कम 30 मिनट पकाएँ, हल्के से मसलते रहें।','क्रीम और गरम मसाला मिलाएँ।','अंत में थोड़ा और मक्खन डालें; जितनी देर पकेगी, उतनी स्वादिष्ट बनेगी।']} },
-  { id:'malaikofta', emoji:'🟠', diet:'veg', name:{en:'Malai Kofta',hi:'मलाई कोफ्ता'}, category:{en:'Curry',hi:'करी'}, time:50,
+  { id:'malaikofta', wiki:'Malai_kofta', emoji:'🟠', diet:'veg', name:{en:'Malai Kofta',hi:'मलाई कोफ्ता'}, category:{en:'Curry',hi:'करी'}, time:50,
     ingredients:{en:['200g paneer, grated','2 potatoes, boiled and mashed','2 tbsp cornflour','4 tomatoes, pureed','1 onion, chopped','1 tbsp ginger-garlic paste','1/4 cup cream','10 cashews, soaked','1 tsp garam masala','Oil for frying, salt'],
       hi:['200 ग्राम पनीर, कद्दूकस किया','2 आलू, उबले और मसले','2 बड़े चम्मच कॉर्नफ्लोर','4 टमाटर की प्यूरी','1 प्याज़, कटा हुआ','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','1/4 कप क्रीम','10 काजू, भिगोए हुए','1 छोटा चम्मच गरम मसाला','तलने के लिए तेल, नमक']},
     steps:{en:['Mix paneer, potato, cornflour, and salt into a dough; shape into balls.','Deep fry the koftas on medium heat until golden; set aside.','Fry onions and ginger-garlic paste, add tomato puree and soaked cashews; cook, then blend silky smooth.','Return gravy to the pan, add cream, garam masala, and salt; simmer gently.','Add koftas just before serving so they stay soft, not soggy.'],
       hi:['पनीर, आलू, कॉर्नफ्लोर और नमक मिलाकर आटा बनाएँ; गोलियाँ बनाएँ।','कोफ्तों को मध्यम आँच पर सुनहरा होने तक तलें; अलग रखें।','प्याज़ और अदरक-लहसुन पेस्ट भूनें, टमाटर प्यूरी और भिगोए काजू डालकर पकाएँ, फिर बारीक पीसें।','ग्रेवी वापस कढ़ाई में डालें, क्रीम, गरम मसाला और नमक डालकर धीमी आँच पर पकाएँ।','कोफ्ते परोसने से ठीक पहले डालें ताकि वे नरम रहें, गलें नहीं।']} },
-  { id:'kadaipaneer', emoji:'🫑', diet:'veg', name:{en:'Kadai Paneer',hi:'कड़ाही पनीर'}, category:{en:'Curry',hi:'करी'}, time:35,
+  { id:'kadaipaneer', wiki:'Kadai_paneer', emoji:'🫑', diet:'veg', name:{en:'Kadai Paneer',hi:'कड़ाही पनीर'}, category:{en:'Curry',hi:'करी'}, time:35,
     ingredients:{en:['250g paneer, cubed','2 bell peppers, cubed','2 onions (1 chopped, 1 cubed)','3 tomatoes, chopped','1 tbsp ginger-garlic paste','2 tbsp coriander seeds + 4 dried red chilies (kadai masala)','1 tsp kasuri methi','3 tbsp oil','Salt'],
       hi:['250 ग्राम पनीर, कटा हुआ','2 शिमला मिर्च, कटी हुई','2 प्याज़ (1 बारीक, 1 चौकोर कटा)','3 टमाटर, कटे हुए','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','2 बड़े चम्मच धनिया के बीज + 4 सूखी लाल मिर्च (कड़ाही मसाला)','1 छोटा चम्मच कसूरी मेथी','3 बड़े चम्मच तेल','नमक']},
     steps:{en:['Dry roast coriander seeds and red chilies; coarsely crush — this is kadai masala.','Fry chopped onion and ginger-garlic paste, add tomatoes and half the kadai masala; cook until soft.','Add cubed onion and bell peppers; toss on high heat keeping them crunchy.','Add paneer, remaining kadai masala, salt, and kasuri methi.','Toss 2-3 minutes and serve hot — the peppers should stay crisp.'],
       hi:['धनिया के बीज और सूखी मिर्च को सूखा भूनकर दरदरा कूटें — यही कड़ाही मसाला है।','बारीक प्याज़ और अदरक-लहसुन पेस्ट भूनें, टमाटर और आधा कड़ाही मसाला डालकर नरम होने तक पकाएँ।','चौकोर प्याज़ और शिमला मिर्च डालकर तेज़ आँच पर चलाएँ, कुरकुरा रखें।','पनीर, बचा मसाला, नमक और कसूरी मेथी डालें।','2-3 मिनट चलाकर गरम परोसें — शिमला मिर्च कुरकुरी रहनी चाहिए।']} },
-  { id:'paneertikka', emoji:'🍢', diet:'veg', name:{en:'Paneer Tikka',hi:'पनीर टिक्का'}, category:{en:'Starter',hi:'स्टार्टर'}, time:40,
+  { id:'paneertikka', wiki:'Paneer_tikka', emoji:'🍢', diet:'veg', name:{en:'Paneer Tikka',hi:'पनीर टिक्का'}, category:{en:'Starter',hi:'स्टार्टर'}, time:40,
     ingredients:{en:['300g paneer, thick cubes','1 cup thick yogurt','1 tbsp ginger-garlic paste','1 tsp red chili powder','1/2 tsp turmeric','1 tsp garam masala','1 tbsp mustard oil','1 bell pepper + 1 onion, cubed','Salt, lemon'],
       hi:['300 ग्राम पनीर, मोटे टुकड़े','1 कप गाढ़ा दही','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','1 छोटा चम्मच लाल मिर्च पाउडर','1/2 छोटा चम्मच हल्दी','1 छोटा चम्मच गरम मसाला','1 बड़ा चम्मच सरसों का तेल','1 शिमला मिर्च + 1 प्याज़, कटे हुए','नमक, नींबू']},
     steps:{en:['Whisk yogurt with all spices, mustard oil, and salt into a thick marinade.','Coat paneer, peppers, and onions; marinate at least 30 minutes.','Thread onto skewers alternating paneer and vegetables.','Grill, air-fry, or cook on a hot tawa until charred at the edges.','Squeeze lemon over and serve with mint chutney.'],
       hi:['दही में सारे मसाले, सरसों का तेल और नमक फेंटकर गाढ़ा मैरिनेड बनाएँ।','पनीर, शिमला मिर्च और प्याज़ को लपेटें; कम से कम 30 मिनट मैरिनेट करें।','सीखों में पनीर और सब्ज़ियाँ बारी-बारी से लगाएँ।','ग्रिल, एयर-फ्राई या गरम तवे पर किनारे झुलसने तक पकाएँ।','नींबू निचोड़ें और पुदीना चटनी के साथ परोसें।']} },
-  { id:'vegbiryani', emoji:'🍛', diet:'veg', name:{en:'Veg Biryani',hi:'वेज बिरयानी'}, category:{en:'Rice',hi:'चावल'}, time:60,
+  { id:'vegbiryani', wiki:'Biryani', emoji:'🍛', diet:'veg', name:{en:'Veg Biryani',hi:'वेज बिरयानी'}, category:{en:'Rice',hi:'चावल'}, time:60,
     ingredients:{en:['2 cups basmati rice','2 cups mixed vegetables','2 onions, fried crisp (birista)','1/2 cup yogurt','1 tbsp ginger-garlic paste','2 tsp biryani masala','Saffron soaked in 1/4 cup warm milk','4 tbsp ghee','Whole spices: bay leaf, cardamom, cloves, cinnamon','Mint and coriander leaves, salt'],
       hi:['2 कप बासमती चावल','2 कप मिली-जुली सब्ज़ियाँ','2 प्याज़, कुरकुरे तले (बिरिस्ता)','1/2 कप दही','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','2 छोटे चम्मच बिरयानी मसाला','1/4 कप गर्म दूध में भिगोया केसर','4 बड़े चम्मच घी','साबुत मसाले: तेज पत्ता, इलायची, लौंग, दालचीनी','पुदीना और हरा धनिया, नमक']},
     steps:{en:['Parboil rice with whole spices and salt until 70% done; drain.','Cook vegetables with ginger-garlic paste, yogurt, and biryani masala into a thick gravy.','Layer: vegetable gravy, then rice, then birista, mint, and saffron milk; repeat.','Seal the pot and cook on dum (lowest heat) for 20-25 minutes.','Rest 10 minutes, then gently mix layers from the side while serving.'],
       hi:['चावल को साबुत मसालों और नमक के साथ 70% पकने तक उबालें; छान लें।','सब्ज़ियों को अदरक-लहसुन पेस्ट, दही और बिरयानी मसाले के साथ गाढ़ी ग्रेवी बनने तक पकाएँ।','परतें लगाएँ: सब्ज़ी ग्रेवी, फिर चावल, फिर बिरिस्ता, पुदीना और केसर दूध; दोहराएँ।','बर्तन सील करके सबसे धीमी आँच पर 20-25 मिनट दम पर पकाएँ।','10 मिनट रखें, फिर परोसते समय किनारे से हल्के हाथ से परतें मिलाएँ।']} },
-  { id:'daltadka', emoji:'🥘', diet:'veg', name:{en:'Dal Tadka',hi:'दाल तड़का'}, category:{en:'Curry',hi:'करी'}, time:35,
+  { id:'daltadka', wiki:'Dal_tadka', emoji:'🥘', diet:'veg', name:{en:'Dal Tadka',hi:'दाल तड़का'}, category:{en:'Curry',hi:'करी'}, time:35,
     ingredients:{en:['1 cup yellow lentils (toor dal)','1 tomato, chopped','1/2 tsp turmeric','2 tbsp ghee','1 tsp cumin seeds','2 dried red chilies','3 cloves garlic, sliced','Pinch of asafoetida','Salt'],
       hi:['1 कप अरहर (तूर) दाल','1 टमाटर, कटा हुआ','1/2 छोटा चम्मच हल्दी','2 बड़े चम्मच घी','1 छोटा चम्मच जीरा','2 सूखी लाल मिर्च','3 कली लहसुन, कटा हुआ','चुटकी भर हींग','नमक']},
     steps:{en:['Pressure cook dal with turmeric, tomato, salt, and water until soft.','Mash the cooked dal to a smooth consistency.','In a separate pan, heat ghee and pop the cumin seeds.','Add garlic, dried chilies, and asafoetida; fry until fragrant.','Pour the tadka over the dal and simmer 5 minutes.'],
       hi:['दाल को हल्दी, टमाटर, नमक और पानी के साथ नरम होने तक प्रेशर कुक करें।','पकी दाल को अच्छी तरह मैश करें।','अलग कढ़ाई में घी गरम करें और जीरा चटकाएँ।','लहसुन, सूखी मिर्च और हींग डालकर खुशबू आने तक भूनें।','तड़का दाल पर डालें और 5 मिनट पकाएँ।']} },
-  { id:'cholebhature', emoji:'🫓', diet:'veg', name:{en:'Chole Bhature',hi:'छोले भटूरे'}, category:{en:'North Indian',hi:'उत्तर भारतीय'}, time:60,
+  { id:'cholebhature', wiki:'Chole_bhature', emoji:'🫓', diet:'veg', name:{en:'Chole Bhature',hi:'छोले भटूरे'}, category:{en:'North Indian',hi:'उत्तर भारतीय'}, time:60,
     ingredients:{en:['2 cups chickpeas, soaked (chole as per Chana Masala)','2 cups all-purpose flour','2 tbsp semolina','2 tbsp yogurt','1/2 tsp baking powder','1 tsp sugar','Oil for deep frying','Salt'],
       hi:['2 कप काबुली चने, भिगोए (छोले, छोले मसाला की तरह)','2 कप मैदा','2 बड़े चम्मच सूजी','2 बड़े चम्मच दही','1/2 छोटा चम्मच बेकिंग पाउडर','1 छोटा चम्मच चीनी','तलने के लिए तेल','नमक']},
     steps:{en:['Make chole following the Chana Masala method, keeping the gravy thick.','Knead flour, semolina, yogurt, baking powder, sugar, and salt into a soft dough; rest 2 hours.','Divide and roll into thick oval discs.','Deep fry in very hot oil, pressing gently so they puff into balloons.','Serve bhature hot with chole, sliced onions, and pickle.'],
       hi:['छोले मसाला की विधि से छोले बनाएँ, ग्रेवी गाढ़ी रखें।','मैदा, सूजी, दही, बेकिंग पाउडर, चीनी और नमक गूँथकर नरम आटा बनाएँ; 2 घंटे रखें।','लोइयाँ बनाकर मोटे अंडाकार बेलें।','बहुत गरम तेल में तलें, हल्का दबाएँ ताकि गुब्बारे जैसे फूलें।','गरम भटूरे छोले, कटे प्याज़ और अचार के साथ परोसें।']} },
-  { id:'shahipaneer', emoji:'👑', diet:'veg', name:{en:'Shahi Paneer',hi:'शाही पनीर'}, category:{en:'Curry',hi:'करी'}, time:40,
+  { id:'shahipaneer', wiki:'Shahi_paneer', emoji:'👑', diet:'veg', name:{en:'Shahi Paneer',hi:'शाही पनीर'}, category:{en:'Curry',hi:'करी'}, time:40,
     ingredients:{en:['250g paneer, cubed','2 onions, chopped','15 cashews, soaked','1/2 cup yogurt','1/4 cup cream','1 tbsp ginger-garlic paste','1/2 tsp cardamom powder','1 tsp garam masala','3 tbsp ghee','Saffron strands, salt, sugar'],
       hi:['250 ग्राम पनीर, कटा हुआ','2 प्याज़, कटे हुए','15 काजू, भिगोए हुए','1/2 कप दही','1/4 कप क्रीम','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','1/2 छोटा चम्मच इलायची पाउडर','1 छोटा चम्मच गरम मसाला','3 बड़े चम्मच घी','केसर के रेशे, नमक, चीनी']},
     steps:{en:['Boil onions and cashews together for 10 minutes, then blend into a white paste.','Cook the paste in ghee with ginger-garlic paste until it loses rawness — do not brown it.','Whisk in yogurt on low heat, then cream, cardamom, saffron, salt, and a touch of sugar.','The gravy should stay pale and royal — unlike red tomato gravies.','Add paneer and simmer gently 5 minutes; finish with garam masala.'],
       hi:['प्याज़ और काजू को 10 मिनट साथ उबालें, फिर पीसकर सफ़ेद पेस्ट बनाएँ।','पेस्ट को घी में अदरक-लहसुन पेस्ट के साथ कच्चापन जाने तक पकाएँ — भूरा न होने दें।','धीमी आँच पर दही फेंटकर डालें, फिर क्रीम, इलायची, केसर, नमक और थोड़ी चीनी।','ग्रेवी हल्के रंग की और शाही रहनी चाहिए — लाल टमाटर ग्रेवी से अलग।','पनीर डालकर 5 मिनट धीमी आँच पर पकाएँ; गरम मसाले से पूरा करें।']} },
-  { id:'vegkorma', emoji:'🥥', diet:'veg', name:{en:'Veg Korma',hi:'वेज कोरमा'}, category:{en:'Curry',hi:'करी'}, time:40,
+  { id:'vegkorma', wiki:'Korma', emoji:'🥥', diet:'veg', name:{en:'Veg Korma',hi:'वेज कोरमा'}, category:{en:'Curry',hi:'करी'}, time:40,
     ingredients:{en:['3 cups mixed vegetables (carrot, beans, peas, potato, cauliflower)','1 onion, chopped','10 cashews + 2 tbsp coconut, ground to paste','1/2 cup yogurt','1 tbsp ginger-garlic paste','1/2 tsp garam masala','Whole spices: 2 cardamom, 1 inch cinnamon','3 tbsp oil','Salt'],
       hi:['3 कप मिली-जुली सब्ज़ियाँ (गाजर, बीन्स, मटर, आलू, गोभी)','1 प्याज़, कटा हुआ','10 काजू + 2 बड़े चम्मच नारियल, पीसकर पेस्ट','1/2 कप दही','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','1/2 छोटा चम्मच गरम मसाला','साबुत मसाले: 2 इलायची, 1 इंच दालचीनी','3 बड़े चम्मच तेल','नमक']},
     steps:{en:['Parboil the vegetables until just tender; drain.','Fry whole spices and onions in oil, add ginger-garlic paste.','Add the cashew-coconut paste and cook 3-4 minutes on low.','Whisk in yogurt gradually, then add vegetables, salt, and a splash of water.','Simmer 8-10 minutes and finish with garam masala.'],
       hi:['सब्ज़ियों को हल्का नरम होने तक उबालें; छान लें।','तेल में साबुत मसाले और प्याज़ भूनें, अदरक-लहसुन पेस्ट डालें।','काजू-नारियल पेस्ट डालकर धीमी आँच पर 3-4 मिनट पकाएँ।','दही धीरे-धीरे फेंटकर डालें, फिर सब्ज़ियाँ, नमक और थोड़ा पानी।','8-10 मिनट पकाएँ और गरम मसाले से पूरा करें।']} },
-  { id:'matarpaneer', emoji:'🟢', diet:'veg', name:{en:'Matar Paneer',hi:'मटर पनीर'}, category:{en:'Curry',hi:'करी'}, time:35,
+  { id:'matarpaneer', wiki:'Mattar_paneer', emoji:'🟢', diet:'veg', name:{en:'Matar Paneer',hi:'मटर पनीर'}, category:{en:'Curry',hi:'करी'}, time:35,
     ingredients:{en:['200g paneer, cubed','1 cup green peas','2 onions, chopped','3 tomatoes, pureed','1 tbsp ginger-garlic paste','1 tsp cumin seeds','1 tsp coriander powder','1/2 tsp garam masala','3 tbsp oil','Salt, coriander leaves'],
       hi:['200 ग्राम पनीर, कटा हुआ','1 कप हरी मटर','2 प्याज़, कटे हुए','3 टमाटर की प्यूरी','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','1 छोटा चम्मच जीरा','1 छोटा चम्मच धनिया पाउडर','1/2 छोटा चम्मच गरम मसाला','3 बड़े चम्मच तेल','नमक, हरा धनिया']},
     steps:{en:['Heat oil, sizzle cumin, fry onions until golden; add ginger-garlic paste.','Add tomato puree and dry spices; bhuna until oil separates.','Add peas with half a cup of water; simmer 5-7 minutes.','Add paneer and salt; simmer 5 more minutes.','Finish with garam masala and coriander leaves.'],
       hi:['तेल गरम करें, जीरा चटकाएँ, प्याज़ सुनहरा होने तक भूनें; अदरक-लहसुन पेस्ट डालें।','टमाटर प्यूरी और सूखे मसाले डालें; तेल अलग होने तक भूनें।','मटर और आधा कप पानी डालकर 5-7 मिनट पकाएँ।','पनीर और नमक डालकर 5 मिनट और पकाएँ।','गरम मसाला और हरे धनिये से पूरा करें।']} },
 /* ---------- NON-VEGETARIAN ---------- */
-  { id:'butterchicken', emoji:'🧈', diet:'nonveg', name:{en:'Butter Chicken (Murgh Makhani)',hi:'बटर चिकन (मुर्ग़ मखनी)'}, category:{en:'Curry',hi:'करी'}, time:60,
+  { id:'butterchicken', wiki:'Butter_chicken', emoji:'🧈', diet:'nonveg', name:{en:'Butter Chicken (Murgh Makhani)',hi:'बटर चिकन (मुर्ग़ मखनी)'}, category:{en:'Curry',hi:'करी'}, time:60,
     ingredients:{en:['500g chicken, boneless','1 cup thick yogurt','1 tbsp ginger-garlic paste','1 tsp red chili powder','5 tomatoes, pureed','3 tbsp butter','1/2 cup cream','1 tsp garam masala','1 tsp kasuri methi','Salt, sugar'],
       hi:['500 ग्राम चिकन, बिना हड्डी','1 कप गाढ़ा दही','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','1 छोटा चम्मच लाल मिर्च पाउडर','5 टमाटर की प्यूरी','3 बड़े चम्मच मक्खन','1/2 कप क्रीम','1 छोटा चम्मच गरम मसाला','1 छोटा चम्मच कसूरी मेथी','नमक, चीनी']},
     steps:{en:['Marinate chicken in yogurt, ginger-garlic paste, chili powder, and salt for 2+ hours.','Grill or pan-sear the chicken until charred at the edges; set aside.','Cook tomato puree in butter until oil separates; blend silky and return to pan.','Add cream, garam masala, salt, and a pinch of sugar; simmer gently.','Add the chicken and crushed kasuri methi; simmer 10 minutes on low.'],
       hi:['चिकन को दही, अदरक-लहसुन पेस्ट, मिर्च पाउडर और नमक में 2+ घंटे मैरिनेट करें।','चिकन को ग्रिल या तवे पर किनारे झुलसने तक सेकें; अलग रखें।','टमाटर प्यूरी को मक्खन में तेल अलग होने तक पकाएँ; बारीक पीसकर वापस डालें।','क्रीम, गरम मसाला, नमक और चुटकी चीनी डालकर धीमी आँच पर पकाएँ।','चिकन और मसली कसूरी मेथी डालें; धीमी आँच पर 10 मिनट पकाएँ।']} },
-  { id:'chickentikkamasala', emoji:'🍅', diet:'nonveg', name:{en:'Chicken Tikka Masala',hi:'चिकन टिक्का मसाला'}, category:{en:'Curry',hi:'करी'}, time:60,
+  { id:'chickentikkamasala', wiki:'Chicken_tikka_masala', emoji:'🍅', diet:'nonveg', name:{en:'Chicken Tikka Masala',hi:'चिकन टिक्का मसाला'}, category:{en:'Curry',hi:'करी'}, time:60,
     ingredients:{en:['500g chicken, cubed','1 cup yogurt','2 tbsp tikka masala spice','1 tbsp ginger-garlic paste','2 onions, chopped','4 tomatoes, pureed','1/2 cup cream','3 tbsp oil','1 tsp garam masala','Salt, coriander leaves'],
       hi:['500 ग्राम चिकन, टुकड़ों में','1 कप दही','2 बड़े चम्मच टिक्का मसाला','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','2 प्याज़, कटे हुए','4 टमाटर की प्यूरी','1/2 कप क्रीम','3 बड़े चम्मच तेल','1 छोटा चम्मच गरम मसाला','नमक, हरा धनिया']},
     steps:{en:['Marinate chicken in yogurt, tikka spice, and half the ginger-garlic paste for 2 hours.','Grill the chicken pieces until lightly charred (tikka); set aside.','Fry onions golden, add remaining paste and tomato puree; bhuna until oil separates.','Add cream and garam masala; simmer into a rich orange gravy.','Fold in the grilled tikka and simmer 5-8 minutes; garnish with coriander.'],
       hi:['चिकन को दही, टिक्का मसाले और आधे अदरक-लहसुन पेस्ट में 2 घंटे मैरिनेट करें।','चिकन के टुकड़ों को हल्का झुलसने तक ग्रिल करें (टिक्का); अलग रखें।','प्याज़ सुनहरा भूनें, बचा पेस्ट और टमाटर प्यूरी डालें; तेल अलग होने तक भूनें।','क्रीम और गरम मसाला डालकर गाढ़ी नारंगी ग्रेवी बनने तक पकाएँ।','ग्रिल किया टिक्का मिलाकर 5-8 मिनट पकाएँ; हरे धनिये से सजाएँ।']} },
-  { id:'chickenbiryani', emoji:'🍛', diet:'nonveg', name:{en:'Chicken Biryani',hi:'चिकन बिरयानी'}, category:{en:'Rice',hi:'चावल'}, time:75,
+  { id:'chickenbiryani', wiki:'Hyderabadi_biryani', emoji:'🍛', diet:'nonveg', name:{en:'Chicken Biryani',hi:'चिकन बिरयानी'}, category:{en:'Rice',hi:'चावल'}, time:75,
     ingredients:{en:['500g chicken, bone-in','2 cups basmati rice','1 cup yogurt','2 onions, fried crisp (birista)','1 tbsp ginger-garlic paste','2 tsp biryani masala','Saffron in 1/4 cup warm milk','4 tbsp ghee','Whole spices: bay leaf, cardamom, cloves, cinnamon','Mint, coriander, salt'],
       hi:['500 ग्राम चिकन, हड्डी सहित','2 कप बासमती चावल','1 कप दही','2 प्याज़, कुरकुरे तले (बिरिस्ता)','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','2 छोटे चम्मच बिरयानी मसाला','1/4 कप गर्म दूध में केसर','4 बड़े चम्मच घी','साबुत मसाले: तेज पत्ता, इलायची, लौंग, दालचीनी','पुदीना, हरा धनिया, नमक']},
     steps:{en:['Marinate chicken in yogurt, ginger-garlic paste, biryani masala, and salt for 2+ hours.','Parboil rice with whole spices and salt to 70% done; drain.','Spread the marinated chicken at the bottom of a heavy pot.','Layer rice over the chicken, topping with birista, mint, saffron milk, and ghee.','Seal and cook on dum: 10 minutes medium, then 20-25 minutes lowest heat.','Rest 10 minutes before opening; serve from the side to keep layers intact.'],
       hi:['चिकन को दही, अदरक-लहसुन पेस्ट, बिरयानी मसाले और नमक में 2+ घंटे मैरिनेट करें।','चावल को साबुत मसालों और नमक के साथ 70% पकाएँ; छान लें।','भारी बर्तन के तले में मैरिनेट किया चिकन फैलाएँ।','चिकन पर चावल की परत लगाएँ, ऊपर बिरिस्ता, पुदीना, केसर दूध और घी डालें।','सील करके दम पर पकाएँ: 10 मिनट मध्यम, फिर 20-25 मिनट सबसे धीमी आँच।','खोलने से पहले 10 मिनट रखें; परतें बनाए रखने के लिए किनारे से परोसें।']} },
-  { id:'tandoorichicken', emoji:'🔥', diet:'nonveg', name:{en:'Tandoori Chicken',hi:'तंदूरी चिकन'}, category:{en:'Starter',hi:'स्टार्टर'}, time:50,
+  { id:'tandoorichicken', wiki:'Tandoori_chicken', emoji:'🔥', diet:'nonveg', name:{en:'Tandoori Chicken',hi:'तंदूरी चिकन'}, category:{en:'Starter',hi:'स्टार्टर'}, time:50,
     ingredients:{en:['1 whole chicken or 6 leg quarters, slashed','1.5 cups thick yogurt','2 tbsp ginger-garlic paste','2 tsp Kashmiri chili powder','1 tsp garam masala','1 tbsp lemon juice','1 tbsp mustard oil','Salt, butter for basting'],
       hi:['1 साबुत चिकन या 6 लेग पीस, चीरे लगे','1.5 कप गाढ़ा दही','2 बड़े चम्मच अदरक-लहसुन पेस्ट','2 छोटे चम्मच कश्मीरी मिर्च पाउडर','1 छोटा चम्मच गरम मसाला','1 बड़ा चम्मच नींबू रस','1 बड़ा चम्मच सरसों का तेल','नमक, लगाने के लिए मक्खन']},
     steps:{en:['Slash the chicken deeply so the marinade penetrates.','First marinade: lemon juice, half the chili powder, salt — 20 minutes.','Second marinade: yogurt, ginger-garlic paste, spices, mustard oil — 4+ hours or overnight.','Roast at high heat (240°C oven or grill) for 30-35 minutes, turning once.','Baste with butter in the final minutes; serve with onion rings and mint chutney.'],
       hi:['चिकन पर गहरे चीरे लगाएँ ताकि मैरिनेड भीतर तक जाए।','पहला मैरिनेड: नींबू रस, आधा मिर्च पाउडर, नमक — 20 मिनट।','दूसरा मैरिनेड: दही, अदरक-लहसुन पेस्ट, मसाले, सरसों का तेल — 4+ घंटे या रातभर।','तेज़ आँच (240°C ओवन या ग्रिल) पर 30-35 मिनट भूनें, एक बार पलटें।','आख़िरी मिनटों में मक्खन लगाएँ; प्याज़ के छल्लों और पुदीना चटनी के साथ परोसें।']} },
-  { id:'chickentikka', emoji:'🍢', diet:'nonveg', name:{en:'Chicken Tikka',hi:'चिकन टिक्का'}, category:{en:'Starter',hi:'स्टार्टर'}, time:45,
+  { id:'chickentikka', wiki:'Chicken_tikka', emoji:'🍢', diet:'nonveg', name:{en:'Chicken Tikka',hi:'चिकन टिक्का'}, category:{en:'Starter',hi:'स्टार्टर'}, time:45,
     ingredients:{en:['500g boneless chicken, cubed','1 cup thick yogurt','1 tbsp ginger-garlic paste','2 tsp Kashmiri chili powder','1 tsp garam masala','1 tbsp lemon juice','1 tbsp mustard oil','1 bell pepper + 1 onion, cubed','Salt'],
       hi:['500 ग्राम बिना हड्डी चिकन, टुकड़ों में','1 कप गाढ़ा दही','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','2 छोटे चम्मच कश्मीरी मिर्च पाउडर','1 छोटा चम्मच गरम मसाला','1 बड़ा चम्मच नींबू रस','1 बड़ा चम्मच सरसों का तेल','1 शिमला मिर्च + 1 प्याज़, कटे','नमक']},
     steps:{en:['Whisk yogurt with all spices, lemon juice, mustard oil, and salt.','Marinate chicken cubes 2+ hours (overnight is better).','Thread onto skewers alternating with peppers and onions.','Grill or cook on a screaming-hot tawa until charred at the edges and cooked through.','Rest 2 minutes, squeeze lemon, and serve with mint chutney.'],
       hi:['दही में सारे मसाले, नींबू रस, सरसों का तेल और नमक फेंटें।','चिकन को 2+ घंटे मैरिनेट करें (रातभर और बेहतर)।','सीखों में शिमला मिर्च और प्याज़ के साथ बारी-बारी लगाएँ।','ग्रिल या बहुत गरम तवे पर किनारे झुलसने और पकने तक सेकें।','2 मिनट रखें, नींबू निचोड़ें, पुदीना चटनी के साथ परोसें।']} },
-  { id:'chickencurry', emoji:'🍗', diet:'nonveg', name:{en:'Chicken Curry (Home Style)',hi:'चिकन करी (घर जैसी)'}, category:{en:'Curry',hi:'करी'}, time:50,
+  { id:'chickencurry', wiki:'Chicken_curry', emoji:'🍗', diet:'nonveg', name:{en:'Chicken Curry (Home Style)',hi:'चिकन करी (घर जैसी)'}, category:{en:'Curry',hi:'करी'}, time:50,
     ingredients:{en:['500g chicken, cut into pieces','2 onions, sliced','2 tomatoes, pureed','1 tbsp ginger-garlic paste','1/2 cup yogurt','1 tsp turmeric','2 tsp coriander powder','1 tsp red chili powder','1 tsp garam masala','3 tbsp oil','Whole spices: bay leaf, cardamom, cloves','Salt, coriander leaves'],
       hi:['500 ग्राम चिकन, टुकड़ों में कटा','2 प्याज़, कटे हुए','2 टमाटर की प्यूरी','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','1/2 कप दही','1 छोटा चम्मच हल्दी','2 छोटे चम्मच धनिया पाउडर','1 छोटा चम्मच लाल मिर्च पाउडर','1 छोटा चम्मच गरम मसाला','3 बड़े चम्मच तेल','साबुत मसाले: तेज पत्ता, इलायची, लौंग','नमक, हरा धनिया']},
     steps:{en:['Marinate chicken in yogurt, turmeric, and salt for 30 minutes.','Fry whole spices and onions in oil until deep golden.','Add ginger-garlic paste, tomato puree, and dry spices; bhuna until oil separates.','Sear the chicken in the masala on high for 5 minutes.','Add a cup of water, cover, and simmer 20-25 minutes; finish with garam masala and coriander.'],
       hi:['चिकन को दही, हल्दी और नमक में 30 मिनट मैरिनेट करें।','तेल में साबुत मसाले और प्याज़ गहरा सुनहरा होने तक भूनें।','अदरक-लहसुन पेस्ट, टमाटर प्यूरी और सूखे मसाले डालें; तेल अलग होने तक भूनें।','चिकन को मसाले में तेज़ आँच पर 5 मिनट भूनें।','एक कप पानी डालें, ढककर 20-25 मिनट पकाएँ; गरम मसाला और हरे धनिये से पूरा करें।']} },
-  { id:'chickenkorma', emoji:'🥥', diet:'nonveg', name:{en:'Chicken Korma',hi:'चिकन कोरमा'}, category:{en:'Curry',hi:'करी'}, time:55,
+  { id:'chickenkorma', wiki:'Korma', emoji:'🥥', diet:'nonveg', name:{en:'Chicken Korma',hi:'चिकन कोरमा'}, category:{en:'Curry',hi:'करी'}, time:55,
     ingredients:{en:['500g chicken','2 onions, sliced and fried golden','15 cashews or almonds, soaked','1 cup yogurt','1 tbsp ginger-garlic paste','1/2 tsp cardamom powder','1 tsp garam masala','4 tbsp ghee','Whole spices: cardamom, cinnamon, cloves','Salt, kewra water (optional)'],
       hi:['500 ग्राम चिकन','2 प्याज़, कटे और सुनहरे तले','15 काजू या बादाम, भिगोए','1 कप दही','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','1/2 छोटा चम्मच इलायची पाउडर','1 छोटा चम्मच गरम मसाला','4 बड़े चम्मच घी','साबुत मसाले: इलायची, दालचीनी, लौंग','नमक, केवड़ा जल (वैकल्पिक)']},
     steps:{en:['Blend fried onions and soaked nuts with a little water into a paste.','Fry whole spices in ghee, add ginger-garlic paste, then the onion-nut paste.','Add chicken and sear 5 minutes, coating in the paste.','Whisk in yogurt gradually on low heat to prevent splitting.','Simmer covered 25-30 minutes; finish with cardamom powder, garam masala, and a drop of kewra.'],
       hi:['तले प्याज़ और भिगोए मेवों को थोड़े पानी के साथ पीसकर पेस्ट बनाएँ।','घी में साबुत मसाले भूनें, अदरक-लहसुन पेस्ट, फिर प्याज़-मेवा पेस्ट डालें।','चिकन डालकर 5 मिनट भूनें, पेस्ट में लपेटें।','दही को धीमी आँच पर धीरे-धीरे फेंटकर डालें ताकि फटे नहीं।','ढककर 25-30 मिनट पकाएँ; इलायची पाउडर, गरम मसाला और बूँद भर केवड़ा से पूरा करें।']} },
-  { id:'kadaichicken', emoji:'🫑', diet:'nonveg', name:{en:'Kadai Chicken',hi:'कड़ाही चिकन'}, category:{en:'Curry',hi:'करी'}, time:45,
+  { id:'kadaichicken', wiki:'Kadai_chicken', emoji:'🫑', diet:'nonveg', name:{en:'Kadai Chicken',hi:'कड़ाही चिकन'}, category:{en:'Curry',hi:'करी'}, time:45,
     ingredients:{en:['500g chicken','2 bell peppers, cubed','3 onions (2 chopped, 1 cubed)','3 tomatoes, chopped','1 tbsp ginger-garlic paste','2 tbsp coriander seeds + 4 dried red chilies (kadai masala)','1 tsp kasuri methi','4 tbsp oil','Salt'],
       hi:['500 ग्राम चिकन','2 शिमला मिर्च, कटी','3 प्याज़ (2 बारीक, 1 चौकोर)','3 टमाटर, कटे','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','2 बड़े चम्मच धनिया बीज + 4 सूखी लाल मिर्च (कड़ाही मसाला)','1 छोटा चम्मच कसूरी मेथी','4 बड़े चम्मच तेल','नमक']},
     steps:{en:['Dry roast and coarsely crush coriander seeds and red chilies — the kadai masala.','Fry chopped onions, add ginger-garlic paste, tomatoes, and half the masala; cook soft.','Add chicken and sear on high, then cover and cook 15-20 minutes.','Toss in cubed onion and bell peppers, keeping them crunchy.','Finish with remaining kadai masala and kasuri methi; serve sizzling.'],
       hi:['धनिया बीज और सूखी मिर्च को सूखा भूनकर दरदरा कूटें — कड़ाही मसाला।','बारीक प्याज़ भूनें, अदरक-लहसुन पेस्ट, टमाटर और आधा मसाला डालकर नरम पकाएँ।','चिकन डालकर तेज़ आँच पर भूनें, फिर ढककर 15-20 मिनट पकाएँ।','चौकोर प्याज़ और शिमला मिर्च डालें, कुरकुरा रखें।','बचे मसाले और कसूरी मेथी से पूरा करें; गरमागरम परोसें।']} },
-  { id:'chicken65', emoji:'🌶️', diet:'nonveg', name:{en:'Chicken 65',hi:'चिकन 65'}, category:{en:'Starter',hi:'स्टार्टर'}, time:40,
+  { id:'chicken65', wiki:'Chicken_65', emoji:'🌶️', diet:'nonveg', name:{en:'Chicken 65',hi:'चिकन 65'}, category:{en:'Starter',hi:'स्टार्टर'}, time:40,
     ingredients:{en:['500g boneless chicken, bite-size','1/2 cup yogurt','1 tbsp ginger-garlic paste','2 tsp red chili powder','3 tbsp cornflour','2 tbsp rice flour','1 egg','10-12 curry leaves','3 green chilies, slit','Oil for deep frying, salt'],
       hi:['500 ग्राम बिना हड्डी चिकन, छोटे टुकड़े','1/2 कप दही','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','2 छोटे चम्मच लाल मिर्च पाउडर','3 बड़े चम्मच कॉर्नफ्लोर','2 बड़े चम्मच चावल का आटा','1 अंडा','10-12 कड़ी पत्ते','3 हरी मिर्च, चीरा लगी','तलने के लिए तेल, नमक']},
     steps:{en:['Marinate chicken in ginger-garlic paste, chili powder, salt, egg, cornflour, and rice flour for 30 minutes.','Deep fry in hot oil until deep red-brown and crisp; drain.','In 1 tbsp oil, crackle curry leaves and green chilies.','Add 2 tbsp yogurt whisked with a pinch of chili powder; sizzle 30 seconds.','Toss the fried chicken in this tempering and serve immediately.'],
       hi:['चिकन को अदरक-लहसुन पेस्ट, मिर्च पाउडर, नमक, अंडा, कॉर्नफ्लोर और चावल के आटे में 30 मिनट मैरिनेट करें।','गरम तेल में गहरा लाल-भूरा और कुरकुरा होने तक तलें; निकालें।','1 बड़े चम्मच तेल में कड़ी पत्ता और हरी मिर्च चटकाएँ।','चुटकी मिर्च पाउडर के साथ फेंटा 2 बड़े चम्मच दही डालें; 30 सेकंड भूनें।','तला चिकन इस तड़के में लपेटकर तुरंत परोसें।']} },
-  { id:'chillichicken', emoji:'🥡', diet:'nonveg', name:{en:'Chilli Chicken',hi:'चिली चिकन'}, category:{en:'Indo-Chinese',hi:'इंडो-चाइनीज़'}, time:40,
+  { id:'chillichicken', wiki:'Chilli_chicken', emoji:'🥡', diet:'nonveg', name:{en:'Chilli Chicken',hi:'चिली चिकन'}, category:{en:'Indo-Chinese',hi:'इंडो-चाइनीज़'}, time:40,
     ingredients:{en:['500g boneless chicken, cubed','3 tbsp cornflour','1 egg','2 tbsp soy sauce','1 tbsp chili sauce','1 tbsp vinegar','1 onion + 1 bell pepper, cubed','4 garlic cloves, chopped','2 green chilies, slit','Oil, salt, pepper'],
       hi:['500 ग्राम बिना हड्डी चिकन, टुकड़ों में','3 बड़े चम्मच कॉर्नफ्लोर','1 अंडा','2 बड़े चम्मच सोया सॉस','1 बड़ा चम्मच चिली सॉस','1 बड़ा चम्मच सिरका','1 प्याज़ + 1 शिमला मिर्च, चौकोर','4 कली लहसुन, कटा','2 हरी मिर्च, चीरा लगी','तेल, नमक, काली मिर्च']},
     steps:{en:['Coat chicken in egg, cornflour, salt, and pepper; deep fry until golden and crisp.','In 2 tbsp oil, fry garlic and green chilies on high heat.','Add onion and bell pepper cubes; toss 2 minutes, keeping them crunchy.','Add soy sauce, chili sauce, vinegar, and a splash of water.','Toss in the fried chicken until glossy and coated; serve hot.'],
       hi:['चिकन को अंडा, कॉर्नफ्लोर, नमक और काली मिर्च में लपेटकर सुनहरा-कुरकुरा तलें।','2 बड़े चम्मच तेल में लहसुन और हरी मिर्च तेज़ आँच पर भूनें।','प्याज़ और शिमला मिर्च डालकर 2 मिनट चलाएँ, कुरकुरा रखें।','सोया सॉस, चिली सॉस, सिरका और थोड़ा पानी डालें।','तला चिकन डालकर चमकदार होने तक लपेटें; गरम परोसें।']} },
-  { id:'roganjosh', emoji:'🐑', diet:'nonveg', name:{en:'Mutton Rogan Josh',hi:'मटन रोगन जोश'}, category:{en:'Curry',hi:'करी'}, time:90,
+  { id:'roganjosh', wiki:'Rogan_josh', emoji:'🐑', diet:'nonveg', name:{en:'Mutton Rogan Josh',hi:'मटन रोगन जोश'}, category:{en:'Curry',hi:'करी'}, time:90,
     ingredients:{en:['750g mutton, bone-in','1 cup yogurt, whisked','2 tsp Kashmiri chili powder','1 tsp fennel powder','1/2 tsp dry ginger powder','4 tbsp mustard oil or ghee','Whole spices: bay leaf, cardamom, cloves, cinnamon','Pinch of asafoetida','Salt'],
       hi:['750 ग्राम मटन, हड्डी सहित','1 कप दही, फेंटा हुआ','2 छोटे चम्मच कश्मीरी मिर्च पाउडर','1 छोटा चम्मच सौंफ पाउडर','1/2 छोटा चम्मच सोंठ पाउडर','4 बड़े चम्मच सरसों का तेल या घी','साबुत मसाले: तेज पत्ता, इलायची, लौंग, दालचीनी','चुटकी भर हींग','नमक']},
     steps:{en:['Heat mustard oil to smoking, cool slightly, then crackle whole spices and asafoetida.','Sear the mutton on high heat until browned all over.','Add Kashmiri chili powder (for the signature red, not fierce heat) and salt.','Whisk in yogurt gradually on low heat, stirring so it never splits.','Add fennel and dry ginger powder, cover, and slow cook 60-75 minutes until fork-tender.'],
       hi:['सरसों का तेल धुआँ उठने तक गरम करें, थोड़ा ठंडा करें, फिर साबुत मसाले और हींग चटकाएँ।','मटन को तेज़ आँच पर चारों ओर से भूरा होने तक भूनें।','कश्मीरी मिर्च पाउडर (सिग्नेचर लाल रंग के लिए, तेज़ तीखेपन के लिए नहीं) और नमक डालें।','दही धीमी आँच पर धीरे-धीरे फेंटकर डालें, लगातार चलाएँ ताकि फटे नहीं।','सौंफ और सोंठ पाउडर डालें, ढककर 60-75 मिनट धीमी आँच पर गलने तक पकाएँ।']} },
-  { id:'muttoncurry', emoji:'🍖', diet:'nonveg', name:{en:'Mutton Curry',hi:'मटन करी'}, category:{en:'Curry',hi:'करी'}, time:90,
+  { id:'muttoncurry', wiki:'Mutton_curry', emoji:'🍖', diet:'nonveg', name:{en:'Mutton Curry',hi:'मटन करी'}, category:{en:'Curry',hi:'करी'}, time:90,
     ingredients:{en:['750g mutton, bone-in','3 onions, sliced','3 tomatoes, chopped','2 tbsp ginger-garlic paste','1/2 cup yogurt','1 tsp turmeric','2 tsp coriander powder','2 tsp red chili powder','1 tsp garam masala','4 tbsp oil','Whole spices, salt, coriander leaves'],
       hi:['750 ग्राम मटन, हड्डी सहित','3 प्याज़, कटे','3 टमाटर, कटे','2 बड़े चम्मच अदरक-लहसुन पेस्ट','1/2 कप दही','1 छोटा चम्मच हल्दी','2 छोटे चम्मच धनिया पाउडर','2 छोटे चम्मच लाल मिर्च पाउडर','1 छोटा चम्मच गरम मसाला','4 बड़े चम्मच तेल','साबुत मसाले, नमक, हरा धनिया']},
     steps:{en:['Marinate mutton in yogurt, turmeric, and salt for 1 hour.','Fry whole spices and onions until deep brown — the color of the curry depends on this.','Add ginger-garlic paste, tomatoes, and dry spices; bhuna hard until oil separates.','Add mutton and sear 10 minutes, then add 2 cups hot water.','Pressure cook or simmer 45-60 minutes until tender; finish with garam masala.'],
       hi:['मटन को दही, हल्दी और नमक में 1 घंटा मैरिनेट करें।','साबुत मसाले और प्याज़ गहरा भूरा होने तक भूनें — करी का रंग इसी पर निर्भर है।','अदरक-लहसुन पेस्ट, टमाटर और सूखे मसाले डालें; तेल अलग होने तक अच्छी तरह भूनें।','मटन डालकर 10 मिनट भूनें, फिर 2 कप गरम पानी डालें।','प्रेशर कुक करें या 45-60 मिनट गलने तक पकाएँ; गरम मसाले से पूरा करें।']} },
-  { id:'keemamatar', emoji:'🫛', diet:'nonveg', name:{en:'Keema Matar',hi:'कीमा मटर'}, category:{en:'Curry',hi:'करी'}, time:45,
+  { id:'keemamatar', wiki:'Keema', emoji:'🫛', diet:'nonveg', name:{en:'Keema Matar',hi:'कीमा मटर'}, category:{en:'Curry',hi:'करी'}, time:45,
     ingredients:{en:['500g minced mutton or chicken','1 cup green peas','2 onions, finely chopped','2 tomatoes, chopped','1 tbsp ginger-garlic paste','1 tsp cumin seeds','2 tsp coriander powder','1 tsp red chili powder','1 tsp garam masala','3 tbsp oil','Salt, coriander leaves'],
       hi:['500 ग्राम मटन या चिकन कीमा','1 कप हरी मटर','2 प्याज़, बारीक कटे','2 टमाटर, कटे','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','1 छोटा चम्मच जीरा','2 छोटे चम्मच धनिया पाउडर','1 छोटा चम्मच लाल मिर्च पाउडर','1 छोटा चम्मच गरम मसाला','3 बड़े चम्मच तेल','नमक, हरा धनिया']},
     steps:{en:['Sizzle cumin in oil and fry onions until golden brown.','Add ginger-garlic paste, tomatoes, and dry spices; cook until oil separates.','Add the keema and fry on high, breaking lumps, until it browns.','Add peas and half a cup of water; cover and simmer 15-20 minutes.','Finish with garam masala and coriander; serve with pav or paratha.'],
       hi:['तेल में जीरा चटकाएँ और प्याज़ सुनहरा-भूरा होने तक भूनें।','अदरक-लहसुन पेस्ट, टमाटर और सूखे मसाले डालें; तेल अलग होने तक पकाएँ।','कीमा डालकर तेज़ आँच पर गाँठें तोड़ते हुए भूरा होने तक भूनें।','मटर और आधा कप पानी डालें; ढककर 15-20 मिनट पकाएँ।','गरम मसाला और हरे धनिये से पूरा करें; पाव या पराठे के साथ परोसें।']} },
-  { id:'seekhkebab', emoji:'🍡', diet:'nonveg', name:{en:'Seekh Kebab',hi:'सीख कबाब'}, category:{en:'Starter',hi:'स्टार्टर'}, time:40,
+  { id:'seekhkebab', wiki:'Seekh_kebab', emoji:'🍡', diet:'nonveg', name:{en:'Seekh Kebab',hi:'सीख कबाब'}, category:{en:'Starter',hi:'स्टार्टर'}, time:40,
     ingredients:{en:['500g minced mutton or chicken (with some fat)','1 onion, very finely chopped and squeezed dry','2 green chilies, minced','1 tbsp ginger-garlic paste','1 tsp garam masala','1 tsp cumin powder','2 tbsp coriander leaves, chopped','1 egg yolk (binder)','Salt, butter for basting'],
       hi:['500 ग्राम मटन या चिकन कीमा (थोड़ी चर्बी सहित)','1 प्याज़, बहुत बारीक कटा और निचोड़ा हुआ','2 हरी मिर्च, बारीक कटी','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','1 छोटा चम्मच गरम मसाला','1 छोटा चम्मच जीरा पाउडर','2 बड़े चम्मच हरा धनिया, कटा','1 अंडे की ज़र्दी (बाँधने के लिए)','नमक, लगाने के लिए मक्खन']},
     steps:{en:['Mix all ingredients and knead the mince 4-5 minutes until sticky — this keeps kebabs from falling apart.','Chill the mixture 30 minutes.','With wet hands, press the mince along skewers into long kebabs.','Grill or pan-cook, turning until browned on all sides and cooked through.','Baste with butter and serve with onion rings, lemon, and mint chutney.'],
       hi:['सारी सामग्री मिलाकर कीमा 4-5 मिनट गूँथें जब तक चिपचिपा न हो — इसी से कबाब टूटते नहीं।','मिश्रण 30 मिनट फ्रिज में रखें।','गीले हाथों से कीमा सीखों पर लंबे कबाब के आकार में दबाएँ।','ग्रिल या तवे पर पलटते हुए चारों ओर भूरा और अंदर तक पकने तक सेकें।','मक्खन लगाकर प्याज़ के छल्लों, नींबू और पुदीना चटनी के साथ परोसें।']} },
-  { id:'fishcurry', emoji:'🐟', diet:'nonveg', name:{en:'Fish Curry',hi:'मछली करी'}, category:{en:'Curry',hi:'करी'}, time:35,
+  { id:'fishcurry', wiki:'Fish_curry', emoji:'🐟', diet:'nonveg', name:{en:'Fish Curry',hi:'मछली करी'}, category:{en:'Curry',hi:'करी'}, time:35,
     ingredients:{en:['500g fish steaks (rohu, kingfish, or pomfret)','1 onion, chopped','2 tomatoes, chopped','1 tbsp ginger-garlic paste','1 tsp mustard seeds','10 curry leaves','1 tsp turmeric','2 tsp red chili powder','1 cup coconut milk or tamarind water','3 tbsp oil, salt'],
       hi:['500 ग्राम मछली के टुकड़े (रोहू, सुरमई या पॉम्फ्रेट)','1 प्याज़, कटा','2 टमाटर, कटे','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','1 छोटा चम्मच राई','10 कड़ी पत्ते','1 छोटा चम्मच हल्दी','2 छोटे चम्मच लाल मिर्च पाउडर','1 कप नारियल दूध या इमली पानी','3 बड़े चम्मच तेल, नमक']},
     steps:{en:['Rub fish with turmeric and salt; rest 15 minutes.','Pop mustard seeds and curry leaves in oil, fry onions golden.','Add ginger-garlic paste, tomatoes, and spices; cook until soft.','Pour in coconut milk (or tamarind water) and bring to a gentle simmer.','Slide in the fish and cook 8-10 minutes without stirring — spoon gravy over instead.'],
       hi:['मछली पर हल्दी और नमक मलें; 15 मिनट रखें।','तेल में राई और कड़ी पत्ता चटकाएँ, प्याज़ सुनहरा भूनें।','अदरक-लहसुन पेस्ट, टमाटर और मसाले डालकर नरम होने तक पकाएँ।','नारियल दूध (या इमली पानी) डालकर हल्का उबाल आने दें।','मछली धीरे से डालें और 8-10 मिनट बिना चलाए पकाएँ — ऊपर से ग्रेवी डालते रहें।']} },
-  { id:'fishfry', emoji:'🍤', diet:'nonveg', name:{en:'Fish Fry',hi:'फिश फ्राई'}, category:{en:'Starter',hi:'स्टार्टर'}, time:30,
+  { id:'fishfry', wiki:'Fish_fry', emoji:'🍤', diet:'nonveg', name:{en:'Fish Fry',hi:'फिश फ्राई'}, category:{en:'Starter',hi:'स्टार्टर'}, time:30,
     ingredients:{en:['500g fish fillets or steaks','1 tbsp ginger-garlic paste','2 tsp red chili powder','1/2 tsp turmeric','1 tbsp lemon juice','3 tbsp rice flour or semolina','1/2 tsp ajwain (carom seeds)','Oil for shallow frying, salt'],
       hi:['500 ग्राम मछली के फ़िले या टुकड़े','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','2 छोटे चम्मच लाल मिर्च पाउडर','1/2 छोटा चम्मच हल्दी','1 बड़ा चम्मच नींबू रस','3 बड़े चम्मच चावल का आटा या सूजी','1/2 छोटा चम्मच अजवाइन','उथले तलने के लिए तेल, नमक']},
     steps:{en:['Marinate fish in ginger-garlic paste, chili powder, turmeric, lemon, ajwain, and salt for 20 minutes.','Coat lightly in rice flour or semolina for crispness.','Heat oil in a flat pan on medium-high.','Shallow fry 3-4 minutes per side until golden and crisp — flip only once.','Drain on paper and serve with lemon wedges and onion.'],
       hi:['मछली को अदरक-लहसुन पेस्ट, मिर्च पाउडर, हल्दी, नींबू, अजवाइन और नमक में 20 मिनट मैरिनेट करें।','कुरकुरेपन के लिए चावल के आटे या सूजी में हल्का लपेटें।','चपटे तवे में मध्यम-तेज़ आँच पर तेल गरम करें।','हर तरफ़ 3-4 मिनट सुनहरा-कुरकुरा होने तक तलें — सिर्फ़ एक बार पलटें।','काग़ज़ पर निकालें और नींबू व प्याज़ के साथ परोसें।']} },
-  { id:'prawnmasala', emoji:'🦐', diet:'nonveg', name:{en:'Prawn Masala',hi:'झींगा मसाला'}, category:{en:'Curry',hi:'करी'}, time:30,
+  { id:'prawnmasala', wiki:'Prawn_curry', emoji:'🦐', diet:'nonveg', name:{en:'Prawn Masala',hi:'झींगा मसाला'}, category:{en:'Curry',hi:'करी'}, time:30,
     ingredients:{en:['400g prawns, cleaned and deveined','2 onions, finely chopped','2 tomatoes, pureed','1 tbsp ginger-garlic paste','1 tsp mustard seeds','8 curry leaves','1/2 tsp turmeric','2 tsp red chili powder','1/2 tsp garam masala','3 tbsp oil, salt'],
       hi:['400 ग्राम झींगे, साफ़ किए हुए','2 प्याज़, बारीक कटे','2 टमाटर की प्यूरी','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','1 छोटा चम्मच राई','8 कड़ी पत्ते','1/2 छोटा चम्मच हल्दी','2 छोटे चम्मच लाल मिर्च पाउडर','1/2 छोटा चम्मच गरम मसाला','3 बड़े चम्मच तेल, नमक']},
     steps:{en:['Toss prawns with turmeric and salt; rest 10 minutes.','Pop mustard seeds and curry leaves in oil, fry onions golden.','Add ginger-garlic paste, tomato puree, and spices; bhuna until oil separates.','Add prawns and cook just 4-5 minutes until they curl and turn pink.','Finish with garam masala — overcooked prawns turn rubbery, so serve right away.'],
       hi:['झींगों को हल्दी और नमक में लपेटें; 10 मिनट रखें।','तेल में राई और कड़ी पत्ता चटकाएँ, प्याज़ सुनहरा भूनें।','अदरक-लहसुन पेस्ट, टमाटर प्यूरी और मसाले डालें; तेल अलग होने तक भूनें।','झींगे डालकर बस 4-5 मिनट पकाएँ जब तक वे मुड़कर गुलाबी न हो जाएँ।','गरम मसाले से पूरा करें — ज़्यादा पके झींगे रबड़ जैसे हो जाते हैं, तुरंत परोसें।']} },
-  { id:'eggcurry', emoji:'🥚', diet:'nonveg', name:{en:'Egg Curry',hi:'अंडा करी'}, category:{en:'Curry',hi:'करी'}, time:30,
+  { id:'eggcurry', wiki:'Egg_curry', emoji:'🥚', diet:'nonveg', name:{en:'Egg Curry',hi:'अंडा करी'}, category:{en:'Curry',hi:'करी'}, time:30,
     ingredients:{en:['6 eggs, hard boiled and peeled','2 onions, finely chopped','2 tomatoes, pureed','1 tbsp ginger-garlic paste','1 tsp cumin seeds','1 tsp coriander powder','1 tsp red chili powder','1/2 tsp garam masala','3 tbsp oil','Salt, coriander leaves'],
       hi:['6 अंडे, उबले और छिले','2 प्याज़, बारीक कटे','2 टमाटर की प्यूरी','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','1 छोटा चम्मच जीरा','1 छोटा चम्मच धनिया पाउडर','1 छोटा चम्मच लाल मिर्च पाउडर','1/2 छोटा चम्मच गरम मसाला','3 बड़े चम्मच तेल','नमक, हरा धनिया']},
     steps:{en:['Lightly fry the boiled eggs in a little oil until golden spots appear; set aside.','Sizzle cumin, fry onions golden, add ginger-garlic paste.','Add tomato puree and dry spices; bhuna until oil separates.','Add a cup of water and simmer into a medium gravy.','Halve or slit the eggs, slide them in, and simmer 5 minutes; garnish with coriander.'],
       hi:['उबले अंडों को थोड़े तेल में सुनहरे धब्बे आने तक हल्का तलें; अलग रखें।','जीरा चटकाएँ, प्याज़ सुनहरा भूनें, अदरक-लहसुन पेस्ट डालें।','टमाटर प्यूरी और सूखे मसाले डालें; तेल अलग होने तक भूनें।','एक कप पानी डालकर मध्यम ग्रेवी बनने तक पकाएँ।','अंडों को आधा काटकर या चीरा लगाकर डालें, 5 मिनट पकाएँ; हरे धनिये से सजाएँ।']} },
-  { id:'eggbhurji', emoji:'🍳', diet:'nonveg', name:{en:'Egg Bhurji',hi:'अंडा भुर्जी'}, category:{en:'Breakfast',hi:'नाश्ता'}, time:15,
+  { id:'eggbhurji', wiki:'Anda_bhurji', emoji:'🍳', diet:'nonveg', name:{en:'Egg Bhurji',hi:'अंडा भुर्जी'}, category:{en:'Breakfast',hi:'नाश्ता'}, time:15,
     ingredients:{en:['4 eggs','1 onion, finely chopped','1 tomato, chopped','1 green chili, chopped','1/2 tsp cumin seeds','1/4 tsp turmeric','2 tbsp oil','Salt, coriander leaves'],
       hi:['4 अंडे','1 प्याज़, बारीक कटा','1 टमाटर, कटा','1 हरी मिर्च, कटी','1/2 छोटा चम्मच जीरा','1/4 छोटा चम्मच हल्दी','2 बड़े चम्मच तेल','नमक, हरा धनिया']},
     steps:{en:['Heat oil and sizzle the cumin seeds.','Fry onions and green chili until soft and lightly golden.','Add tomatoes, turmeric, and salt; cook until tomatoes break down.','Crack in the eggs and scramble on medium heat, stirring continuously.','Cook until just set but still soft; finish with coriander leaves.'],
       hi:['तेल गरम करें और जीरा चटकाएँ।','प्याज़ और हरी मिर्च नरम और हल्का सुनहरा होने तक भूनें।','टमाटर, हल्दी और नमक डालें; टमाटर गलने तक पकाएँ।','अंडे फोड़कर डालें और मध्यम आँच पर लगातार चलाते हुए भुर्जी बनाएँ।','हल्का सेट होने तक पकाएँ, नरम ही रखें; हरे धनिये से सजाएँ।']} },
-  { id:'chickenchettinad', emoji:'🌑', diet:'nonveg', name:{en:'Chicken Chettinad',hi:'चिकन चेट्टिनाड'}, category:{en:'South Indian',hi:'दक्षिण भारतीय'}, time:55,
+  { id:'chickenchettinad', wiki:'Chicken_Chettinad', emoji:'🌑', diet:'nonveg', name:{en:'Chicken Chettinad',hi:'चिकन चेट्टिनाड'}, category:{en:'South Indian',hi:'दक्षिण भारतीय'}, time:55,
     ingredients:{en:['500g chicken','2 onions, chopped','2 tomatoes, chopped','1 tbsp ginger-garlic paste','Chettinad masala: 2 tbsp coriander seeds, 1 tsp fennel, 1 tsp peppercorns, 4 dried red chilies, 1 tsp cumin, 2 tbsp grated coconut — dry roasted and ground','10 curry leaves','4 tbsp oil, salt'],
       hi:['500 ग्राम चिकन','2 प्याज़, कटे','2 टमाटर, कटे','1 बड़ा चम्मच अदरक-लहसुन पेस्ट','चेट्टिनाड मसाला: 2 बड़े चम्मच धनिया बीज, 1 छोटा चम्मच सौंफ, 1 छोटा चम्मच काली मिर्च, 4 सूखी लाल मिर्च, 1 छोटा चम्मच जीरा, 2 बड़े चम्मच कसा नारियल — सूखा भूनकर पिसा','10 कड़ी पत्ते','4 बड़े चम्मच तेल, नमक']},
     steps:{en:['Dry roast all Chettinad masala ingredients until fragrant and grind to a powder.','Fry curry leaves and onions in oil until golden; add ginger-garlic paste.','Add tomatoes and cook soft, then add the ground Chettinad masala.','Add chicken and sear, coating it in the dark, peppery masala.','Add a cup of water, cover, and simmer 25-30 minutes; the gravy should be thick and clinging.'],
@@ -1216,6 +1229,25 @@ function openTechDetail(id){
 }
 
 /* ---------------- RECIPES TAB ---------------- */
+const thumbCache = {};
+function loadThumbs(container){
+  container.querySelectorAll('img[data-wiki]').forEach(img => {
+    const wiki = img.dataset.wiki;
+    if (thumbCache[wiki] !== undefined){
+      if (thumbCache[wiki]) { img.src = thumbCache[wiki]; img.classList.add('loaded'); }
+      return;
+    }
+    fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${wiki}`)
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        const src = data && data.thumbnail ? data.thumbnail.source : null;
+        thumbCache[wiki] = src;
+        if (src){ img.src = src; img.classList.add('loaded'); }
+      })
+      .catch(() => { thumbCache[wiki] = null; });
+  });
+}
+
 function renderRecipes(){
   const list = document.getElementById('recipeList');
   const groups = [
@@ -1229,8 +1261,11 @@ function renderRecipes(){
     const rows = items.map(r => {
       const cooked = state.cooked.includes(r.id);
       const badge = cooked ? `<span class="badge-cooked">${T('cookedBadge')}</span>` : '';
+      const thumb = r.wiki
+        ? `<span class="thumb-wrap"><span class="emoji">${r.emoji}</span><img class="recipe-thumb" data-wiki="${r.wiki}" alt="" loading="lazy" onerror="this.remove()"></span>`
+        : `<span class="emoji">${r.emoji}</span>`;
       return `<div class="recipe-row" onclick="openRecipe('${r.id}')">
-        <span class="emoji">${r.emoji}</span>
+        ${thumb}
         <div class="info">
           <h3>${L(r.name)}</h3>
           <div class="meta">${L(r.category)} · ${r.time} ${T('min')}</div>
@@ -1248,6 +1283,7 @@ function renderRecipes(){
       <div class="diet-group-body">${rows}</div>
     </div>`;
   }).join('');
+  loadThumbs(list);
 }
 
 const openDietGroups = new Set(['vegan']);
@@ -1261,8 +1297,10 @@ let currentRecipeStep = 0;
 function openRecipe(id){
   const r = RECIPES.find(x => x.id === id);
   currentRecipeStep = 0;
+  const banner = r.wiki ? `<img class="modal-banner" data-wiki="${r.wiki}" alt="" onerror="this.remove()">` : '';
   openModal(`
     <button class="modal-close" onclick="closeModal()">✕</button>
+    ${banner}
     <h2>${r.emoji} ${L(r.name)}</h2>
     <div class="modal-meta">${L(r.category)} · ${r.time} ${T('min')}</div>
     <div id="ingredientsBlock">
@@ -1271,6 +1309,7 @@ function openRecipe(id){
       <button class="btn btn-primary btn-block" onclick="startCooking('${r.id}')">${T('startCooking')}</button>
     </div>
   `);
+  loadThumbs(document.getElementById('modalContent'));
 }
 function startCooking(id){
   currentRecipeStep = 0;
