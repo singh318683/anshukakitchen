@@ -521,7 +521,29 @@
     padding:0.1rem 0.45rem; border-radius:100px; margin-left:0.3rem; vertical-align:middle;
   }
 
-  /* RECENTLY COOKED */
+  /* REGIONAL CUISINES */
+  .region-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:0.8rem; padding:0.2rem 0.2rem 0.5rem; }
+  @media(max-width:560px){ .region-grid{ grid-template-columns: repeat(2,1fr); } }
+  .region-card{
+    background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow);
+    border:1px solid rgba(92,46,14,0.07); cursor:pointer;
+    transition:transform 0.2s ease, box-shadow 0.2s ease; overflow:hidden;
+  }
+  .region-card:hover{ transform:translateY(-3px); box-shadow:0 10px 24px rgba(44,26,14,0.18); }
+  .region-card-inner{ padding:0.85rem 0.75rem 0.75rem; text-align:center; }
+  .region-flag{ font-size:1.6rem; display:block; margin-bottom:0.4rem; }
+  .region-img-wrap{ width:100%; height:72px; border-radius:10px; overflow:hidden; margin-bottom:0.5rem; background:var(--cream-2); position:relative; }
+  .region-img{ width:100%; height:72px; object-fit:cover; border-radius:10px; opacity:0; transition:opacity 0.4s ease; }
+  .region-img.loaded{ opacity:1; }
+  .region-card h3{ font-family:var(--font-display); font-size:0.9rem; color:var(--maroon); margin-bottom:0.2rem; }
+  .region-tagline{ font-size:0.72rem; color:rgba(44,26,14,0.6); line-height:1.3; }
+  .region-modal-header{ display:flex; align-items:center; gap:0.8rem; margin-bottom:0.8rem; }
+  .region-detail{ margin-top:0.6rem; }
+  .region-detail-block{ padding:0.7rem 0; border-bottom:1px dashed rgba(92,46,14,0.12); }
+  .region-detail-block:last-child{ border-bottom:none; }
+  .region-detail-block.highlight{ background:var(--cream-2); border-radius:var(--radius-sm); padding:0.8rem; margin-top:0.3rem; border-bottom:none; }
+  .region-detail-label{ font-family:var(--font-display); font-weight:700; font-size:0.82rem; color:var(--maroon); margin-bottom:0.3rem; }
+  .region-detail p{ font-size:0.87rem; line-height:1.55; color:rgba(44,26,14,0.82); }
   .recent-card{
     display:flex; align-items:center; gap:0.9rem; background:var(--white);
     border-radius:var(--radius); padding:0.75rem 1rem; margin-bottom:0.7rem;
@@ -615,6 +637,18 @@
         <div class="diet-group-body">
           <p class="section-sub" data-i18n="spicesSub">Tap each one to learn it.</p>
           <div class="card-grid" id="spiceGrid"></div>
+        </div>
+      </div>
+
+      <div class="diet-group learn-group" id="lgroup-regions">
+        <button class="diet-group-header" style="border-left-color:#c1440e" onclick="toggleLearnGroup('regions')">
+          <span data-i18n="regionsTitle">Regional Cuisines of India</span>
+          <span class="diet-count" id="regionCount"></span>
+          <span class="diet-chevron">▾</span>
+        </button>
+        <div class="diet-group-body">
+          <p class="section-sub" data-i18n="regionsSub">Every state cooks differently — explore the flavors of India's regions.</p>
+          <div class="region-grid" id="regionGrid"></div>
         </div>
       </div>
 
@@ -812,6 +846,8 @@ const UI = {
   grpVeggies2:{en:'More Vegetables',hi:'और सब्ज़ियाँ'},
   grpLentils:{en:'Lentils & Legumes',hi:'दालें और फलियाँ'},
   grpCondiments:{en:'Chutneys & Pastes',hi:'चटनी और पेस्ट'},
+  regionsTitle:{en:'Regional Cuisines of India',hi:'भारत के क्षेत्रीय व्यंजन'},
+  regionsSub:{en:'Every state cooks differently — explore the flavors of India\'s regions.',hi:'हर राज्य अलग तरह पकाता है — भारत के क्षेत्रों के स्वाद जानें।'},
   spicesTitle:{en:'Learn Your Spices',hi:'मसाले सीखें'},
   spicesSub:{en:'Tap each one to learn it.',hi:'हर एक को सीखने के लिए टैप करें।'},
   techTitle:{en:'Core Techniques',hi:'मुख्य तकनीकें'},
@@ -1344,6 +1380,105 @@ const RECIPES = [
       hi:['दही को अदरक-लहसुन पेस्ट, कश्मीरी मिर्च, गरम मसाला, सरसों के तेल और नमक से फेंटें।','पनीर, शिमला मिर्च और प्याज़ को 1+ घंटा मैरिनेट करें।','सीखों पर लगाकर तेज़ आँच पर ग्रिल या एयर-फ्राई करें जब तक झुलसे।','नींबू निचोड़ें, पुदीना-दही डिप के साथ परोसें।','पूर्ण वसा, शून्य कार्ब — आदर्श कीटो स्टार्टर।']} },
 ];
 
+
+const REGIONS = [
+  { id:'punjab', emoji:'🌾', wiki:'Punjabi_cuisine',
+    name:{en:'Punjab',hi:'पंजाब'},
+    tagline:{en:'Rich, buttery, tandoor-fired',hi:'मक्खनी, तंदूरी, भरपूर'},
+    flavor:{en:'Bold and hearty — heavy use of ghee, butter, and cream. Onion-tomato masala base bhuna deeply before adding anything else.',hi:'बोल्ड और भरपूर — घी, मक्खन और क्रीम का खुलकर उपयोग। प्याज़-टमाटर मसाले को गहरा भूनकर ही आगे बढ़ते हैं।'},
+    spices:{en:'Garam masala, kasuri methi, red chili, coriander',hi:'गरम मसाला, कसूरी मेथी, लाल मिर्च, धनिया'},
+    dishes:{en:'Butter Chicken, Dal Makhani, Sarson da Saag, Chole Bhature, Tandoori Chicken, Makki di Roti',hi:'बटर चिकन, दाल मखनी, सरसों का साग, छोले भटूरे, तंदूरी चिकन, मक्की की रोटी'},
+    fact:{en:'The tandoor oven originated here — most of India's beloved grilled dishes trace back to Punjab.',hi:'तंदूर यहीं से आया — भारत के अधिकांश ग्रिल्ड व्यंजनों की जड़ें पंजाब में हैं।'} },
+
+  { id:'gujarat', emoji:'🥜', wiki:'Gujarati_cuisine',
+    name:{en:'Gujarat',hi:'गुजरात'},
+    tagline:{en:'Sweet, sour, and mildly spiced',hi:'मीठा, खट्टा और हल्का मसालेदार'},
+    flavor:{en:'The only major Indian cuisine that balances sweet in savory — a pinch of sugar goes into almost every dish, balanced with tamarind or lemon. Oil-rich but not heavy on chili.',hi:'एकमात्र प्रमुख भारतीय व्यंजन जो नमकीन में मीठा मिलाता है — लगभग हर व्यंजन में चुटकी चीनी, इमली या नींबू से संतुलित।'},
+    spices:{en:'Mustard seeds, curry leaves, asafoetida, turmeric, ajwain',hi:'राई, कड़ी पत्ता, हींग, हल्दी, अजवाइन'},
+    dishes:{en:'Dhokla, Thepla, Undhiyu, Khandvi, Dal Dhokli, Fafda-Jalebi',hi:'ढोकला, थेपला, उंधियू, खांडवी, दाल ढोकली, फाफड़ा-जलेबी'},
+    fact:{en:'Gujarati cuisine is almost entirely vegetarian — one of the richest veg food cultures in the world.',hi:'गुजराती खाना लगभग पूरी तरह शाकाहारी है — दुनिया की सबसे समृद्ध शाकाहारी खान-पान संस्कृतियों में से एक।'} },
+
+  { id:'tamilnadu', emoji:'🥥', wiki:'Tamil_cuisine',
+    name:{en:'Tamil Nadu',hi:'तमिलनाडु'},
+    tagline:{en:'Rice, lentils, and coconut at every turn',hi:'हर मोड़ पर चावल, दाल और नारियल'},
+    flavor:{en:'Sambar and rasam are the backbone — thin, tangy, deeply spiced lentil broths. Coconut in every form: fresh, oil, milk, paste. The tadka always starts with mustard seeds and curry leaves.',hi:'सांभर और रसम रीढ़ हैं — पतली, खट्टी, गहरी मसालेदार दाल। नारियल हर रूप में: ताज़ा, तेल, दूध, पेस्ट। तड़का हमेशा राई और कड़ी पत्ते से।'},
+    spices:{en:'Black pepper, curry leaves, mustard seeds, dry red chili, tamarind, asafoetida',hi:'काली मिर्च, कड़ी पत्ता, राई, सूखी लाल मिर्च, इमली, हींग'},
+    dishes:{en:'Masala Dosa, Idli-Sambar, Chettinad Chicken, Rasam, Pongal, Medu Vada',hi:'मसाला डोसा, इडली-सांभर, चेट्टिनाड चिकन, रसम, पोंगल, मेदू वड़ा'},
+    fact:{en:'Tamil Chettinad cuisine is considered one of the spiciest in India — it uses fresh-ground spice blends unique to each household.',hi:'तमिल चेट्टिनाड व्यंजन भारत में सबसे तीखे माने जाते हैं — हर घर की अपनी ताज़ी पिसी मसाला मिश्रण होती है।'} },
+
+  { id:'kerala', emoji:'🌴', wiki:'Kerala_cuisine',
+    name:{en:'Kerala',hi:'केरल'},
+    tagline:{en:'Coconut oil, seafood, and ancient spices',hi:'नारियल तेल, समुद्री खाना और पुराने मसाले'},
+    flavor:{en:'Almost everything is cooked in coconut oil, finished with coconut milk. The oldest spice-trading coast in the world — black pepper, cardamom, and cloves grow here.',hi:'लगभग सब कुछ नारियल के तेल में, नारियल दूध से पूरा। दुनिया का सबसे पुराना मसाला व्यापारिक तट — काली मिर्च, इलायची और लौंग यहीं उगते हैं।'},
+    spices:{en:'Black pepper, cardamom, cloves, curry leaves, mustard seeds, turmeric',hi:'काली मिर्च, इलायची, लौंग, कड़ी पत्ता, राई, हल्दी'},
+    dishes:{en:'Fish Molee, Appam, Kerala Prawn Curry, Puttu-Kadala, Avial, Kerala Sadya',hi:'फिश मोली, अप्पम, केरला झींगा करी, पुट्टू-कडाला, अवियल, केरला सद्या'},
+    fact:{en:'Kerala is the birthplace of black pepper — the spice that once made it one of the wealthiest trading regions on Earth.',hi:'केरल काली मिर्च की जन्मभूमि है — वह मसाला जो इसे एक समय पृथ्वी के सबसे धनी व्यापारिक क्षेत्रों में से एक बनाता था।'} },
+
+  { id:'rajasthan', emoji:'🏜️', wiki:'Rajasthani_cuisine',
+    name:{en:'Rajasthan',hi:'राजस्थान'},
+    tagline:{en:'Desert cooking — preserved, dried, and intensely spiced',hi:'रेगिस्तानी खाना — संरक्षित, सुखाया हुआ, तीव्र मसालेदार'},
+    flavor:{en:'A desert state with scarce water — recipes evolved to use minimal water, maximum dried ingredients. Heavy on lentils, dried vegetables, and gramflour. Very spicy to preserve food.',hi:'रेगिस्तानी राज्य, पानी कम — रेसिपी कम पानी, ज़्यादा सूखी सामग्री से बनीं। दाल, सूखी सब्ज़ियाँ और बेसन का खूब उपयोग। संरक्षण के लिए बहुत तीखा।'},
+    spices:{en:'Red chili (mathania), coriander, dried mango powder, asafoetida, fenugreek',hi:'लाल मिर्च (माथानिया), धनिया, अमचूर, हींग, मेथी'},
+    dishes:{en:'Dal Baati Churma, Laal Maas, Gatte ki Sabzi, Ker Sangri, Pyaaz Kachori, Ghevar',hi:'दाल बाटी चूरमा, लाल मास, गट्टे की सब्ज़ी, केर सांगरी, प्याज़ कचौरी, घेवर'},
+    fact:{en:'Dal Baati is baked directly in desert sand or over cow-dung fire — one of the oldest cooking methods still used in India.',hi:'दाल बाटी रेगिस्तानी रेत में या गोबर के कंडे पर सेकी जाती है — भारत में अभी भी उपयोग होने वाली सबसे पुरानी खाना पकाने की विधियों में से एक।'} },
+
+  { id:'bengal', emoji:'🐟', wiki:'Bengali_cuisine',
+    name:{en:'West Bengal',hi:'पश्चिम बंगाल'},
+    tagline:{en:'Mustard oil, fish, and five-spice magic',hi:'सरसों का तेल, मछली और पाँच मसालों का जादू'},
+    flavor:{en:'Panch phoron (five-spice: fennel, fenugreek, mustard, cumin, nigella) is the Bengali signature. Mustard oil gives everything a sharp, pungent edge. Fish is treated as reverently as meat elsewhere.',hi:'पंचफोरन (पाँच मसाले: सौंफ, मेथी, राई, जीरा, कलौंजी) बंगाली पहचान है। सरसों का तेल सब कुछ तीखा बनाता है। मछली को वैसे ही सम्मान मिलता है जैसे और जगह मांस को।'},
+    spices:{en:'Panch phoron, mustard seeds, nigella seeds, turmeric, green cardamom',hi:'पंचफोरन, राई, कलौंजी, हल्दी, हरी इलायची'},
+    dishes:{en:'Macher Jhol, Roshogolla, Shorshe Ilish, Kosha Mangsho, Aloo Posto, Mishti Doi',hi:'माछेर झोल, रसगुल्ला, शोर्शे इलिश, कोशा मांगसो, आलू पोस्तो, मिष्टी दोई'},
+    fact:{en:'Bengal gave India its beloved sweets — rasgulla, sandesh, and mishti doi were all invented in Bengali confectionery shops.',hi:'बंगाल ने भारत को प्रिय मिठाइयाँ दीं — रसगुल्ला, संदेश और मिष्टी दोई सभी बंगाली मिठाई की दुकानों में बने।'} },
+
+  { id:'kashmir', emoji:'🏔️', wiki:'Kashmiri_cuisine',
+    name:{en:'Kashmir',hi:'कश्मीर'},
+    tagline:{en:'Saffron, dry ginger, and slow-cooked wonders',hi:'केसर, सोंठ और धीमी आँच के चमत्कार'},
+    flavor:{en:'No onion or garlic in traditional Kashmiri Pandit cooking — flavor comes from dry ginger, fennel, and asafoetida instead. The hallmark is slow cooking (dum) in yogurt and Kashmiri chili — which gives color without fierce heat.',hi:'पारंपरिक कश्मीरी पंडित खाने में प्याज़-लहसुन नहीं — स्वाद सोंठ, सौंफ और हींग से आता है। पहचान है दही और कश्मीरी मिर्च में धीमी dum पकाई — रंग देती है, तीखापन नहीं।'},
+    spices:{en:'Kashmiri chili, fennel powder, dry ginger, asafoetida, saffron, cardamom',hi:'कश्मीरी मिर्च, सौंफ पाउडर, सोंठ, हींग, केसर, इलायची'},
+    dishes:{en:'Rogan Josh, Yakhni, Gushtaba, Haak Saag, Dum Aloo, Kahwa tea',hi:'रोगन जोश, याखनी, गुश्तबा, हाक साग, दम आलू, कहवा चाय'},
+    fact:{en:'Wazwan — a traditional 36-course Kashmiri feast — is considered one of the greatest culinary traditions in the world.',hi:'वज़वान — 36 व्यंजनों का पारंपरिक कश्मीरी भोज — दुनिया की महानतम पाक परंपराओं में से एक माना जाता है।'} },
+
+  { id:'maharashtra', emoji:'🌶️', wiki:'Maharashtrian_cuisine',
+    name:{en:'Maharashtra',hi:'महाराष्ट्र'},
+    tagline:{en:'Coconut, peanuts, and fiery street food',hi:'नारियल, मूंगफली और तीखा स्ट्रीट फूड'},
+    flavor:{en:'Two distinct styles: coastal Konkan (coconut-rich, tangy, fish-forward) and inland Vidarbha (dry, fiery, heavy on peanuts and sesame). Mumbai street food is its own world — vada pav, pav bhaji, misal.',hi:'दो अलग शैलियाँ: तटीय कोंकण (नारियल-भरपूर, खट्टा, मछली-प्रधान) और अंतर्देशीय विदर्भ (सूखा, तीखा, मूंगफली-तिल भरपूर)। मुंबई स्ट्रीट फूड अपनी दुनिया है।'},
+    spices:{en:'Goda masala (unique to Maharashtra), red chili, coriander, sesame, mustard',hi:'गोडा मसाला (महाराष्ट्र का अपना), लाल मिर्च, धनिया, तिल, राई'},
+    dishes:{en:'Vada Pav, Pav Bhaji, Misal Pav, Puran Poli, Kombdi Vade, Sol Kadhi',hi:'वड़ा पाव, पाव भाजी, मिसल पाव, पुरण पोळी, कोंबडी वडे, सोल कढ़ी'},
+    fact:{en:'Vada Pav — Mumbai's humble potato-fritter burger — is the most-sold street food in India with an estimated 1.2 crore sold daily.',hi:'वड़ा पाव — मुंबई का आलू-तली बर्गर — भारत में सबसे ज़्यादा बिकने वाला स्ट्रीट फूड है, अनुमानतः 1.2 करोड़ रोज़ बिकते हैं।'} },
+
+  { id:'andhra', emoji:'🔥', wiki:'Andhra_cuisine',
+    name:{en:'Andhra Pradesh & Telangana',hi:'आंध्र प्रदेश और तेलंगाना'},
+    tagline:{en:'The spiciest cuisine in India',hi:'भारत का सबसे तीखा व्यंजन'},
+    flavor:{en:'Renowned as the hottest regional cuisine in India — generous amounts of red chili in almost everything. Tamarind and tomato provide the sour counterbalance. Rice is the staple, eaten with a succession of curries and pickles.',hi:'भारत का सबसे तीखा क्षेत्रीय व्यंजन — लगभग हर चीज़ में भरपूर लाल मिर्च। इमली और टमाटर खट्टा संतुलन देते हैं। चावल प्रमुख अनाज है, करी और अचार की श्रृंखला के साथ खाया जाता है।'},
+    spices:{en:'Red chili, tamarind, mustard seeds, curry leaves, fenugreek',hi:'लाल मिर्च, इमली, राई, कड़ी पत्ता, मेथी'},
+    dishes:{en:'Hyderabadi Biryani, Gongura Mutton, Avakaya (mango pickle), Pesarattu, Pappu, Punugulu',hi:'हैदराबादी बिरयानी, गोंगुरा मटन, आवकाया (आम का अचार), पेसारट्टू, पप्पू, पुनुगुलु'},
+    fact:{en:'Hyderabadi Biryani is cooked by the dum method in a sealed pot — a tradition brought by the Nizams of Hyderabad from Persia.',hi:'हैदराबादी बिरयानी बंद बर्तन में दम विधि से पकाई जाती है — हैदराबाद के निज़ामों द्वारा फ़ारस से लाई परंपरा।'} },
+
+  { id:'goa', emoji:'🌊', wiki:'Goan_cuisine',
+    name:{en:'Goa',hi:'गोवा'},
+    tagline:{en:'Portuguese-spiced, coconut-drenched seafood',hi:'पुर्तगाली मसाले, नारियल में लिपटा समुद्री खाना'},
+    flavor:{en:'The most fusion cuisine in India — 450 years of Portuguese influence added vinegar, pork, and bread into a Hindu-Muslim-Catholic melting pot. Vinegar in curries is uniquely Goan.',hi:'भारत का सबसे fusion व्यंजन — 450 साल के पुर्तगाली प्रभाव ने सिरका, सूअर और रोटी को हिंदू-मुस्लिम-कैथोलिक संगम में जोड़ा। करी में सिरका विशिष्ट रूप से गोवन है।'},
+    spices:{en:'Kashmiri chili, vinegar, coconut, cumin, cinnamon, cloves',hi:'कश्मीरी मिर्च, सिरका, नारियल, जीरा, दालचीनी, लौंग'},
+    dishes:{en:'Fish Curry Rice, Vindaloo, Xacuti, Sorpotel, Bebinca, Prawn Balchao',hi:'फिश करी राइस, विंदालू, शकुटी, सरपोटेल, बेबिंका, झींगा बालचाओ'},
+    fact:{en:'Vindaloo was originally Carne de Vinha d'Alhos — Portuguese pork in wine and garlic. Indians replaced wine with palm vinegar and added red chili.',hi:'विंदालू मूल रूप से पुर्तगाली Carne de Vinha d'Alhos था — वाइन और लहसुन में सूअर। भारतीयों ने वाइन की जगह ताड़ी सिरका और लाल मिर्च डाल दी।'} },
+
+  { id:'up', emoji:'🕌', wiki:'Awadhi_cuisine',
+    name:{en:'Uttar Pradesh (Awadhi)',hi:'उत्तर प्रदेश (अवधी)'},
+    tagline:{en:'Dum cooking, kebabs, and Mughal refinement',hi:'दम पाक, कबाब और मुगलिया नफ़ासत'},
+    flavor:{en:'Awadh (Lucknow) perfected dum cooking — slow steaming in sealed pots so flavors meld. Known for subtlety over intensity: dishes are aromatic and layered rather than aggressively spiced.',hi:'अवध (लखनऊ) ने दम पाक निखारा — बंद बर्तनों में धीमी भाप ताकि स्वाद घुलें। तीव्रता से अधिक सूक्ष्मता: व्यंजन आक्रामक मसालों की बजाय सुगंधित और बहुपरती हैं।'},
+    spices:{en:'Kewra, saffron, cardamom, mace, rose water, long pepper',hi:'केवड़ा, केसर, इलायची, जावित्री, गुलाब जल, पिप्पली'},
+    dishes:{en:'Galauti Kebab, Lucknowi Biryani, Nihari, Korma, Sheermal, Kulfi',hi:'गलौटी कबाब, लखनवी बिरयानी, निहारी, कोरमा, शीरमाल, कुल्फी'},
+    fact:{en:'The Galauti kebab was invented for an aging Nawab who had lost all his teeth — mince ground so fine it dissolves on the tongue.',hi:'गलौटी कबाब एक बूढ़े नवाब के लिए बनाया गया जिनके दाँत नहीं रहे — कीमा इतना बारीक कि ज़ुबान पर घुल जाए।'} },
+
+  { id:'chhattisgarh', emoji:'🌿', wiki:'Chhattisgarhi_cuisine',
+    name:{en:'Chhattisgarh & Central India',hi:'छत्तीसगढ़ और मध्य भारत'},
+    tagline:{en:'Tribal, earthy, and rice-rooted',hi:'आदिवासी, मिट्टी से जुड़ा, चावल-आधारित'},
+    flavor:{en:'One of the least-known but most unique cuisines in India. Rice in every form — rice bread, rice beer (handia), rice dumplings. Minimal oil, lots of leafy greens cooked simply.',hi:'भारत के सबसे कम जाने पर सबसे अनोखे व्यंजनों में से एक। हर रूप में चावल — चावल की रोटी, चावल की बीयर (हड़िया), चावल के पकौड़े। कम तेल, बहुत सारी पत्तेदार सब्ज़ियाँ सरलता से पकाई।'},
+    spices:{en:'Minimal spices — turmeric, coriander, green chili, and lots of leafy herbs',hi:'कम मसाले — हल्दी, धनिया, हरी मिर्च और खूब पत्तेदार जड़ी-बूटियाँ'},
+    dishes:{en:'Bafauri, Aamat, Chila, Dubki Kadhi, Muthia, Faraa',hi:'बफौरी, आमट, चीला, डुबकी कढ़ी, मुठिया, फरा'},
+    fact:{en:'Chhattisgarh is called the "Rice Bowl of India" — it grows over 20,000 varieties of indigenous rice.',hi:'छत्तीसगढ़ को "भारत का चावल का कटोरा" कहा जाता है — यहाँ 20,000 से अधिक देशी चावल की किस्में उगती हैं।'} },
+];
+
 const QUIZ_POOL = [
   { emoji:'⚫', q:{en:'Which spice pops and crackles loudly the moment it hits hot oil?',hi:'कौन सा मसाला गरम तेल में पड़ते ही ज़ोर से चटकता है?'},
     a:{en:'Mustard Seeds',hi:'राई'}, opts:{en:['Mustard Seeds','Cardamom','Turmeric','Garam Masala'],hi:['राई','इलायची','हल्दी','गरम मसाला']} },
@@ -1447,6 +1582,59 @@ function addXP(amount){
 }
 
 /* ---------------- MODAL ---------------- */
+
+function renderRegions(){
+  const grid = document.getElementById('regionGrid');
+  if(!grid) return;
+  document.getElementById('regionCount').textContent = REGIONS.length;
+  grid.innerHTML = REGIONS.map(r => `
+    <div class="region-card" onclick="openRegionDetail('${r.id}')">
+      <div class="region-card-inner">
+        <span class="region-flag">${r.emoji}</span>
+        <div class="region-img-wrap">
+          <img class="region-img" data-wiki="${r.wiki}" alt="" onerror="this.remove()">
+        </div>
+        <h3>${L(r.name)}</h3>
+        <p class="region-tagline">${L(r.tagline)}</p>
+      </div>
+    </div>`).join('');
+  loadThumbs(grid);
+}
+
+function openRegionDetail(id){
+  const r = REGIONS.find(x => x.id === id);
+  openModal(`
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="region-modal-header">
+      <span style="font-size:2.2rem">${r.emoji}</span>
+      <div>
+        <h2 style="font-family:var(--font-display);color:var(--maroon);font-size:1.2rem">${L(r.name)}</h2>
+        <div class="modal-meta">${L(r.tagline)}</div>
+      </div>
+    </div>
+    <img class="modal-banner" data-wiki="${r.wiki}" alt="" onerror="this.remove()">
+    <div class="region-detail">
+      <div class="region-detail-block">
+        <div class="region-detail-label">🍳 Cooking Style</div>
+        <p>${L(r.flavor)}</p>
+      </div>
+      <div class="region-detail-block">
+        <div class="region-detail-label">🌶️ Key Spices</div>
+        <p>${L(r.spices)}</p>
+      </div>
+      <div class="region-detail-block">
+        <div class="region-detail-label">🍽️ Must-Try Dishes</div>
+        <p>${L(r.dishes)}</p>
+      </div>
+      <div class="region-detail-block highlight">
+        <div class="region-detail-label">💡 Did You Know?</div>
+        <p>${L(r.fact)}</p>
+      </div>
+    </div>
+  `);
+  loadThumbs(document.getElementById('modalContent'));
+}
+
 function openModal(html){
   document.getElementById('modalContent').innerHTML = html;
   document.getElementById('modalOverlay').classList.remove('hidden');
@@ -1463,6 +1651,7 @@ function renderLearn(){
   const spiceGrid = document.getElementById('spiceGrid');
   document.getElementById('spiceCount').textContent = SPICES.length;
   document.getElementById('techCount').textContent = TECHNIQUES.length;
+  renderRegions();
   spiceGrid.innerHTML = SPICES.map(s => {
     const imgHtml = s.wiki
       ? `<span class="card-img-wrap"><img class="card-img" data-wiki="${s.wiki}" alt="" onerror="this.parentElement.style.display='none'"><span class="card-emoji-fallback">${s.emoji}</span></span>`
