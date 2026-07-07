@@ -5,26 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Anshu Ka Kitchen — Learn Indian Cooking</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Mukta:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Mukta:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --turmeric:#c1440e;
-    --turmeric-light:#e07040;
-    --maroon:#5c2e0e;
-    --maroon-dark:#3a1c08;
-    --ember:#2c1a0e;
-    --leaf:#7a9e6a;
-    --leaf-dark:#5a7a4a;
-    --cream:#f5ede0;
-    --cream-2:#eddcca;
-    --chili:#b03a1a;
-    --white:#fdf8f2;
+    --turmeric:#e8a93a;
+    --turmeric-light:#f4cb7c;
+    --maroon:#6b1e23;
+    --maroon-dark:#4a1418;
+    --ember:#2a1810;
+    --leaf:#5b7b4f;
+    --leaf-dark:#3f5836;
+    --cream:#fbf3e3;
+    --cream-2:#f3e6cc;
+    --chili:#c0392b;
+    --white:#fffdf8;
     --font-display:'Baloo 2', sans-serif;
     --font-body:'Mukta', sans-serif;
     --font-utility:'Inter', sans-serif;
     --radius:16px;
     --radius-sm:10px;
-    --shadow: 0 6px 20px rgba(44,26,14,0.18);
+    --shadow: 0 6px 20px rgba(42,24,16,0.18);
   }
   @media (prefers-reduced-motion: reduce){
     *{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
@@ -37,24 +37,24 @@
     color: var(--ember);
     min-height:100vh;
     background-image:
-      radial-gradient(circle at 10% 15%, rgba(180,80,20,0.07) 0, transparent 45%),
-      radial-gradient(circle at 90% 85%, rgba(140,61,24,0.06) 0, transparent 45%);
+      radial-gradient(circle at 10% 15%, rgba(232,169,58,0.10) 0, transparent 45%),
+      radial-gradient(circle at 90% 85%, rgba(91,123,79,0.10) 0, transparent 45%);
   }
   #app{ max-width: 880px; margin:0 auto; padding: 0 0 3rem; }
 
   /* HEADER */
   .topbar{
     background:
-      radial-gradient(circle at 85% 20%, rgba(220,130,60,0.28) 0, transparent 40%),
-      radial-gradient(circle at 10% 80%, rgba(180,80,20,0.20) 0, transparent 45%),
-      linear-gradient(160deg, #8c3d18, var(--maroon-dark));
+      radial-gradient(circle at 85% 20%, rgba(232,169,58,0.18) 0, transparent 40%),
+      radial-gradient(circle at 10% 80%, rgba(192,57,43,0.25) 0, transparent 45%),
+      linear-gradient(135deg, #7a2328, var(--maroon-dark));
     padding: 1.3rem 1.25rem 1.6rem;
     position:relative;
     animation: dropIn 0.6s cubic-bezier(.2,.8,.2,1) both;
   }
   .topbar::before{
     content:''; position:absolute; inset:0; pointer-events:none; opacity:0.5;
-    background-image: radial-gradient(rgba(255,220,180,0.15) 1.2px, transparent 1.2px);
+    background-image: radial-gradient(rgba(244,203,124,0.14) 1.2px, transparent 1.2px);
     background-size: 22px 22px;
   }
   /* Toran scallop edge */
@@ -71,12 +71,12 @@
   .toran span::after{
     content:''; position:absolute; bottom:2px; left:50%; transform:translateX(-50%);
     width:5px; height:5px; border-radius:50%;
-    background: rgba(255,210,170,0.9);
+    background: var(--turmeric);
   }
   @keyframes dropIn{ from{ transform: translateY(-16px); opacity:0; } to{ transform:none; opacity:1; } }
   .brand-row{ display:flex; align-items:center; justify-content:space-between; margin-bottom:1.1rem; position:relative; }
   .brand{
-    font-family: 'Playfair Display', serif; font-weight:800; color: var(--white);
+    font-family: var(--font-display); font-weight:800; color: var(--white);
     font-size: 1.55rem; letter-spacing:0.01em; line-height:1.1;
   }
   .brand span{ background: linear-gradient(90deg, var(--turmeric-light), var(--turmeric)); -webkit-background-clip:text; background-clip:text; color:transparent; }
@@ -120,7 +120,7 @@
     display:flex; align-items:center; gap:1rem;
     background: var(--white); margin: 1rem 1.25rem 0; padding: 0.85rem 1.1rem;
     border-radius: var(--radius); box-shadow: var(--shadow);
-    border: 1px solid rgba(92,46,14,0.08);
+    border: 1px solid rgba(107,30,35,0.08);
   }
   #tadkaSvg{ width:64px; height:52px; flex-shrink:0; overflow:visible; }
   .oil{ animation: simmer 2.6s ease-in-out infinite; }
@@ -145,8 +145,8 @@
   .tab-panel.active{ display:block; }
   @keyframes fadeUp{ from{ opacity:0; transform: translateY(10px); } to{ opacity:1; transform:none; } }
 
-  .section-title{ font-family: 'Playfair Display', serif; font-weight:700; font-size:1.3rem; margin: 1.4rem 0 0.3rem; color: var(--maroon); }
-  .section-sub{ font-size:0.9rem; color: rgba(44,26,14,0.6); margin-bottom:1rem; }
+  .section-title{ font-family: var(--font-display); font-weight:700; font-size:1.3rem; margin: 1.4rem 0 0.3rem; color: var(--maroon); }
+  .section-sub{ font-size:0.9rem; color: rgba(42,24,16,0.6); margin-bottom:1rem; }
 
   /* CARD GRID */
   .card-grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap:0.9rem; }
@@ -154,29 +154,13 @@
 
   .item-card{
     background: var(--white); border-radius: var(--radius); padding:1.1rem;
-    box-shadow: var(--shadow); border:1px solid rgba(92,46,14,0.06);
+    box-shadow: var(--shadow); border:1px solid rgba(107,30,35,0.06);
     cursor:pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; position:relative; overflow:hidden;
   }
-  .item-card:hover{ transform: translateY(-3px); box-shadow: 0 10px 26px rgba(44,26,14,0.22); }
+  .item-card:hover{ transform: translateY(-3px); box-shadow: 0 10px 26px rgba(42,24,16,0.22); }
   .item-card .emoji{ font-size:1.6rem; margin-bottom:0.4rem; display:block; }
-  .card-img-wrap{
-    position:relative; width:64px; height:64px; border-radius:14px;
-    overflow:hidden; margin-bottom:0.6rem; display:block;
-    background:var(--cream-2); flex-shrink:0;
-  }
-  .card-img{
-    width:64px; height:64px; object-fit:cover; border-radius:14px;
-    opacity:0; transition:opacity 0.4s ease; position:absolute; inset:0;
-  }
-  .card-img.loaded{ opacity:1; }
-  .card-emoji-fallback{
-    font-size:1.6rem; position:absolute; inset:0;
-    display:flex; align-items:center; justify-content:center;
-    transition:opacity 0.4s ease;
-  }
-  .card-img.loaded ~ .card-emoji-fallback{ opacity:0; }
   .item-card h3{ font-family: var(--font-display); font-size:1.02rem; color: var(--maroon); margin-bottom:0.3rem; }
-  .item-card p{ font-size:0.85rem; color: rgba(44,26,14,0.65); line-height:1.45; }
+  .item-card p{ font-size:0.85rem; color: rgba(42,24,16,0.65); line-height:1.45; }
 
   .btn{
     font-family: var(--font-display); font-weight:600; font-size:0.9rem; border:none;
@@ -186,26 +170,26 @@
   .btn-primary{ background: var(--turmeric); color: var(--ember); }
   .btn-primary:hover{ background: var(--turmeric-light); }
   .btn-ghost{ background: transparent; color: var(--maroon); border:1.5px solid var(--maroon); }
-  .btn-ghost:hover{ background: rgba(92,46,14,0.06); }
+  .btn-ghost:hover{ background: rgba(107,30,35,0.06); }
   .btn-block{ width:100%; margin-top:0.75rem; }
 
   /* RECIPE LIST */
   .recipe-row{
     display:flex; align-items:center; gap:1rem; background: var(--white); border-radius: var(--radius);
     padding: 0.9rem 1.1rem; margin-bottom:0.8rem; box-shadow: var(--shadow); cursor:pointer;
-    border:1px solid rgba(92,46,14,0.06); transition: transform 0.2s ease;
+    border:1px solid rgba(107,30,35,0.06); transition: transform 0.2s ease;
   }
   .recipe-row:hover{ transform: translateX(3px); }
   .recipe-row .emoji{ font-size:1.8rem; }
   .recipe-row .info{ flex:1; }
   .recipe-row h3{ font-family: var(--font-display); font-size:1.02rem; color:var(--maroon); }
-  .recipe-row .meta{ font-size:0.8rem; color: rgba(44,26,14,0.55); margin-top:0.15rem; }
+  .recipe-row .meta{ font-size:0.8rem; color: rgba(42,24,16,0.55); margin-top:0.15rem; }
   .recipe-row .badge-cooked{ background: var(--leaf); color:#fff; font-size:0.68rem; font-weight:600; padding:0.2rem 0.6rem; border-radius:100px; }
   .thumb-wrap{ position:relative; width:54px; height:54px; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
   .recipe-thumb{
     position:absolute; inset:0; width:54px; height:54px; object-fit:cover;
     border-radius:12px; opacity:0; transition: opacity 0.4s ease;
-    box-shadow: 0 2px 8px rgba(44,26,14,0.2);
+    box-shadow: 0 2px 8px rgba(42,24,16,0.2);
   }
   .recipe-thumb.loaded{ opacity:1; }
   .modal-banner{
@@ -218,7 +202,7 @@
   .diet-group-header{
     width:100%; display:flex; align-items:center; gap:0.7rem;
     font-family: var(--font-display); font-weight:700; font-size:1.05rem;
-    background: var(--white); border:1px solid rgba(92,46,14,0.08);
+    background: var(--white); border:1px solid rgba(107,30,35,0.08);
     border-left:5px solid var(--turmeric); border-radius: var(--radius);
     padding: 0.9rem 1.1rem; cursor:pointer; box-shadow: var(--shadow);
     transition: all 0.2s ease; text-align:left;
@@ -258,14 +242,14 @@
   .quiz-opt.correct{ background: var(--leaf); color:#fff; }
   .quiz-opt.wrong{ background: var(--chili); color:#fff; animation: shake 0.4s ease; }
   @keyframes shake{ 0%,100%{ transform: translateX(0); } 25%{ transform: translateX(-6px); } 75%{ transform: translateX(6px); } }
-  .quiz-footer{ display:flex; justify-content:space-between; align-items:center; margin-top:1.1rem; font-size:0.85rem; color: rgba(44,26,14,0.6); }
+  .quiz-footer{ display:flex; justify-content:space-between; align-items:center; margin-top:1.1rem; font-size:0.85rem; color: rgba(42,24,16,0.6); }
   .streak-pill{ background: var(--maroon); color:#fff; padding:0.3rem 0.8rem; border-radius:100px; font-weight:600; }
 
   /* PROGRESS */
   .xp-jar-wrap{ background: var(--white); border-radius: var(--radius); padding:1.3rem; box-shadow: var(--shadow); margin-bottom:1rem; }
   .xp-jar-label{ display:flex; justify-content:space-between; font-family: var(--font-display); font-weight:600; color: var(--maroon); margin-bottom:0.5rem; }
-  .xp-track{ height:22px; background: var(--cream-2); border-radius:100px; overflow:hidden; border:1px solid rgba(92,46,14,0.08); }
-  .xp-fill{ height:100%; background: linear-gradient(90deg, #e07040, #b03a1a); border-radius:100px; transition: width 0.8s cubic-bezier(.2,.8,.2,1); width:0%; }
+  .xp-track{ height:22px; background: var(--cream-2); border-radius:100px; overflow:hidden; border:1px solid rgba(107,30,35,0.08); }
+  .xp-fill{ height:100%; background: linear-gradient(90deg, var(--turmeric), var(--chili)); border-radius:100px; transition: width 0.8s cubic-bezier(.2,.8,.2,1); width:0%; }
   .badge-grid{ display:grid; grid-template-columns: repeat(4,1fr); gap:0.8rem; }
   @media (max-width:480px){ .badge-grid{ grid-template-columns: repeat(2,1fr); } }
   .badge{
@@ -286,7 +270,7 @@
   .streak-card .lbl{ font-size:0.8rem; opacity:0.85; }
 
   /* MODAL */
-  .modal-overlay{ position:fixed; inset:0; background: rgba(44,26,14,0.55); display:flex; align-items:center; justify-content:center; padding:1rem; z-index:50; }
+  .modal-overlay{ position:fixed; inset:0; background: rgba(42,24,16,0.55); display:flex; align-items:center; justify-content:center; padding:1rem; z-index:50; }
   .modal-overlay.hidden{ display:none; }
   .modal{
     background: var(--cream); border-radius: 20px; max-width:460px; width:100%; max-height:85vh; overflow-y:auto;
@@ -294,21 +278,21 @@
   }
   @keyframes modalIn{ from{ transform: scale(0.92) translateY(10px); opacity:0; } to{ transform:none; opacity:1; } }
   .modal h2{ font-family: var(--font-display); color: var(--maroon); font-size:1.25rem; margin-bottom:0.6rem; }
-  .modal .modal-meta{ font-size:0.85rem; color: rgba(44,26,14,0.6); margin-bottom:1rem; }
+  .modal .modal-meta{ font-size:0.85rem; color: rgba(42,24,16,0.6); margin-bottom:1rem; }
   .modal-close{ float:right; background:none; border:none; font-size:1.1rem; cursor:pointer; color: var(--maroon); }
   .ingredient-list{ list-style:none; margin: 0.6rem 0 1.2rem; }
-  .ingredient-list li{ padding:0.4rem 0; border-bottom:1px dashed rgba(92,46,14,0.15); font-size:0.92rem; display:flex; gap:0.5rem; align-items:center; }
+  .ingredient-list li{ padding:0.4rem 0; border-bottom:1px dashed rgba(107,30,35,0.15); font-size:0.92rem; display:flex; gap:0.5rem; align-items:center; }
   .ingredient-list li::before{ content:'🌿'; font-size:0.8rem; }
   .step-box{ background: var(--white); border-radius: var(--radius-sm); padding:1rem; margin-bottom:0.8rem; border-left:4px solid var(--turmeric); }
   .step-box .step-num{ font-family: var(--font-display); font-weight:700; color: var(--chili); font-size:0.85rem; margin-bottom:0.2rem; }
   .step-nav{ display:flex; justify-content:space-between; gap:0.6rem; margin-top:1rem; }
-  .spice-detail p{ font-size:0.9rem; line-height:1.55; margin-bottom:0.85rem; color: rgba(44,26,14,0.85); }
+  .spice-detail p{ font-size:0.9rem; line-height:1.55; margin-bottom:0.85rem; color: rgba(42,24,16,0.85); }
   .spice-detail strong{ color: var(--maroon); font-family: var(--font-display); font-weight:600; font-size:0.85rem; display:block; margin-bottom:0.15rem; }
 
   /* CREATE — KITCHEN */
   .kitchen-stage{
     background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow);
-    border:1px solid rgba(92,46,14,0.06); padding: 1.4rem 1.2rem 1.2rem; margin-bottom:1.2rem;
+    border:1px solid rgba(107,30,35,0.06); padding: 1.4rem 1.2rem 1.2rem; margin-bottom:1.2rem;
     text-align:center;
   }
   .pan-wrap{ position:relative; width:280px; height:240px; margin:0 auto; }
@@ -319,14 +303,14 @@
     width:212px; height:212px; border-radius:50%;
     background: radial-gradient(circle at 32% 26%, #5c3b25, #33200f 55%, #170a03 92%);
     box-shadow:
-      0 16px 34px rgba(44,26,14,0.4),
+      0 16px 34px rgba(42,24,16,0.4),
       inset 0 -8px 18px rgba(0,0,0,0.55),
       inset 0 8px 14px rgba(255,255,255,0.07);
     transition: box-shadow 0.5s ease;
   }
   .pan-wrap.cooking .pan-top{
     box-shadow:
-      0 16px 34px rgba(44,26,14,0.4),
+      0 16px 34px rgba(42,24,16,0.4),
       0 0 46px rgba(235,120,40,0.55),
       inset 0 -8px 18px rgba(0,0,0,0.55),
       inset 0 8px 14px rgba(255,255,255,0.07);
@@ -412,10 +396,10 @@
   .ing-acc-header{
     width:100%; display:flex; align-items:center; gap:0.6rem;
     font-family: var(--font-display); font-weight:700; font-size:0.92rem;
-    background: var(--white); border:1px solid rgba(92,46,14,0.08);
+    background: var(--white); border:1px solid rgba(107,30,35,0.08);
     border-left:4px solid var(--turmeric); border-radius: var(--radius-sm);
     padding: 0.65rem 0.9rem; cursor:pointer;
-    box-shadow: 0 2px 8px rgba(44,26,14,0.08);
+    box-shadow: 0 2px 8px rgba(42,24,16,0.08);
     transition: all 0.2s ease; text-align:left; color: var(--maroon);
   }
   .ing-acc-header:hover{ background: var(--cream-2); }
@@ -439,7 +423,7 @@
   .chip-img{
     position:absolute; inset:0; width:36px; height:36px; object-fit:cover;
     border-radius:50%; opacity:0; transition: opacity 0.35s ease;
-    box-shadow: 0 1px 4px rgba(44,26,14,0.2);
+    box-shadow: 0 1px 4px rgba(42,24,16,0.2);
   }
   .chip-img.loaded{ opacity:1; }
   .chip-emoji{ font-size:1.2rem; width:36px; text-align:center; flex-shrink:0; }
@@ -447,11 +431,11 @@
   .ing-chip{
     display:inline-flex; align-items:center; gap:0.4rem;
     font-family: var(--font-body); font-weight:600; font-size:0.87rem; color: var(--ember);
-    background: var(--white); border:1px solid rgba(92,46,14,0.1); border-radius:100px;
-    padding:0.3rem 0.7rem 0.3rem 0.3rem; cursor:pointer; box-shadow: 0 2px 8px rgba(44,26,14,0.1);
+    background: var(--white); border:1px solid rgba(107,30,35,0.1); border-radius:100px;
+    padding:0.3rem 0.7rem 0.3rem 0.3rem; cursor:pointer; box-shadow: 0 2px 8px rgba(42,24,16,0.1);
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
-  .ing-chip:hover{ transform: translateY(-2px); box-shadow: 0 5px 14px rgba(44,26,14,0.18); }
+  .ing-chip:hover{ transform: translateY(-2px); box-shadow: 0 5px 14px rgba(42,24,16,0.18); }
   .ing-chip:active{ transform: scale(0.94); }
   .result-photo-wrap{
     width:100%; height:200px; border-radius:14px; overflow:hidden;
@@ -475,16 +459,16 @@
   .result-dish h3{ font-family: var(--font-display); font-size:1.35rem; color: var(--maroon); margin:0.5rem 0 0.2rem; }
   .result-stars{ font-size:1.3rem; letter-spacing:0.15em; margin-bottom:0.8rem; }
   .result-feedback{ text-align:left; }
-  .result-feedback p{ font-size:0.88rem; line-height:1.5; padding:0.35rem 0; color: rgba(44,26,14,0.85); border-bottom:1px dashed rgba(92,46,14,0.12); }
+  .result-feedback p{ font-size:0.88rem; line-height:1.5; padding:0.35rem 0; color: rgba(42,24,16,0.85); border-bottom:1px dashed rgba(107,30,35,0.12); }
   .result-feedback p:last-child{ border-bottom:none; }
 
-  footer{ text-align:center; font-size:0.8rem; color: rgba(44,26,14,0.5); padding: 1.5rem 1rem 0; font-family: var(--font-utility); }
+  footer{ text-align:center; font-size:0.8rem; color: rgba(42,24,16,0.5); padding: 1.5rem 1rem 0; font-family: var(--font-utility); }
 
   /* INGREDIENT SEARCH */
   .ing-search-wrap{ position:relative; margin-bottom:1rem; }
   .ing-search{
     width:100%; padding:0.75rem 2.5rem 0.75rem 1rem; border-radius:100px;
-    border:1.5px solid rgba(92,46,14,0.12); background:var(--white);
+    border:1.5px solid rgba(107,30,35,0.12); background:var(--white);
     font-family:var(--font-body); font-size:0.95rem; color:var(--ember);
     box-shadow:var(--shadow); outline:none; transition:border 0.2s ease;
   }
@@ -497,23 +481,23 @@
     font-family:var(--font-display); font-weight:600; font-size:0.85rem;
     background:linear-gradient(135deg,var(--maroon),var(--maroon-dark)); color:#fff;
     border:none; border-radius:100px; padding:0.45rem 1rem; cursor:pointer;
-    box-shadow:0 3px 8px rgba(44,26,14,0.2); transition:transform 0.15s ease;
+    box-shadow:0 3px 8px rgba(42,24,16,0.2); transition:transform 0.15s ease;
   }
   .step-timer-btn:hover{ transform:translateY(-1px); }
   .step-timer-display{
     font-family:var(--font-display); font-weight:800; font-size:1.2rem;
     color:var(--white); background:var(--maroon); border-radius:100px;
     padding:0.3rem 1rem; min-width:70px; text-align:center;
-    box-shadow:0 3px 8px rgba(44,26,14,0.25); display:flex; align-items:center; justify-content:center;
+    box-shadow:0 3px 8px rgba(42,24,16,0.25); display:flex; align-items:center; justify-content:center;
   }
 
   /* DIFFICULTY FILTER */
   .diff-filter-row{ display:flex; gap:0.5rem; margin-bottom:1rem; flex-wrap:wrap; }
   .diff-btn{
     font-family:var(--font-display); font-weight:600; font-size:0.82rem;
-    background:var(--white); color:var(--ember); border:1.5px solid rgba(92,46,14,0.1);
+    background:var(--white); color:var(--ember); border:1.5px solid rgba(107,30,35,0.1);
     border-radius:100px; padding:0.4rem 0.9rem; cursor:pointer;
-    box-shadow:0 2px 6px rgba(44,26,14,0.08); transition:all 0.2s ease;
+    box-shadow:0 2px 6px rgba(42,24,16,0.08); transition:all 0.2s ease;
   }
   .diff-btn.active{ background:var(--maroon); color:#fff; border-color:var(--maroon); }
   .diff-badge{
@@ -522,33 +506,30 @@
   }
 
   /* REGIONAL CUISINES */
-  .region-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:0.8rem; padding:0.2rem 0.2rem 0.5rem; }
-  @media(max-width:560px){ .region-grid{ grid-template-columns: repeat(2,1fr); } }
-  .region-card{
-    background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow);
-    border:1px solid rgba(92,46,14,0.07); cursor:pointer;
-    transition:transform 0.2s ease, box-shadow 0.2s ease; overflow:hidden;
-  }
+  .region-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:0.8rem; padding:0.2rem 0.2rem 0.5rem; }
+  @media(max-width:560px){ .region-grid{ grid-template-columns:repeat(2,1fr); } }
+  .region-card{ background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); border:1px solid rgba(92,46,14,0.07); cursor:pointer; transition:transform 0.2s ease,box-shadow 0.2s ease; overflow:hidden; }
   .region-card:hover{ transform:translateY(-3px); box-shadow:0 10px 24px rgba(44,26,14,0.18); }
   .region-card-inner{ padding:0.85rem 0.75rem 0.75rem; text-align:center; }
   .region-flag{ font-size:1.6rem; display:block; margin-bottom:0.4rem; }
-  .region-img-wrap{ width:100%; height:72px; border-radius:10px; overflow:hidden; margin-bottom:0.5rem; background:var(--cream-2); position:relative; }
+  .region-img-wrap{ width:100%; height:72px; border-radius:10px; overflow:hidden; margin-bottom:0.5rem; background:var(--cream-2); }
   .region-img{ width:100%; height:72px; object-fit:cover; border-radius:10px; opacity:0; transition:opacity 0.4s ease; }
   .region-img.loaded{ opacity:1; }
   .region-card h3{ font-family:var(--font-display); font-size:0.9rem; color:var(--maroon); margin-bottom:0.2rem; }
   .region-tagline{ font-size:0.72rem; color:rgba(44,26,14,0.6); line-height:1.3; }
   .region-modal-header{ display:flex; align-items:center; gap:0.8rem; margin-bottom:0.8rem; }
-  .region-detail{ margin-top:0.6rem; }
   .region-detail-block{ padding:0.7rem 0; border-bottom:1px dashed rgba(92,46,14,0.12); }
   .region-detail-block:last-child{ border-bottom:none; }
-  .region-detail-block.highlight{ background:var(--cream-2); border-radius:var(--radius-sm); padding:0.8rem; margin-top:0.3rem; border-bottom:none; }
+  .region-detail-block.highlight{ background:var(--cream-2); border-radius:var(--radius-sm); padding:0.8rem; border-bottom:none; margin-top:0.3rem; }
   .region-detail-label{ font-family:var(--font-display); font-weight:700; font-size:0.82rem; color:var(--maroon); margin-bottom:0.3rem; }
   .region-detail p{ font-size:0.87rem; line-height:1.55; color:rgba(44,26,14,0.82); }
+
+  /* RECENTLY COOKED */
   .recent-card{
     display:flex; align-items:center; gap:0.9rem; background:var(--white);
     border-radius:var(--radius); padding:0.75rem 1rem; margin-bottom:0.7rem;
     box-shadow:var(--shadow); cursor:pointer; transition:transform 0.2s ease;
-    border:1px solid rgba(92,46,14,0.06);
+    border:1px solid rgba(107,30,35,0.06);
   }
   .recent-card:hover{ transform:translateX(3px); }
   .recent-thumb-wrap{ width:52px; height:52px; border-radius:12px; overflow:hidden; flex-shrink:0; background:var(--cream-2); display:flex; align-items:center; justify-content:center; }
@@ -556,12 +537,12 @@
   .recent-thumb.loaded{ opacity:1; }
   .recent-info{ flex:1; }
   .recent-name{ font-family:var(--font-display); font-weight:700; font-size:0.95rem; color:var(--maroon); }
-  .recent-meta{ font-size:0.78rem; color:rgba(44,26,14,0.55); margin-top:0.1rem; }
+  .recent-meta{ font-size:0.78rem; color:rgba(42,24,16,0.55); margin-top:0.1rem; }
   .recent-cooked-badge{ background:var(--leaf); color:#fff; font-size:0.75rem; font-weight:700; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
 
   /* ONBOARDING */
   .onboard-overlay{
-    display:none; position:fixed; inset:0; background:rgba(44,26,14,0.7);
+    display:none; position:fixed; inset:0; background:rgba(42,24,16,0.7);
     z-index:100; align-items:center; justify-content:center; padding:1.5rem;
   }
   .onboard-card{
@@ -574,13 +555,13 @@
   .onboard-slide.active{ display:block; animation:fadeUp 0.35s ease; }
   .onboard-art{ font-size:3.5rem; margin-bottom:0.8rem; animation:flamePulse 2s ease-in-out infinite; }
   .onboard-card h2{ font-family:var(--font-display); font-size:1.4rem; color:var(--maroon); margin-bottom:0.6rem; }
-  .onboard-card p{ font-size:0.95rem; color:rgba(44,26,14,0.75); line-height:1.6; }
+  .onboard-card p{ font-size:0.95rem; color:rgba(42,24,16,0.75); line-height:1.6; }
   .onboard-card p b{ color:var(--maroon); }
   .onboard-dots{ display:flex; justify-content:center; gap:0.5rem; margin:1.2rem 0 1rem; }
   .onboard-dot{ width:10px; height:10px; border-radius:50%; background:var(--cream-2); transition:all 0.3s ease; }
   .onboard-dot.active{ background:var(--turmeric); transform:scale(1.2); }
   .onboard-btn{ width:100%; font-size:1rem; }
-  .onboard-skip{ background:none; border:none; font-size:0.85rem; color:rgba(44,26,14,0.45); cursor:pointer; margin-top:0.7rem; display:block; width:100%; }
+  .onboard-skip{ background:none; border:none; font-size:0.85rem; color:rgba(42,24,16,0.45); cursor:pointer; margin-top:0.7rem; display:block; width:100%; }
 </style>
 </head>
 <body>
@@ -647,7 +628,7 @@
           <span class="diet-chevron">▾</span>
         </button>
         <div class="diet-group-body">
-          <p class="section-sub" data-i18n="regionsSub">Every state cooks differently — explore the flavors of India's regions.</p>
+          <p class="section-sub" data-i18n="regionsSub">Every state cooks differently.</p>
           <div class="region-grid" id="regionGrid"></div>
         </div>
       </div>
@@ -846,9 +827,7 @@ const UI = {
   grpVeggies2:{en:'More Vegetables',hi:'और सब्ज़ियाँ'},
   grpLentils:{en:'Lentils & Legumes',hi:'दालें और फलियाँ'},
   grpCondiments:{en:'Chutneys & Pastes',hi:'चटनी और पेस्ट'},
-  regionsTitle:{en:'Regional Cuisines of India',hi:'भारत के क्षेत्रीय व्यंजन'},
-  regionsSub:{en:'Every state cooks differently — explore the flavors of India\'s regions.',hi:'हर राज्य अलग तरह पकाता है — भारत के क्षेत्रों के स्वाद जानें।'},
-  spicesTitle:{en:'Learn Your Spices',hi:'मसाले सीखें'},
+  spicesTitle:{en:'Essential Spices',hi:'ज़रूरी मसाले'},
   spicesSub:{en:'Tap each one to learn it.',hi:'हर एक को सीखने के लिए टैप करें।'},
   techTitle:{en:'Core Techniques',hi:'मुख्य तकनीकें'},
   techSub:{en:'The methods behind almost every Indian dish.',hi:'लगभग हर भारतीय व्यंजन के पीछे की विधियाँ।'},
@@ -943,7 +922,7 @@ const SPICES = [
     benefits:{en:'A source of selenium and magnesium; mustard oil is also traditionally used in massage.',hi:'सेलेनियम और मैग्नीशियम का स्रोत; सरसों का तेल परंपरागत रूप से मालिश में भी उपयोग होता है।'},
     uses:{en:'Essential to South Indian tempering for sambar, rasam, and coconut-based curries.',hi:'सांभर, रसम और नारियल आधारित करी के दक्षिण भारतीय तड़के के लिए अनिवार्य।'},
     tip:{en:'Add to hot oil and stand back or cover the pan briefly — the seeds pop and can jump out.',hi:'गरम तेल में डालकर थोड़ा पीछे हटें या ढक्कन लगाएँ — दाने चटककर बाहर उछल सकते हैं।'} },
-  { id:'coriander', wiki:'Coriander', emoji:'🌿',
+  { id:'coriander', emoji:'🌿',
     name:{en:'Coriander Powder (Dhania)',hi:'धनिया पाउडर'},
     desc:{en:'Mild and citrusy. The quiet workhorse behind most North Indian curry bases.',hi:'हल्का और नींबू जैसा। अधिकांश उत्तर भारतीय करी के आधार का ख़ामोश मेहनती मसाला।'},
     origin:{en:'Grown throughout India; the seeds and the fresh leaves (cilantro) come from the same plant but are used very differently.',hi:'पूरे भारत में उगाया जाता है; बीज और ताज़ी पत्तियाँ (हरा धनिया) एक ही पौधे से आते हैं पर इस्तेमाल बहुत अलग है।'},
@@ -964,7 +943,7 @@ const SPICES = [
     benefits:{en:'Traditionally used to reduce bloating, especially when cooking lentils and beans.',hi:'परंपरागत रूप से पेट फूलने से राहत के लिए, विशेषकर दाल और फलियाँ पकाते समय, उपयोग होती है।'},
     uses:{en:'A pinch added to hot oil at the very start of tempering, especially in dals and vegetable dishes.',hi:'तड़के की बिल्कुल शुरुआत में गरम तेल में एक चुटकी, विशेषकर दाल और सब्ज़ियों में।'},
     tip:{en:'Keep it in an airtight container — its raw smell is strong and can seep into other spices nearby.',hi:'हवाबंद डिब्बे में रखें — इसकी तेज़ गंध आस-पास के मसालों में समा सकती है।'} },
-  { id:'cardamom', wiki:'Cardamom', emoji:'💚',
+  { id:'cardamom', emoji:'💚',
     name:{en:'Cardamom (Elaichi)',hi:'इलायची'},
     desc:{en:'Sweet and floral. Shows up in both savory curries and chai or dessert.',hi:'मीठी और फूलों जैसी खुशबू। नमकीन करी से लेकर चाय और मिठाई तक में मिलती है।'},
     origin:{en:'Native to the forests of the Western Ghats in South India, though Guatemala is now also a major grower.',hi:'दक्षिण भारत के पश्चिमी घाट के जंगलों की मूल निवासी, हालाँकि अब ग्वाटेमाला भी बड़ा उत्पादक है।'},
@@ -978,7 +957,7 @@ const SPICES = [
     benefits:{en:'Contains capsaicin, which is linked to a temporary boost in metabolism.',hi:'इसमें कैप्साइसिन होता है, जो चयापचय (मेटाबॉलिज़्म) को अस्थायी रूप से बढ़ाने से जुड़ा है।'},
     uses:{en:'The primary source of heat and red color in most curries, marinades, and pickles.',hi:'अधिकांश करी, मैरिनेड और अचार में तीखेपन और लाल रंग का मुख्य स्रोत।'},
     tip:{en:'Add it with the other dry spices early in cooking so it loses its raw, sharp edge.',hi:'पकाने की शुरुआत में बाकी सूखे मसालों के साथ डालें ताकि इसका कच्चापन निकल जाए।'} },
-  { id:'blackpepper', wiki:'Black_pepper', emoji:'⚪',
+  { id:'blackpepper', emoji:'⚪',
     name:{en:'Black Pepper (Kali Mirch)',hi:'काली मिर्च'},
     desc:{en:"Sharp, woody heat. India's original source of spice-trade fame, long before chilies arrived.",hi:'तीखी, लकड़ी जैसी गर्मी। मिर्च के आने से बहुत पहले भारत की मसाला-व्यापार प्रसिद्धि का मूल स्रोत।'},
     origin:{en:'Native to the Malabar coast of Kerala — the "black gold" that drove centuries of global spice trade to India.',hi:'केरल के मालाबार तट की मूल निवासी — वह "काला सोना" जिसने सदियों तक दुनिया का मसाला व्यापार भारत की ओर खींचा।'},
@@ -992,21 +971,21 @@ const SPICES = [
     benefits:{en:'Clove oil is a traditional home remedy for toothache, and cloves are chewed to freshen breath.',hi:'लौंग का तेल दाँत दर्द का पारंपरिक घरेलू उपचार है, और मुँह की ताज़गी के लिए लौंग चबाई जाती है।'},
     uses:{en:'Whole cloves in biryani, pulao, and garam masala; a key note in masala chai.',hi:'साबुत लौंग बिरयानी, पुलाव और गरम मसाले में; मसाला चाय की एक ख़ास खुशबू।'},
     tip:{en:'Use sparingly — 2-3 whole cloves flavor an entire pot. Too many overpower everything else.',hi:'कम इस्तेमाल करें — 2-3 लौंग पूरे बर्तन के लिए काफ़ी हैं। ज़्यादा डालने से बाकी सब दब जाता है।'} },
-  { id:'cinnamon', wiki:'Cinnamon', emoji:'🪵',
+  { id:'cinnamon', emoji:'🪵',
     name:{en:'Cinnamon (Dalchini)',hi:'दालचीनी'},
     desc:{en:'Sweet, warm bark that rounds out both savory curries and desserts.',hi:'मीठी, गर्म छाल जो नमकीन करी और मिठाइयों दोनों का स्वाद निखारती है।'},
     origin:{en:'True cinnamon comes from Sri Lanka; the stronger cassia variety is more common in Indian kitchens.',hi:'असली दालचीनी श्रीलंका से आती है; भारतीय रसोई में तेज़ स्वाद वाली कैसिया किस्म ज़्यादा आम है।'},
     benefits:{en:'Traditionally used to support blood sugar balance and warm the body in winter.',hi:'परंपरागत रूप से रक्त शर्करा संतुलन और सर्दियों में शरीर को गर्म रखने के लिए उपयोग होती है।'},
     uses:{en:'A stick dropped into biryani, pulao, and curries at the tadka stage; ground into garam masala and chai.',hi:'तड़के के समय बिरयानी, पुलाव और करी में एक टुकड़ा; पिसी हुई गरम मसाले और चाय में।'},
     tip:{en:'Add the whole stick to hot oil at the start — it releases flavor slowly and can be fished out before serving.',hi:'शुरुआत में गरम तेल में साबुत टुकड़ा डालें — यह धीरे-धीरे स्वाद छोड़ती है और परोसने से पहले निकाली जा सकती है।'} },
-  { id:'fenugreek', wiki:'Fenugreek', emoji:'🌾',
+  { id:'fenugreek', emoji:'🌾',
     name:{en:'Fenugreek (Methi)',hi:'मेथी'},
     desc:{en:'Bitter seeds and aromatic dried leaves — the flavor behind that "restaurant curry" smell.',hi:'कड़वे दाने और खुशबूदार सूखी पत्तियाँ — "रेस्टोरेंट वाली करी" की महक का राज़।'},
     origin:{en:'One of the oldest cultivated spice plants, grown across India with Rajasthan as the major producer.',hi:'सबसे पुराने उगाए जाने वाले मसाला पौधों में से एक, पूरे भारत में उगती है — राजस्थान सबसे बड़ा उत्पादक है।'},
     benefits:{en:'Traditionally used to support digestion and lactation; often soaked overnight and eaten in the morning.',hi:'परंपरागत रूप से पाचन और स्तनपान में सहायक; अक्सर रातभर भिगोकर सुबह खाई जाती है।'},
     uses:{en:'Seeds in pickles, sambar powder, and tadkas; dried leaves (kasuri methi) crushed over butter chicken and paneer dishes.',hi:'दाने अचार, सांभर पाउडर और तड़कों में; सूखी पत्तियाँ (कसूरी मेथी) बटर चिकन और पनीर के व्यंजनों पर।'},
     tip:{en:'Crush kasuri methi between your palms before adding at the end — heat from your hands releases its aroma.',hi:'अंत में डालने से पहले कसूरी मेथी को हथेलियों में मसलें — हाथों की गर्मी से खुशबू खिल उठती है।'} },
-  { id:'fennel', wiki:'Fennel_seed', emoji:'🌱',
+  { id:'fennel', emoji:'🌱',
     name:{en:'Fennel Seeds (Saunf)',hi:'सौंफ'},
     desc:{en:'Sweet, licorice-like seeds served after meals in every Indian restaurant.',hi:'मीठे, मुलेठी जैसे दाने जो हर भारतीय रेस्टोरेंट में भोजन के बाद परोसे जाते हैं।'},
     origin:{en:'Grown widely in Gujarat and Rajasthan; a staple of both the kitchen and the after-dinner tray.',hi:'गुजरात और राजस्थान में बड़े पैमाने पर उगाई जाती है; रसोई और भोजन के बाद की तश्तरी दोनों की शान।'},
@@ -1027,7 +1006,7 @@ const SPICES = [
     benefits:{en:'The classic Indian home remedy for gas and indigestion — often taken with warm water and salt.',hi:'गैस और अपच का क्लासिक भारतीय घरेलू उपचार — अक्सर गुनगुने पानी और नमक के साथ ली जाती है।'},
     uses:{en:'Kneaded into paratha and puri dough, sprinkled into pakora batter, and used in fish fry masalas.',hi:'पराठे और पूरी के आटे में गूँथी जाती है, पकौड़े के घोल में छिड़की जाती है, और मछली फ्राई मसालों में।'},
     tip:{en:'Rub the seeds between your fingers before adding to release the thymol aroma.',hi:'डालने से पहले उंगलियों के बीच मसलें ताकि थाइमोल की खुशबू निकल आए।'} },
-  { id:'saffron', wiki:'Saffron', emoji:'🌸',
+  { id:'saffron', emoji:'🌸',
     name:{en:'Saffron (Kesar)',hi:'केसर'},
     desc:{en:"The world's most precious spice — a few threads perfume an entire dish golden.",hi:'दुनिया का सबसे कीमती मसाला — कुछ ही रेशे पूरे व्यंजन को सुनहरी खुशबू से भर देते हैं।'},
     origin:{en:'Grown in India almost exclusively in the Pampore region of Kashmir, harvested by hand from crocus flowers.',hi:'भारत में लगभग पूरी तरह कश्मीर के पंपोर क्षेत्र में उगाया जाता है, क्रोकस फूलों से हाथ से चुना जाता है।'},
@@ -1383,100 +1362,89 @@ const RECIPES = [
 
 const REGIONS = [
   { id:'punjab', emoji:'🌾', wiki:'Punjabi_cuisine',
-    name:{en:'Punjab',hi:'पंजाब'},
-    tagline:{en:'Rich, buttery, tandoor-fired',hi:'मक्खनी, तंदूरी, भरपूर'},
-    flavor:{en:'Bold and hearty — heavy use of ghee, butter, and cream. Onion-tomato masala base bhuna deeply before adding anything else.',hi:'बोल्ड और भरपूर — घी, मक्खन और क्रीम का खुलकर उपयोग। प्याज़-टमाटर मसाले को गहरा भूनकर ही आगे बढ़ते हैं।'},
-    spices:{en:'Garam masala, kasuri methi, red chili, coriander',hi:'गरम मसाला, कसूरी मेथी, लाल मिर्च, धनिया'},
-    dishes:{en:'Butter Chicken, Dal Makhani, Sarson da Saag, Chole Bhature, Tandoori Chicken, Makki di Roti',hi:'बटर चिकन, दाल मखनी, सरसों का साग, छोले भटूरे, तंदूरी चिकन, मक्की की रोटी'},
-    fact:{en:'The tandoor oven originated here — most of India's beloved grilled dishes trace back to Punjab.',hi:'तंदूर यहीं से आया — भारत के अधिकांश ग्रिल्ड व्यंजनों की जड़ें पंजाब में हैं।'} },
-
+    name:{en:"Punjab",hi:"पंजाब"},
+    tagline:{en:"Rich, buttery, tandoor-fired",hi:"मक्खनी, तंदूरी, भरपूर"},
+    flavor:{en:"Bold and hearty — heavy use of ghee, butter, and cream. Onion-tomato masala base bhuna deeply before adding anything else.",hi:"बोल्ड और भरपूर — घी, मक्खन और क्रीम का खुलकर उपयोग। प्याज़-टमाटर मसाले को गहरा भूनकर ही आगे बढ़ते हैं।"},
+    spices:{en:"Garam masala, kasuri methi, red chili, coriander",hi:"गरम मसाला, कसूरी मेथी, लाल मिर्च, धनिया"},
+    dishes:{en:"Butter Chicken, Dal Makhani, Sarson da Saag, Chole Bhature, Tandoori Chicken",hi:"बटर चिकन, दाल मखनी, सरसों का साग, छोले भटूरे, तंदूरी चिकन"},
+    fact:{en:"The tandoor oven originated here — most of India's beloved grilled dishes trace back to Punjab.",hi:"तंदूर यहीं से आया — भारत के अधिकांश ग्रिल्ड व्यंजनों की जड़ें पंजाब में हैं।"} },
   { id:'gujarat', emoji:'🥜', wiki:'Gujarati_cuisine',
-    name:{en:'Gujarat',hi:'गुजरात'},
-    tagline:{en:'Sweet, sour, and mildly spiced',hi:'मीठा, खट्टा और हल्का मसालेदार'},
-    flavor:{en:'The only major Indian cuisine that balances sweet in savory — a pinch of sugar goes into almost every dish, balanced with tamarind or lemon. Oil-rich but not heavy on chili.',hi:'एकमात्र प्रमुख भारतीय व्यंजन जो नमकीन में मीठा मिलाता है — लगभग हर व्यंजन में चुटकी चीनी, इमली या नींबू से संतुलित।'},
-    spices:{en:'Mustard seeds, curry leaves, asafoetida, turmeric, ajwain',hi:'राई, कड़ी पत्ता, हींग, हल्दी, अजवाइन'},
-    dishes:{en:'Dhokla, Thepla, Undhiyu, Khandvi, Dal Dhokli, Fafda-Jalebi',hi:'ढोकला, थेपला, उंधियू, खांडवी, दाल ढोकली, फाफड़ा-जलेबी'},
-    fact:{en:'Gujarati cuisine is almost entirely vegetarian — one of the richest veg food cultures in the world.',hi:'गुजराती खाना लगभग पूरी तरह शाकाहारी है — दुनिया की सबसे समृद्ध शाकाहारी खान-पान संस्कृतियों में से एक।'} },
-
+    name:{en:"Gujarat",hi:"गुजरात"},
+    tagline:{en:"Sweet, sour, and mildly spiced",hi:"मीठा, खट्टा और हल्का मसालेदार"},
+    flavor:{en:"The only major Indian cuisine that balances sweet in savory — a pinch of sugar goes into almost every dish, balanced with tamarind or lemon.",hi:"एकमात्र प्रमुख भारतीय व्यंजन जो नमकीन में मीठा मिलाता है — लगभग हर व्यंजन में चुटकी चीनी।"},
+    spices:{en:"Mustard seeds, curry leaves, asafoetida, turmeric, ajwain",hi:"राई, कड़ी पत्ता, हींग, हल्दी, अजवाइन"},
+    dishes:{en:"Dhokla, Thepla, Undhiyu, Khandvi, Dal Dhokli, Fafda-Jalebi",hi:"ढोकला, थेपला, उंधियू, खांडवी, दाल ढोकली, फाफड़ा-जलेबी"},
+    fact:{en:"Gujarati cuisine is almost entirely vegetarian — one of the richest veg food cultures in the world.",hi:"गुजराती खाना लगभग पूरी तरह शाकाहारी है — दुनिया की सबसे समृद्ध शाकाहारी संस्कृतियों में से एक।"} },
   { id:'tamilnadu', emoji:'🥥', wiki:'Tamil_cuisine',
-    name:{en:'Tamil Nadu',hi:'तमिलनाडु'},
-    tagline:{en:'Rice, lentils, and coconut at every turn',hi:'हर मोड़ पर चावल, दाल और नारियल'},
-    flavor:{en:'Sambar and rasam are the backbone — thin, tangy, deeply spiced lentil broths. Coconut in every form: fresh, oil, milk, paste. The tadka always starts with mustard seeds and curry leaves.',hi:'सांभर और रसम रीढ़ हैं — पतली, खट्टी, गहरी मसालेदार दाल। नारियल हर रूप में: ताज़ा, तेल, दूध, पेस्ट। तड़का हमेशा राई और कड़ी पत्ते से।'},
-    spices:{en:'Black pepper, curry leaves, mustard seeds, dry red chili, tamarind, asafoetida',hi:'काली मिर्च, कड़ी पत्ता, राई, सूखी लाल मिर्च, इमली, हींग'},
-    dishes:{en:'Masala Dosa, Idli-Sambar, Chettinad Chicken, Rasam, Pongal, Medu Vada',hi:'मसाला डोसा, इडली-सांभर, चेट्टिनाड चिकन, रसम, पोंगल, मेदू वड़ा'},
-    fact:{en:'Tamil Chettinad cuisine is considered one of the spiciest in India — it uses fresh-ground spice blends unique to each household.',hi:'तमिल चेट्टिनाड व्यंजन भारत में सबसे तीखे माने जाते हैं — हर घर की अपनी ताज़ी पिसी मसाला मिश्रण होती है।'} },
-
+    name:{en:"Tamil Nadu",hi:"तमिलनाडु"},
+    tagline:{en:"Rice, lentils, and coconut at every turn",hi:"हर मोड़ पर चावल, दाल और नारियल"},
+    flavor:{en:"Sambar and rasam are the backbone — thin, tangy, deeply spiced lentil broths. Coconut in every form. The tadka always starts with mustard seeds and curry leaves.",hi:"सांभर और रसम रीढ़ हैं — पतली, खट्टी, गहरी दाल। नारियल हर रूप में। तड़का हमेशा राई और कड़ी पत्ते से।"},
+    spices:{en:"Black pepper, curry leaves, mustard seeds, dry red chili, tamarind",hi:"काली मिर्च, कड़ी पत्ता, राई, सूखी लाल मिर्च, इमली"},
+    dishes:{en:"Masala Dosa, Idli-Sambar, Chettinad Chicken, Rasam, Pongal, Medu Vada",hi:"मसाला डोसा, इडली-सांभर, चेट्टिनाड चिकन, रसम, पोंगल, मेदू वड़ा"},
+    fact:{en:"Tamil Chettinad cuisine uses fresh-ground spice blends unique to each household — considered one of the spiciest in India.",hi:"तमिल चेट्टिनाड व्यंजन हर घर की ताज़ी पिसी मसाला मिश्रण से बनता है — भारत में सबसे तीखे माने जाते हैं।"} },
   { id:'kerala', emoji:'🌴', wiki:'Kerala_cuisine',
-    name:{en:'Kerala',hi:'केरल'},
-    tagline:{en:'Coconut oil, seafood, and ancient spices',hi:'नारियल तेल, समुद्री खाना और पुराने मसाले'},
-    flavor:{en:'Almost everything is cooked in coconut oil, finished with coconut milk. The oldest spice-trading coast in the world — black pepper, cardamom, and cloves grow here.',hi:'लगभग सब कुछ नारियल के तेल में, नारियल दूध से पूरा। दुनिया का सबसे पुराना मसाला व्यापारिक तट — काली मिर्च, इलायची और लौंग यहीं उगते हैं।'},
-    spices:{en:'Black pepper, cardamom, cloves, curry leaves, mustard seeds, turmeric',hi:'काली मिर्च, इलायची, लौंग, कड़ी पत्ता, राई, हल्दी'},
-    dishes:{en:'Fish Molee, Appam, Kerala Prawn Curry, Puttu-Kadala, Avial, Kerala Sadya',hi:'फिश मोली, अप्पम, केरला झींगा करी, पुट्टू-कडाला, अवियल, केरला सद्या'},
-    fact:{en:'Kerala is the birthplace of black pepper — the spice that once made it one of the wealthiest trading regions on Earth.',hi:'केरल काली मिर्च की जन्मभूमि है — वह मसाला जो इसे एक समय पृथ्वी के सबसे धनी व्यापारिक क्षेत्रों में से एक बनाता था।'} },
-
+    name:{en:"Kerala",hi:"केरल"},
+    tagline:{en:"Coconut oil, seafood, and ancient spices",hi:"नारियल तेल, समुद्री खाना और पुराने मसाले"},
+    flavor:{en:"Almost everything is cooked in coconut oil, finished with coconut milk. The oldest spice-trading coast in the world — black pepper, cardamom, and cloves grow here.",hi:"लगभग सब कुछ नारियल के तेल में, नारियल दूध से पूरा। दुनिया का सबसे पुराना मसाला व्यापारिक तट।"},
+    spices:{en:"Black pepper, cardamom, cloves, curry leaves, mustard seeds, turmeric",hi:"काली मिर्च, इलायची, लौंग, कड़ी पत्ता, राई, हल्दी"},
+    dishes:{en:"Fish Molee, Appam, Kerala Prawn Curry, Puttu-Kadala, Avial, Kerala Sadya",hi:"फिश मोली, अप्पम, केरला झींगा करी, पुट्टू-कडाला, अवियल, केरला सद्या"},
+    fact:{en:"Kerala is the birthplace of black pepper — the spice that once made it one of the wealthiest trading regions on Earth.",hi:"केरल काली मिर्च की जन्मभूमि है — वह मसाला जो इसे एक समय पृथ्वी के सबसे धनी व्यापारिक क्षेत्रों में से एक बनाता था।"} },
   { id:'rajasthan', emoji:'🏜️', wiki:'Rajasthani_cuisine',
-    name:{en:'Rajasthan',hi:'राजस्थान'},
-    tagline:{en:'Desert cooking — preserved, dried, and intensely spiced',hi:'रेगिस्तानी खाना — संरक्षित, सुखाया हुआ, तीव्र मसालेदार'},
-    flavor:{en:'A desert state with scarce water — recipes evolved to use minimal water, maximum dried ingredients. Heavy on lentils, dried vegetables, and gramflour. Very spicy to preserve food.',hi:'रेगिस्तानी राज्य, पानी कम — रेसिपी कम पानी, ज़्यादा सूखी सामग्री से बनीं। दाल, सूखी सब्ज़ियाँ और बेसन का खूब उपयोग। संरक्षण के लिए बहुत तीखा।'},
-    spices:{en:'Red chili (mathania), coriander, dried mango powder, asafoetida, fenugreek',hi:'लाल मिर्च (माथानिया), धनिया, अमचूर, हींग, मेथी'},
-    dishes:{en:'Dal Baati Churma, Laal Maas, Gatte ki Sabzi, Ker Sangri, Pyaaz Kachori, Ghevar',hi:'दाल बाटी चूरमा, लाल मास, गट्टे की सब्ज़ी, केर सांगरी, प्याज़ कचौरी, घेवर'},
-    fact:{en:'Dal Baati is baked directly in desert sand or over cow-dung fire — one of the oldest cooking methods still used in India.',hi:'दाल बाटी रेगिस्तानी रेत में या गोबर के कंडे पर सेकी जाती है — भारत में अभी भी उपयोग होने वाली सबसे पुरानी खाना पकाने की विधियों में से एक।'} },
-
+    name:{en:"Rajasthan",hi:"राजस्थान"},
+    tagline:{en:"Desert cooking — preserved, dried, intensely spiced",hi:"रेगिस्तानी खाना — संरक्षित, सुखाया, तीव्र मसालेदार"},
+    flavor:{en:"A desert state with scarce water — recipes evolved to use minimal water and maximum dried ingredients. Heavy on lentils, dried vegetables, and gram flour.",hi:"रेगिस्तानी राज्य, पानी कम — कम पानी, ज़्यादा सूखी सामग्री। दाल, सूखी सब्ज़ियाँ और बेसन का खूब उपयोग।"},
+    spices:{en:"Red chili, coriander, dried mango powder, asafoetida, fenugreek",hi:"लाल मिर्च, धनिया, अमचूर, हींग, मेथी"},
+    dishes:{en:"Dal Baati Churma, Laal Maas, Gatte ki Sabzi, Ker Sangri, Pyaaz Kachori",hi:"दाल बाटी चूरमा, लाल मास, गट्टे की सब्ज़ी, केर सांगरी, प्याज़ कचौरी"},
+    fact:{en:"Dal Baati is baked directly in desert sand — one of the oldest cooking methods still used in India.",hi:"दाल बाटी रेगिस्तानी रेत में सेकी जाती है — भारत में अभी भी उपयोग होने वाली सबसे पुरानी विधियों में से एक।"} },
   { id:'bengal', emoji:'🐟', wiki:'Bengali_cuisine',
-    name:{en:'West Bengal',hi:'पश्चिम बंगाल'},
-    tagline:{en:'Mustard oil, fish, and five-spice magic',hi:'सरसों का तेल, मछली और पाँच मसालों का जादू'},
-    flavor:{en:'Panch phoron (five-spice: fennel, fenugreek, mustard, cumin, nigella) is the Bengali signature. Mustard oil gives everything a sharp, pungent edge. Fish is treated as reverently as meat elsewhere.',hi:'पंचफोरन (पाँच मसाले: सौंफ, मेथी, राई, जीरा, कलौंजी) बंगाली पहचान है। सरसों का तेल सब कुछ तीखा बनाता है। मछली को वैसे ही सम्मान मिलता है जैसे और जगह मांस को।'},
-    spices:{en:'Panch phoron, mustard seeds, nigella seeds, turmeric, green cardamom',hi:'पंचफोरन, राई, कलौंजी, हल्दी, हरी इलायची'},
-    dishes:{en:'Macher Jhol, Roshogolla, Shorshe Ilish, Kosha Mangsho, Aloo Posto, Mishti Doi',hi:'माछेर झोल, रसगुल्ला, शोर्शे इलिश, कोशा मांगसो, आलू पोस्तो, मिष्टी दोई'},
-    fact:{en:'Bengal gave India its beloved sweets — rasgulla, sandesh, and mishti doi were all invented in Bengali confectionery shops.',hi:'बंगाल ने भारत को प्रिय मिठाइयाँ दीं — रसगुल्ला, संदेश और मिष्टी दोई सभी बंगाली मिठाई की दुकानों में बने।'} },
-
+    name:{en:"West Bengal",hi:"पश्चिम बंगाल"},
+    tagline:{en:"Mustard oil, fish, and five-spice magic",hi:"सरसों का तेल, मछली और पाँच मसालों का जादू"},
+    flavor:{en:"Panch phoron — five spices: fennel, fenugreek, mustard, cumin, nigella — is the Bengali signature. Mustard oil gives everything a sharp, pungent edge.",hi:"पंचफोरन — पाँच मसाले: सौंफ, मेथी, राई, जीरा, कलौंजी — बंगाली पहचान है। सरसों का तेल सब कुछ तीखा बनाता है।"},
+    spices:{en:"Panch phoron, mustard seeds, nigella seeds, turmeric, green cardamom",hi:"पंचफोरन, राई, कलौंजी, हल्दी, हरी इलायची"},
+    dishes:{en:"Macher Jhol, Roshogolla, Shorshe Ilish, Kosha Mangsho, Aloo Posto, Mishti Doi",hi:"माछेर झोल, रसगुल्ला, शोर्शे इलिश, कोशा मांगसो, आलू पोस्तो, मिष्टी दोई"},
+    fact:{en:"Bengal invented rasgulla, sandesh, and mishti doi — the roots of India's beloved sweets tradition.",hi:"बंगाल ने रसगुल्ला, संदेश और मिष्टी दोई बनाए — भारत की मिठाई परंपरा की जड़ें यहीं हैं।"} },
   { id:'kashmir', emoji:'🏔️', wiki:'Kashmiri_cuisine',
-    name:{en:'Kashmir',hi:'कश्मीर'},
-    tagline:{en:'Saffron, dry ginger, and slow-cooked wonders',hi:'केसर, सोंठ और धीमी आँच के चमत्कार'},
-    flavor:{en:'No onion or garlic in traditional Kashmiri Pandit cooking — flavor comes from dry ginger, fennel, and asafoetida instead. The hallmark is slow cooking (dum) in yogurt and Kashmiri chili — which gives color without fierce heat.',hi:'पारंपरिक कश्मीरी पंडित खाने में प्याज़-लहसुन नहीं — स्वाद सोंठ, सौंफ और हींग से आता है। पहचान है दही और कश्मीरी मिर्च में धीमी dum पकाई — रंग देती है, तीखापन नहीं।'},
-    spices:{en:'Kashmiri chili, fennel powder, dry ginger, asafoetida, saffron, cardamom',hi:'कश्मीरी मिर्च, सौंफ पाउडर, सोंठ, हींग, केसर, इलायची'},
-    dishes:{en:'Rogan Josh, Yakhni, Gushtaba, Haak Saag, Dum Aloo, Kahwa tea',hi:'रोगन जोश, याखनी, गुश्तबा, हाक साग, दम आलू, कहवा चाय'},
-    fact:{en:'Wazwan — a traditional 36-course Kashmiri feast — is considered one of the greatest culinary traditions in the world.',hi:'वज़वान — 36 व्यंजनों का पारंपरिक कश्मीरी भोज — दुनिया की महानतम पाक परंपराओं में से एक माना जाता है।'} },
-
+    name:{en:"Kashmir",hi:"कश्मीर"},
+    tagline:{en:"Saffron, dry ginger, and slow-cooked wonders",hi:"केसर, सोंठ और धीमी आँच के चमत्कार"},
+    flavor:{en:"No onion or garlic in traditional Kashmiri Pandit cooking — flavor comes from dry ginger, fennel, and asafoetida. The hallmark is slow dum cooking in yogurt and Kashmiri chili.",hi:"पारंपरिक कश्मीरी पंडित खाने में प्याज़-लहसुन नहीं — स्वाद सोंठ, सौंफ और हींग से आता है।"},
+    spices:{en:"Kashmiri chili, fennel powder, dry ginger, asafoetida, saffron, cardamom",hi:"कश्मीरी मिर्च, सौंफ पाउडर, सोंठ, हींग, केसर, इलायची"},
+    dishes:{en:"Rogan Josh, Yakhni, Gushtaba, Haak Saag, Dum Aloo, Kahwa tea",hi:"रोगन जोश, याखनी, गुश्तबा, हाक साग, दम आलू, कहवा चाय"},
+    fact:{en:"Wazwan — a traditional 36-course Kashmiri feast — is considered one of the greatest culinary traditions in the world.",hi:"वज़वान — 36 व्यंजनों का पारंपरिक कश्मीरी भोज — दुनिया की महानतम पाक परंपराओं में से एक।"} },
   { id:'maharashtra', emoji:'🌶️', wiki:'Maharashtrian_cuisine',
-    name:{en:'Maharashtra',hi:'महाराष्ट्र'},
-    tagline:{en:'Coconut, peanuts, and fiery street food',hi:'नारियल, मूंगफली और तीखा स्ट्रीट फूड'},
-    flavor:{en:'Two distinct styles: coastal Konkan (coconut-rich, tangy, fish-forward) and inland Vidarbha (dry, fiery, heavy on peanuts and sesame). Mumbai street food is its own world — vada pav, pav bhaji, misal.',hi:'दो अलग शैलियाँ: तटीय कोंकण (नारियल-भरपूर, खट्टा, मछली-प्रधान) और अंतर्देशीय विदर्भ (सूखा, तीखा, मूंगफली-तिल भरपूर)। मुंबई स्ट्रीट फूड अपनी दुनिया है।'},
-    spices:{en:'Goda masala (unique to Maharashtra), red chili, coriander, sesame, mustard',hi:'गोडा मसाला (महाराष्ट्र का अपना), लाल मिर्च, धनिया, तिल, राई'},
-    dishes:{en:'Vada Pav, Pav Bhaji, Misal Pav, Puran Poli, Kombdi Vade, Sol Kadhi',hi:'वड़ा पाव, पाव भाजी, मिसल पाव, पुरण पोळी, कोंबडी वडे, सोल कढ़ी'},
-    fact:{en:'Vada Pav — Mumbai's humble potato-fritter burger — is the most-sold street food in India with an estimated 1.2 crore sold daily.',hi:'वड़ा पाव — मुंबई का आलू-तली बर्गर — भारत में सबसे ज़्यादा बिकने वाला स्ट्रीट फूड है, अनुमानतः 1.2 करोड़ रोज़ बिकते हैं।'} },
-
+    name:{en:"Maharashtra",hi:"महाराष्ट्र"},
+    tagline:{en:"Coconut, peanuts, and fiery street food",hi:"नारियल, मूंगफली और तीखा स्ट्रीट फूड"},
+    flavor:{en:"Two distinct styles: coastal Konkan (coconut-rich, tangy) and inland Vidarbha (dry, fiery, peanut-heavy). Mumbai street food is its own world.",hi:"दो अलग शैलियाँ: तटीय कोंकण (नारियल, खट्टा) और विदर्भ (सूखा, तीखा, मूंगफली)। मुंबई स्ट्रीट फूड अपनी दुनिया है।"},
+    spices:{en:"Goda masala, red chili, coriander, sesame, mustard",hi:"गोडा मसाला, लाल मिर्च, धनिया, तिल, राई"},
+    dishes:{en:"Vada Pav, Pav Bhaji, Misal Pav, Puran Poli, Kombdi Vade, Sol Kadhi",hi:"वड़ा पाव, पाव भाजी, मिसल पाव, पुरण पोळी, कोंबडी वडे, सोल कढ़ी"},
+    fact:{en:"Vada Pav is the most-sold street food in India — an estimated 1.2 crore sold daily in Mumbai alone.",hi:"वड़ा पाव भारत में सबसे ज़्यादा बिकने वाला स्ट्रीट फूड है — अकेले मुंबई में रोज़ 1.2 करोड़ बिकते हैं।"} },
   { id:'andhra', emoji:'🔥', wiki:'Andhra_cuisine',
-    name:{en:'Andhra Pradesh & Telangana',hi:'आंध्र प्रदेश और तेलंगाना'},
-    tagline:{en:'The spiciest cuisine in India',hi:'भारत का सबसे तीखा व्यंजन'},
-    flavor:{en:'Renowned as the hottest regional cuisine in India — generous amounts of red chili in almost everything. Tamarind and tomato provide the sour counterbalance. Rice is the staple, eaten with a succession of curries and pickles.',hi:'भारत का सबसे तीखा क्षेत्रीय व्यंजन — लगभग हर चीज़ में भरपूर लाल मिर्च। इमली और टमाटर खट्टा संतुलन देते हैं। चावल प्रमुख अनाज है, करी और अचार की श्रृंखला के साथ खाया जाता है।'},
-    spices:{en:'Red chili, tamarind, mustard seeds, curry leaves, fenugreek',hi:'लाल मिर्च, इमली, राई, कड़ी पत्ता, मेथी'},
-    dishes:{en:'Hyderabadi Biryani, Gongura Mutton, Avakaya (mango pickle), Pesarattu, Pappu, Punugulu',hi:'हैदराबादी बिरयानी, गोंगुरा मटन, आवकाया (आम का अचार), पेसारट्टू, पप्पू, पुनुगुलु'},
-    fact:{en:'Hyderabadi Biryani is cooked by the dum method in a sealed pot — a tradition brought by the Nizams of Hyderabad from Persia.',hi:'हैदराबादी बिरयानी बंद बर्तन में दम विधि से पकाई जाती है — हैदराबाद के निज़ामों द्वारा फ़ारस से लाई परंपरा।'} },
-
+    name:{en:"Andhra Pradesh & Telangana",hi:"आंध्र और तेलंगाना"},
+    tagline:{en:"The spiciest cuisine in India",hi:"भारत का सबसे तीखा व्यंजन"},
+    flavor:{en:"Renowned as the hottest regional cuisine in India — generous red chili in almost everything. Tamarind and tomato provide the sour balance. Rice is the staple.",hi:"भारत का सबसे तीखा क्षेत्रीय व्यंजन — लगभग हर चीज़ में भरपूर लाल मिर्च। इमली और टमाटर खट्टा संतुलन देते हैं।"},
+    spices:{en:"Red chili, tamarind, mustard seeds, curry leaves, fenugreek",hi:"लाल मिर्च, इमली, राई, कड़ी पत्ता, मेथी"},
+    dishes:{en:"Hyderabadi Biryani, Gongura Mutton, Avakaya, Pesarattu, Pappu",hi:"हैदराबादी बिरयानी, गोंगुरा मटन, आवकाया, पेसारट्टू, पप्पू"},
+    fact:{en:"Hyderabadi Biryani is cooked by the dum method in a sealed pot — a tradition brought by the Nizams from Persia.",hi:"हैदराबादी बिरयानी बंद बर्तन में दम विधि से पकाई जाती है — निज़ामों द्वारा फ़ारस से लाई परंपरा।"} },
   { id:'goa', emoji:'🌊', wiki:'Goan_cuisine',
-    name:{en:'Goa',hi:'गोवा'},
-    tagline:{en:'Portuguese-spiced, coconut-drenched seafood',hi:'पुर्तगाली मसाले, नारियल में लिपटा समुद्री खाना'},
-    flavor:{en:'The most fusion cuisine in India — 450 years of Portuguese influence added vinegar, pork, and bread into a Hindu-Muslim-Catholic melting pot. Vinegar in curries is uniquely Goan.',hi:'भारत का सबसे fusion व्यंजन — 450 साल के पुर्तगाली प्रभाव ने सिरका, सूअर और रोटी को हिंदू-मुस्लिम-कैथोलिक संगम में जोड़ा। करी में सिरका विशिष्ट रूप से गोवन है।'},
-    spices:{en:'Kashmiri chili, vinegar, coconut, cumin, cinnamon, cloves',hi:'कश्मीरी मिर्च, सिरका, नारियल, जीरा, दालचीनी, लौंग'},
-    dishes:{en:'Fish Curry Rice, Vindaloo, Xacuti, Sorpotel, Bebinca, Prawn Balchao',hi:'फिश करी राइस, विंदालू, शकुटी, सरपोटेल, बेबिंका, झींगा बालचाओ'},
-    fact:{en:'Vindaloo was originally Carne de Vinha d'Alhos — Portuguese pork in wine and garlic. Indians replaced wine with palm vinegar and added red chili.',hi:'विंदालू मूल रूप से पुर्तगाली Carne de Vinha d'Alhos था — वाइन और लहसुन में सूअर। भारतीयों ने वाइन की जगह ताड़ी सिरका और लाल मिर्च डाल दी।'} },
-
+    name:{en:"Goa",hi:"गोवा"},
+    tagline:{en:"Portuguese-spiced, coconut-drenched seafood",hi:"पुर्तगाली मसाले, नारियल में लिपटा समुद्री खाना"},
+    flavor:{en:"The most fusion cuisine in India — 450 years of Portuguese influence added vinegar, pork, and bread. Vinegar in curries is uniquely Goan.",hi:"भारत का सबसे fusion व्यंजन — 450 साल के पुर्तगाली प्रभाव ने सिरका, सूअर और रोटी जोड़ी। करी में सिरका विशिष्ट रूप से गोवन है।"},
+    spices:{en:"Kashmiri chili, vinegar, coconut, cumin, cinnamon, cloves",hi:"कश्मीरी मिर्च, सिरका, नारियल, जीरा, दालचीनी, लौंग"},
+    dishes:{en:"Fish Curry Rice, Vindaloo, Xacuti, Sorpotel, Bebinca, Prawn Balchao",hi:"फिश करी राइस, विंदालू, शकुटी, सरपोटेल, बेबिंका, झींगा बालचाओ"},
+    fact:{en:"Vindaloo was originally a Portuguese dish with wine and garlic. Indians replaced wine with palm vinegar and added red chili — creating something entirely new.",hi:"विंदालू मूल रूप से पुर्तगाली वाइन-लहसुन व्यंजन था। भारतीयों ने वाइन की जगह ताड़ी सिरका और लाल मिर्च डाली।"} },
   { id:'up', emoji:'🕌', wiki:'Awadhi_cuisine',
-    name:{en:'Uttar Pradesh (Awadhi)',hi:'उत्तर प्रदेश (अवधी)'},
-    tagline:{en:'Dum cooking, kebabs, and Mughal refinement',hi:'दम पाक, कबाब और मुगलिया नफ़ासत'},
-    flavor:{en:'Awadh (Lucknow) perfected dum cooking — slow steaming in sealed pots so flavors meld. Known for subtlety over intensity: dishes are aromatic and layered rather than aggressively spiced.',hi:'अवध (लखनऊ) ने दम पाक निखारा — बंद बर्तनों में धीमी भाप ताकि स्वाद घुलें। तीव्रता से अधिक सूक्ष्मता: व्यंजन आक्रामक मसालों की बजाय सुगंधित और बहुपरती हैं।'},
-    spices:{en:'Kewra, saffron, cardamom, mace, rose water, long pepper',hi:'केवड़ा, केसर, इलायची, जावित्री, गुलाब जल, पिप्पली'},
-    dishes:{en:'Galauti Kebab, Lucknowi Biryani, Nihari, Korma, Sheermal, Kulfi',hi:'गलौटी कबाब, लखनवी बिरयानी, निहारी, कोरमा, शीरमाल, कुल्फी'},
-    fact:{en:'The Galauti kebab was invented for an aging Nawab who had lost all his teeth — mince ground so fine it dissolves on the tongue.',hi:'गलौटी कबाब एक बूढ़े नवाब के लिए बनाया गया जिनके दाँत नहीं रहे — कीमा इतना बारीक कि ज़ुबान पर घुल जाए।'} },
-
+    name:{en:"Uttar Pradesh (Awadhi)",hi:"उत्तर प्रदेश (अवधी)"},
+    tagline:{en:"Dum cooking, kebabs, and Mughal refinement",hi:"दम पाक, कबाब और मुगलिया नफ़ासत"},
+    flavor:{en:"Awadh perfected dum cooking — slow steaming in sealed pots so flavors meld. Known for subtlety: dishes are aromatic and layered rather than aggressively spiced.",hi:"अवध ने दम पाक निखारा — बंद बर्तनों में धीमी भाप। व्यंजन आक्रामक मसालों की बजाय सुगंधित और बहुपरती हैं।"},
+    spices:{en:"Kewra, saffron, cardamom, mace, rose water",hi:"केवड़ा, केसर, इलायची, जावित्री, गुलाब जल"},
+    dishes:{en:"Galauti Kebab, Lucknowi Biryani, Nihari, Korma, Sheermal, Kulfi",hi:"गलौटी कबाब, लखनवी बिरयानी, निहारी, कोरमा, शीरमाल, कुल्फी"},
+    fact:{en:"The Galauti kebab was invented for an aging Nawab who had lost his teeth — mince ground so fine it dissolves on the tongue.",hi:"गलौटी कबाब एक बूढ़े नवाब के लिए बना जिनके दाँत नहीं रहे — कीमा इतना बारीक कि ज़ुबान पर घुल जाए।"} },
   { id:'chhattisgarh', emoji:'🌿', wiki:'Chhattisgarhi_cuisine',
-    name:{en:'Chhattisgarh & Central India',hi:'छत्तीसगढ़ और मध्य भारत'},
-    tagline:{en:'Tribal, earthy, and rice-rooted',hi:'आदिवासी, मिट्टी से जुड़ा, चावल-आधारित'},
-    flavor:{en:'One of the least-known but most unique cuisines in India. Rice in every form — rice bread, rice beer (handia), rice dumplings. Minimal oil, lots of leafy greens cooked simply.',hi:'भारत के सबसे कम जाने पर सबसे अनोखे व्यंजनों में से एक। हर रूप में चावल — चावल की रोटी, चावल की बीयर (हड़िया), चावल के पकौड़े। कम तेल, बहुत सारी पत्तेदार सब्ज़ियाँ सरलता से पकाई।'},
-    spices:{en:'Minimal spices — turmeric, coriander, green chili, and lots of leafy herbs',hi:'कम मसाले — हल्दी, धनिया, हरी मिर्च और खूब पत्तेदार जड़ी-बूटियाँ'},
-    dishes:{en:'Bafauri, Aamat, Chila, Dubki Kadhi, Muthia, Faraa',hi:'बफौरी, आमट, चीला, डुबकी कढ़ी, मुठिया, फरा'},
-    fact:{en:'Chhattisgarh is called the "Rice Bowl of India" — it grows over 20,000 varieties of indigenous rice.',hi:'छत्तीसगढ़ को "भारत का चावल का कटोरा" कहा जाता है — यहाँ 20,000 से अधिक देशी चावल की किस्में उगती हैं।'} },
+    name:{en:"Chhattisgarh & Central India",hi:"छत्तीसगढ़ और मध्य भारत"},
+    tagline:{en:"Tribal, earthy, and rice-rooted",hi:"आदिवासी, मिट्टी से जुड़ा, चावल-आधारित"},
+    flavor:{en:"One of the least-known but most unique cuisines in India. Rice in every form — rice bread, rice beer, rice dumplings. Minimal oil, lots of leafy greens cooked simply.",hi:"भारत के सबसे कम जाने पर सबसे अनोखे व्यंजन। हर रूप में चावल। कम तेल, बहुत सारी पत्तेदार सब्ज़ियाँ।"},
+    spices:{en:"Minimal — turmeric, coriander, green chili, and leafy herbs",hi:"कम मसाले — हल्दी, धनिया, हरी मिर्च और जड़ी-बूटियाँ"},
+    dishes:{en:"Bafauri, Aamat, Chila, Dubki Kadhi, Muthia, Faraa",hi:"बफौरी, आमट, चीला, डुबकी कढ़ी, मुठिया, फरा"},
+    fact:{en:"Chhattisgarh is called the Rice Bowl of India — it grows over 20,000 varieties of indigenous rice.",hi:"छत्तीसगढ़ को भारत का चावल का कटोरा कहा जाता है — यहाँ 20,000 से अधिक देशी चावल की किस्में उगती हैं।"} },
 ];
 
 const QUIZ_POOL = [
@@ -1592,7 +1560,7 @@ function renderRegions(){
       <div class="region-card-inner">
         <span class="region-flag">${r.emoji}</span>
         <div class="region-img-wrap">
-          <img class="region-img" data-wiki="${r.wiki}" alt="" onerror="this.remove()">
+          <img class="region-img" data-wiki="${r.wiki}" alt="" onerror="this.style.display='none'">
         </div>
         <h3>${L(r.name)}</h3>
         <p class="region-tagline">${L(r.tagline)}</p>
@@ -1604,9 +1572,9 @@ function renderRegions(){
 function openRegionDetail(id){
   const r = REGIONS.find(x => x.id === id);
   openModal(`
-    <button class="modal-close" onclick="closeModal()">✕</button>
+    <button class="modal-close" onclick="closeModal()">&#10005;</button>
     <div class="region-modal-header">
-      <span style="font-size:2.2rem">${r.emoji}</span>
+      <span style="font-size:2rem">${r.emoji}</span>
       <div>
         <h2 style="font-family:var(--font-display);color:var(--maroon);font-size:1.2rem">${L(r.name)}</h2>
         <div class="modal-meta">${L(r.tagline)}</div>
@@ -1614,22 +1582,10 @@ function openRegionDetail(id){
     </div>
     <img class="modal-banner" data-wiki="${r.wiki}" alt="" onerror="this.remove()">
     <div class="region-detail">
-      <div class="region-detail-block">
-        <div class="region-detail-label">🍳 Cooking Style</div>
-        <p>${L(r.flavor)}</p>
-      </div>
-      <div class="region-detail-block">
-        <div class="region-detail-label">🌶️ Key Spices</div>
-        <p>${L(r.spices)}</p>
-      </div>
-      <div class="region-detail-block">
-        <div class="region-detail-label">🍽️ Must-Try Dishes</div>
-        <p>${L(r.dishes)}</p>
-      </div>
-      <div class="region-detail-block highlight">
-        <div class="region-detail-label">💡 Did You Know?</div>
-        <p>${L(r.fact)}</p>
-      </div>
+      <div class="region-detail-block"><div class="region-detail-label">&#127859; Cooking Style</div><p>${L(r.flavor)}</p></div>
+      <div class="region-detail-block"><div class="region-detail-label">&#127798; Key Spices</div><p>${L(r.spices)}</p></div>
+      <div class="region-detail-block"><div class="region-detail-label">&#127374; Must-Try Dishes</div><p>${L(r.dishes)}</p></div>
+      <div class="region-detail-block highlight"><div class="region-detail-label">&#128161; Did You Know?</div><p>${L(r.fact)}</p></div>
     </div>
   `);
   loadThumbs(document.getElementById('modalContent'));
@@ -1653,29 +1609,21 @@ function renderLearn(){
   document.getElementById('techCount').textContent = TECHNIQUES.length;
   renderRegions();
   spiceGrid.innerHTML = SPICES.map(s => {
-    const imgHtml = s.wiki
-      ? `<span class="card-img-wrap"><img class="card-img" data-wiki="${s.wiki}" alt="" onerror="this.parentElement.style.display='none'"><span class="card-emoji-fallback">${s.emoji}</span></span>`
-      : `<span class="emoji">${s.emoji}</span>`;
     return `<div class="item-card" onclick="openSpiceDetail('${s.id}')">
-      ${imgHtml}
+      <span class="emoji">${s.emoji}</span>
       <h3>${L(s.name)}</h3>
       <p>${L(s.desc)}</p>
     </div>`;
   }).join('');
-  loadThumbs(document.getElementById('spiceGrid'));
 
   const techGrid = document.getElementById('techniqueGrid');
   techGrid.innerHTML = TECHNIQUES.map(t => {
-    const imgHtml = t.wiki
-      ? `<span class="card-img-wrap"><img class="card-img" data-wiki="${t.wiki}" alt="" onerror="this.parentElement.style.display='none'"><span class="card-emoji-fallback">${t.emoji}</span></span>`
-      : `<span class="emoji">${t.emoji}</span>`;
     return `<div class="item-card" onclick="openTechDetail('${t.id}')">
-      ${imgHtml}
+      <span class="emoji">${t.emoji}</span>
       <h3>${L(t.name)}</h3>
       <p>${L(t.desc)}</p>
     </div>`;
   }).join('');
-  loadThumbs(document.getElementById('techniqueGrid'));
 }
 
 function findItem(id){
@@ -1756,20 +1704,9 @@ const DIFF_COLOR = {easy:'var(--leaf)',medium:'var(--turmeric)',hard:'var(--chil
 let activeDiffFilter = 'all';
 
 const thumbCache = {};
-const CUSTOM_IMAGES = {
-  'Cumin': 'https://raw.githubusercontent.com/singh318683/anshukakitchen/main/images/cumin.png',
-  'Cumin_seeds': 'https://raw.githubusercontent.com/singh318683/anshukakitchen/main/images/cumin.png',
-};
 function loadThumbs(container){
   container.querySelectorAll('img[data-wiki]').forEach(img => {
     const wiki = img.dataset.wiki;
-    // Check custom images first
-    if (CUSTOM_IMAGES[wiki]) {
-      img.src = CUSTOM_IMAGES[wiki];
-      img.classList.add('loaded');
-      thumbCache[wiki] = CUSTOM_IMAGES[wiki];
-      return;
-    }
     if (thumbCache[wiki] !== undefined){
       if (thumbCache[wiki]) { img.src = thumbCache[wiki]; img.classList.add('loaded'); }
       return;
