@@ -1543,9 +1543,20 @@ const DIFF_COLOR = {easy:'var(--leaf)',medium:'var(--turmeric)',hard:'var(--chil
 let activeDiffFilter = 'all';
 
 const thumbCache = {};
+const CUSTOM_IMAGES = {
+  'Cumin': 'https://raw.githubusercontent.com/singh318683/anshukakitchen/main/images/cumin.png',
+  'Cumin_seeds': 'https://raw.githubusercontent.com/singh318683/anshukakitchen/main/images/cumin.png',
+};
 function loadThumbs(container){
   container.querySelectorAll('img[data-wiki]').forEach(img => {
     const wiki = img.dataset.wiki;
+    // Check custom images first
+    if (CUSTOM_IMAGES[wiki]) {
+      img.src = CUSTOM_IMAGES[wiki];
+      img.classList.add('loaded');
+      thumbCache[wiki] = CUSTOM_IMAGES[wiki];
+      return;
+    }
     if (thumbCache[wiki] !== undefined){
       if (thumbCache[wiki]) { img.src = thumbCache[wiki]; img.classList.add('loaded'); }
       return;
