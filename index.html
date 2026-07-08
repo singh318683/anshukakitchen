@@ -225,6 +225,7 @@
   .diet-dessert{ color: #7a1f4a; border-left-color: #c9508a !important; }
   .diet-beverage{ color: #1a4f6b; border-left-color: #4a9fc4 !important; }
   .diet-indochinese{ color: #5a2d82; border-left-color: #9b59b6 !important; }
+  .diet-chutney{ color: #2d6a2d; border-left-color: #52b788 !important; }
   .diet-group-body{
     max-height:0; overflow:hidden; transition: max-height 0.35s ease;
     padding: 0 0.2rem;
@@ -884,6 +885,7 @@ const UI = {
   dietDessert:{en:'🍮 Desserts',hi:'🍮 मिठाइयाँ'},
   dietBeverage:{en:'☕ Beverages',hi:'☕ पेय'},
   dietIndoChinese:{en:'🥡 Indo-Chinese',hi:'🥡 इंडो-चाइनीज़'},
+  dietChutney:{en:'🌿 Chutneys',hi:'🌿 चटनियाँ'},
   howToDo:{en:'How to do it:',hi:'कैसे करें:'},
   usedIn:{en:'Used in:',hi:'किन व्यंजनों में:'},
   regionNote:{en:'Regional note:',hi:'क्षेत्रीय जानकारी:'},
@@ -1187,7 +1189,7 @@ const RECIPE_DIFFICULTY = {
   'tandoorichicken':'hard','chickenkorma':'hard','kadaichicken':'medium','chicken65':'medium',
   'chillichicken':'medium','roganjosh':'hard','muttoncurry':'hard','keemamatar':'medium',
   'seekhkebab':'medium','fishcurry':'easy','fishfry':'easy','prawnmasala':'easy',
-  'eggcurry':'easy','chickenchettinad':'hard','poha':'easy','upma':'easy','alooparatha':'medium','idlisoft':'easy','thepla':'easy','oatmealupma':'easy','quinoaupma':'easy','vermicelli':'easy','indiaeggbhurji':'easy','aloopuri':'medium','kachori':'hard','pavbhaji':'medium','panipuri':'medium','aalootikki':'medium','samosa':'hard','bhelpuri':'easy','kheer':'medium','gajarhalwa':'medium','besan_ladoo':'medium','kulfi':'medium','masalachai':'easy','lassi':'easy','thandai':'medium','nimbupaani':'easy','hakkanoodles':'medium','gobimanchurian':'medium','friedrice':'easy','springrolls':'medium','ketobutterchicken':'medium','ketosaagchicken':'medium','ketopaneermasala':'easy','ketoeggsalad':'easy','ketochicken65':'medium','ketoeggcurry':'easy','ketomuttoncurry':'hard','ketoprawncurry':'easy','ketocauliflowerrice':'easy','ketopaneergrilled':'medium',
+  'eggcurry':'easy','chickenchettinad':'hard','poha':'easy','upma':'easy','alooparatha':'medium','idlisoft':'easy','thepla':'easy','oatmealupma':'easy','quinoaupma':'easy','vermicelli':'easy','indiaeggbhurji':'easy','aloopuri':'medium','kachori':'hard','pavbhaji':'medium','panipuri':'medium','aalootikki':'medium','samosa':'hard','bhelpuri':'easy','kheer':'medium','gajarhalwa':'medium','besan_ladoo':'medium','kulfi':'medium','masalachai':'easy','lassi':'easy','thandai':'medium','nimbupaani':'easy','hakkanoodles':'medium','gobimanchurian':'medium','friedrice':'easy','springrolls':'medium','mintchutney':'easy','tamarindchutney2':'easy','coconutchutney':'easy','tomatochutney':'easy','groundnutchutney':'easy','dhaniyachutney':'easy','kasundichutney':'easy','rawmangochutney':'easy','garlichutney':'easy','onionchutney':'medium','gongurachutney':'medium','walnutchutney':'easy','plumchutney':'medium','ketobutterchicken':'medium','ketosaagchicken':'medium','ketopaneermasala':'easy','ketoeggsalad':'easy','ketochicken65':'medium','ketoeggcurry':'easy','ketomuttoncurry':'hard','ketoprawncurry':'easy','ketocauliflowerrice':'easy','ketopaneergrilled':'medium',
 };
 const DIFF_LABEL = {easy:{en:'Easy',hi:'आसान'},medium:{en:'Medium',hi:'मध्यम'},hard:{en:'Hard',hi:'कठिन'}};
 const DIFF_COLOR = {easy:'var(--leaf)',medium:'var(--turmeric)',hard:'var(--chili)'};
@@ -1246,6 +1248,7 @@ function renderRecipes(){
     { diet:'dessert', label:T('dietDessert') },
     { diet:'beverage', label:T('dietBeverage') },
     { diet:'indochinese', label:T('dietIndoChinese') },
+    { diet:'chutney', label:T('dietChutney') },
   ];
   list.innerHTML = groups.map(g => {
     const items = RECIPES.filter(r => r.diet === g.diet);
