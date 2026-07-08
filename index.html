@@ -296,6 +296,7 @@
   .step-nav{ display:flex; justify-content:space-between; gap:0.6rem; margin-top:1rem; }
   .spice-detail p{ font-size:0.9rem; line-height:1.55; margin-bottom:0.85rem; color: rgba(42,24,16,0.85); }
   .spice-detail strong{ color: var(--maroon); font-family: var(--font-display); font-weight:600; font-size:0.85rem; display:block; margin-bottom:0.15rem; }
+  .remedy-disclaimer{ font-size:0.78rem !important; font-style:italic; color: rgba(42,24,16,0.55) !important; border-top:1px dashed rgba(42,24,16,0.15); padding-top:0.6rem; margin-top:0.2rem; }
 
   /* CREATE — KITCHEN */
   .kitchen-stage{
@@ -770,6 +771,18 @@
           <div class="card-grid" id="techniqueGrid"></div>
         </div>
       </div>
+
+      <div class="diet-group learn-group" id="lgroup-drinks">
+        <button class="diet-group-header" style="border-left-color:#4a7c59" onclick="toggleLearnGroup('drinks')">
+          <span data-i18n="drinksTitle">Morning Drinks & Home Remedies</span>
+          <span class="diet-count" id="drinkCount"></span>
+          <span class="diet-chevron">▾</span>
+        </button>
+        <div class="diet-group-body">
+          <p class="section-sub" data-i18n="drinksSub">Traditional empty-stomach tonics passed down in Indian homes.</p>
+          <div class="card-grid" id="drinkGrid"></div>
+        </div>
+      </div>
     </section>
 
     <!-- RECIPES TAB -->
@@ -965,6 +978,8 @@ const UI = {
   spicesSub:{en:'Tap each one to learn it.',hi:'हर एक को सीखने के लिए टैप करें।'},
   techTitle:{en:'Core Techniques',hi:'मुख्य तकनीकें'},
   techSub:{en:'The methods behind almost every Indian dish.',hi:'लगभग हर भारतीय व्यंजन के पीछे की विधियाँ।'},
+  drinksTitle:{en:'Morning Drinks & Home Remedies',hi:'सुबह के पेय और घरेलू उपाय'},
+  drinksSub:{en:'Traditional empty-stomach tonics passed down in Indian homes.',hi:'भारतीय घरों में पीढ़ी दर पीढ़ी चले आ रहे खाली पेट के पारंपरिक टॉनिक।'},
   recipesTitle:{en:'Cook Along',hi:'साथ में पकाएँ'},
   recipesSub:{en:'Step-by-step guides with ingredients and timers.',hi:'सामग्री सहित चरण-दर-चरण मार्गदर्शन।'},
   quizTitle:{en:'Spice Detective',hi:'मसाला जासूस'},
@@ -980,6 +995,10 @@ const UI = {
   of:{en:'of',hi:'में से'},
   essentialSpice:{en:'Essential Spice',hi:'ज़रूरी मसाला'},
   coreTechnique:{en:'Core Technique',hi:'मुख्य तकनीक'},
+  homeRemedy:{en:'Morning Drink / Home Remedy',hi:'सुबह का पेय / घरेलू उपाय'},
+  howToMake:{en:'How to make it:',hi:'कैसे बनाएँ:'},
+  bestTime:{en:'Best time:',hi:'सबसे अच्छा समय:'},
+  remedyDisclaimer:{en:'Traditional home remedy, not medical advice. Consult a doctor for health concerns.',hi:'यह पारंपरिक घरेलू उपाय है, चिकित्सीय सलाह नहीं। स्वास्थ्य संबंधी चिंता होने पर डॉक्टर से सलाह लें।'},
   dietVegan:{en:'🌱 Vegan',hi:'🌱 वीगन'},
   dietVeg:{en:'🥬 Vegetarian',hi:'🥬 शाकाहारी'},
   dietNonveg:{en:'🍗 Non-Vegetarian',hi:'🍗 मांसाहारी'},
@@ -1221,10 +1240,20 @@ function renderLearn(){
       <p>${L(t.desc)}</p>
     </div>`;
   }).join('');
+
+  const drinkGrid = document.getElementById('drinkGrid');
+  document.getElementById('drinkCount').textContent = MORNING_DRINKS.length;
+  drinkGrid.innerHTML = MORNING_DRINKS.map(d => {
+    return `<div class="item-card" onclick="openDrinkDetail('${d.id}')">
+      <span class="emoji">${d.emoji}</span>
+      <h3>${L(d.name)}</h3>
+      <p>${L(d.desc)}</p>
+    </div>`;
+  }).join('');
 }
 
 function findItem(id){
-  return SPICES.find(x => x.id === id) || TECHNIQUES.find(x => x.id === id);
+  return SPICES.find(x => x.id === id) || TECHNIQUES.find(x => x.id === id) || MORNING_DRINKS.find(x => x.id === id);
 }
 
 function learnItem(id){
@@ -1277,6 +1306,27 @@ function openTechDetail(id){
       <p><strong>${T('cookingTip')}</strong> ${L(t.tip)}</p>
     </div>
     <button class="btn btn-primary btn-block" onclick="learnItem('${t.id}'); closeModal();">
+      ${learned ? T('reviewAgain') : T('markLearned')}
+    </button>
+  `);
+}
+
+function openDrinkDetail(id){
+  const d = MORNING_DRINKS.find(x => x.id === id);
+  const learned = state.learned.includes(id);
+  openModal(`
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h2>${d.emoji} ${L(d.name)}</h2>
+    <div class="modal-meta">${T('homeRemedy')}</div>
+    <div class="spice-detail">
+      <p><strong>${T('whatItsLike')}</strong> ${L(d.desc)}</p>
+      <p><strong>${T('howToMake')}</strong> ${L(d.howToMake)}</p>
+      <p><strong>${T('benefits')}</strong> ${L(d.benefits)}</p>
+      <p><strong>${T('bestTime')}</strong> ${L(d.bestTime)}</p>
+      <p><strong>${T('cookingTip')}</strong> ${L(d.tip)}</p>
+      <p class="remedy-disclaimer">${T('remedyDisclaimer')}</p>
+    </div>
+    <button class="btn btn-primary btn-block" onclick="learnItem('${d.id}'); closeModal();">
       ${learned ? T('reviewAgain') : T('markLearned')}
     </button>
   `);
