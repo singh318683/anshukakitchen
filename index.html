@@ -527,7 +527,7 @@
   /* Category hero banner */
   .cat-hero{
     display:flex; align-items:center; gap:1rem;
-    border-radius:16px; padding:0.9rem 1.1rem;
+    border-radius:16px; padding:1rem 1.2rem;
     margin-bottom:0; cursor:pointer;
     box-shadow:0 3px 14px rgba(44,26,14,0.10);
     transition:transform 0.2s ease, box-shadow 0.2s ease;
@@ -540,17 +540,18 @@
   }
   .cat-hero:hover{ transform:translateY(-2px); box-shadow:0 8px 24px rgba(44,26,14,0.16); }
   .cat-hero-img-wrap{
-    width:70px; height:70px; border-radius:50%; overflow:hidden;
-    flex-shrink:0; background:rgba(255,255,255,0.4);
+    width:80px; height:80px; border-radius:50%; overflow:hidden;
+    flex-shrink:0; background:rgba(255,255,255,0.5);
     position:relative; display:flex; align-items:center; justify-content:center;
-    box-shadow:0 3px 10px rgba(0,0,0,0.15);
+    box-shadow:0 4px 14px rgba(0,0,0,0.18);
+    border:3px solid rgba(255,255,255,0.8);
   }
   .cat-hero-img{
-    width:70px; height:70px; object-fit:cover; border-radius:50%;
+    width:80px; height:80px; object-fit:cover; border-radius:50%;
     opacity:0; transition:opacity 0.4s ease; position:absolute; inset:0;
   }
   .cat-hero-img.loaded{ opacity:1; }
-  .cat-hero-emoji{ font-size:1.8rem; z-index:1; }
+  .cat-hero-emoji{ font-size:2rem; z-index:1; }
   .cat-hero-info{ flex:1; }
   .cat-hero-title{
     font-family:'Playfair Display',serif; font-size:1.25rem;
@@ -568,19 +569,29 @@
   /* Dish grid — horizontal scroll */
   .dish-grid{
     max-height:0; overflow:hidden;
-    transition:max-height 0.4s ease;
+    transition:max-height 0.45s cubic-bezier(.2,.8,.2,1);
     margin-top:0;
   }
-  .dish-grid.open{ max-height:600px; }
+  .dish-grid.open{ max-height:280px; }
+  .dish-grid-wrap{
+    position:relative;
+  }
+  .dish-grid-wrap::after{
+    content:''; pointer-events:none;
+    position:absolute; right:0; top:0; bottom:0; width:60px;
+    background:linear-gradient(to left, var(--cream) 0%, transparent 100%);
+    z-index:2; border-radius:0 16px 16px 0;
+  }
   .dish-grid-inner{
-    display:flex; gap:0.9rem; overflow-x:auto; overflow-y:hidden;
-    padding:0.9rem 0.2rem 0.5rem; scrollbar-width:none;
+    display:flex; gap:0.75rem; overflow-x:auto; overflow-y:hidden;
+    padding:0.8rem 0.5rem 0.8rem 0.5rem; scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
   }
   .dish-grid-inner::-webkit-scrollbar{ display:none; }
 
   /* Individual dish card */
   .dish-card{
-    flex:0 0 130px; width:130px;
+    flex:0 0 140px; width:140px;
     background:var(--white); border-radius:16px;
     box-shadow:0 3px 12px rgba(44,26,14,0.10);
     cursor:pointer; overflow:hidden;
@@ -590,12 +601,12 @@
   .dish-card:hover{ transform:translateY(-4px); box-shadow:0 10px 24px rgba(44,26,14,0.18); }
   .dish-card:active{ transform:scale(0.97); }
   .dish-card-img-wrap{
-    width:130px; height:100px; overflow:hidden;
+    width:140px; height:105px; overflow:hidden;
     background:var(--cream-2); position:relative;
     display:flex; align-items:center; justify-content:center;
   }
   .dish-card-img{
-    width:130px; height:100px; object-fit:cover;
+    width:140px; height:105px; object-fit:cover;
     opacity:0; transition:opacity 0.4s ease; position:absolute; inset:0;
   }
   .dish-card-img.loaded{ opacity:1; }
@@ -1407,7 +1418,7 @@ function renderRecipes(){
     return `<div class="cat-section" id="catsec-${diet}">
       ${heroBanner}
       <div class="dish-grid ${isOpen?'open':''}" id="catgrid-${diet}">
-        <div class="dish-grid-inner">${dishes}</div>
+        <div class="dish-grid-wrap"><div class="dish-grid-inner">${dishes}</div></div>
       </div>
     </div>`;
   }).join('');
