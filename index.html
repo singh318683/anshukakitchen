@@ -1415,6 +1415,8 @@ function renderRecipes(){
   loadThumbs(list);
 }
 
+const openDietGroups = new Set(["breakfast"]);
+
 function toggleCatGroup(diet){
   const grid = document.getElementById('catgrid-'+diet);
   const chev = document.getElementById('chev-'+diet);
