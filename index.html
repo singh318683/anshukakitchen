@@ -571,7 +571,7 @@
     transition:max-height 0.4s ease;
     margin-top:0;
   }
-  .dish-grid.open{ max-height:500px; }
+  .dish-grid.open{ max-height:600px; }
   .dish-grid-inner{
     display:flex; gap:0.9rem; overflow-x:auto; overflow-y:hidden;
     padding:0.9rem 0.2rem 0.5rem; scrollbar-width:none;
@@ -1318,15 +1318,24 @@ function filterRecipes(q){
   if(!q){ renderRecipes(); return; }
   const matches = RECIPES.filter(r => L(r.name).toLowerCase().includes(q) || L(r.category).toLowerCase().includes(q));
   const list = document.getElementById('recipeList');
-  if(!matches.length){ list.innerHTML = '<p class="section-sub" style="padding:0.5rem">No recipes found.</p>'; return; }
-  list.innerHTML = matches.map(r => {
-    const cooked = state.cooked.includes(r.id);
-    const badge = cooked ? `<span class="badge-cooked">${T('cookedBadge')}</span>` : '';
-    const thumb = r.wiki ? `<span class="thumb-wrap"><span class="emoji">${r.emoji}</span><img class="recipe-thumb" data-wiki="${r.wiki}" alt="" loading="lazy" onerror="this.remove()"></span>` : `<span class="emoji">${r.emoji}</span>`;
-    const diff = RECIPE_DIFFICULTY[r.id]||'medium';
-    const diffBadge = `<span class="diff-badge" style="background:${DIFF_COLOR[diff]}">${DIFF_LABEL[diff][lang]}</span>`;
-    return `<div class="recipe-row" onclick="openRecipe('${r.id}')">${thumb}<div class="info"><h3>${L(r.name)}</h3><div class="meta">${L(r.category)} · ${r.time} ${T('min')} ${diffBadge}</div></div>${badge}</div>`;
-  }).join('');
+  if(!matches.length){ list.innerHTML = '<p class="section-sub" style="padding:1rem">No recipes found.</p>'; return; }
+  const diffColors = {easy:'#3f9b72',medium:'#c1440e',hard:'#b03a1a'};
+  const diffLabel = {easy:{en:'Easy',hi:'आसान'},medium:{en:'Medium',hi:'मध्यम'},hard:{en:'Hard',hi:'कठिन'}};
+  list.innerHTML = `<div class="dish-grid open"><div class="dish-grid-inner">${
+    matches.map(r => {
+      const diff = RECIPE_DIFFICULTY[r.id]||'medium';
+      return `<div class="dish-card" onclick="openRecipe('${r.id}')">
+        <div class="dish-card-img-wrap">
+          ${r.wiki ? `<img class="dish-card-img" data-wiki="${r.wiki}" alt="" onerror="this.parentElement.innerHTML='<span class=\'dish-card-emoji\'>${r.emoji}</span>'">` : `<span class="dish-card-emoji">${r.emoji}</span>`}
+        </div>
+        <div class="dish-card-name">${L(r.name)}</div>
+        <div class="dish-card-meta">
+          <span class="dish-card-time">⏱ ${r.time}m</span>
+          <span class="dish-card-diff" style="background:${diffColors[diff]}">${diffLabel[diff][lang]}</span>
+        </div>
+      </div>`;
+    }).join('')
+  }</div></div>`;
   loadThumbs(list);
 }
 function setDiffFilter(diff){
