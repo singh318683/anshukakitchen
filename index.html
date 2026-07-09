@@ -736,6 +736,18 @@
         </div>
       </div>
 
+      <div class="diet-group learn-group" id="lgroup-grains">
+        <button class="diet-group-header" style="border-left-color:#b8860b" onclick="toggleLearnGroup('grains')">
+          <span data-i18n="grainsTitle">Grains of India</span>
+          <span class="diet-count" id="grainCount"></span>
+          <span class="diet-chevron">▾</span>
+        </button>
+        <div class="diet-group-body">
+          <p class="section-sub" data-i18n="grainsSub">The rice, wheat, and millets that anchor every Indian meal.</p>
+          <div class="card-grid" id="grainGrid"></div>
+        </div>
+      </div>
+
       <div class="diet-group learn-group" id="lgroup-regions">
         <button class="diet-group-header" style="border-left-color:#c1440e" onclick="toggleLearnGroup('regions')">
           <span data-i18n="regionsTitle">Regional Cuisines of India</span>
@@ -976,6 +988,8 @@ const UI = {
   regionsSub:{en:'Every state cooks differently.',hi:'हर राज्य अलग तरह पकाता है।'},
   spicesTitle:{en:'Learn Your Spices',hi:'ज़रूरी मसाले'},
   spicesSub:{en:'Tap each one to learn it.',hi:'हर एक को सीखने के लिए टैप करें।'},
+  grainsTitle:{en:'Grains of India',hi:'भारत के अनाज'},
+  grainsSub:{en:'The rice, wheat, and millets that anchor every Indian meal.',hi:'चावल, गेहूं और बाजरे जो हर भारतीय भोजन का आधार हैं।'},
   techTitle:{en:'Core Techniques',hi:'मुख्य तकनीकें'},
   techSub:{en:'The methods behind almost every Indian dish.',hi:'लगभग हर भारतीय व्यंजन के पीछे की विधियाँ।'},
   drinksTitle:{en:'Morning Drinks & Home Remedies',hi:'सुबह के पेय और घरेलू उपाय'},
@@ -994,6 +1008,7 @@ const UI = {
   question:{en:'Question',hi:'प्रश्न'},
   of:{en:'of',hi:'में से'},
   essentialSpice:{en:'Essential Spice',hi:'ज़रूरी मसाला'},
+  grainCategory:{en:'Grain',hi:'अनाज'},
   coreTechnique:{en:'Core Technique',hi:'मुख्य तकनीक'},
   homeRemedy:{en:'Morning Drink / Home Remedy',hi:'सुबह का पेय / घरेलू उपाय'},
   howToMake:{en:'How to make it:',hi:'कैसे बनाएँ:'},
@@ -1232,6 +1247,16 @@ function renderLearn(){
     </div>`;
   }).join('');
 
+  const grainGrid = document.getElementById('grainGrid');
+  document.getElementById('grainCount').textContent = GRAINS.length;
+  grainGrid.innerHTML = GRAINS.map(g => {
+    return `<div class="item-card" onclick="openGrainDetail('${g.id}')">
+      <span class="emoji">${g.emoji}</span>
+      <h3>${L(g.name)}</h3>
+      <p>${L(g.desc)}</p>
+    </div>`;
+  }).join('');
+
   const techGrid = document.getElementById('techniqueGrid');
   techGrid.innerHTML = TECHNIQUES.map(t => {
     return `<div class="item-card" onclick="openTechDetail('${t.id}')">
@@ -1253,7 +1278,7 @@ function renderLearn(){
 }
 
 function findItem(id){
-  return SPICES.find(x => x.id === id) || TECHNIQUES.find(x => x.id === id) || MORNING_DRINKS.find(x => x.id === id);
+  return SPICES.find(x => x.id === id) || GRAINS.find(x => x.id === id) || TECHNIQUES.find(x => x.id === id) || MORNING_DRINKS.find(x => x.id === id);
 }
 
 function learnItem(id){
@@ -1286,6 +1311,26 @@ function openSpiceDetail(id){
       <p><strong>${T('cookingTip')}</strong> ${L(s.tip)}</p>
     </div>
     <button class="btn btn-primary btn-block" onclick="learnItem('${s.id}'); closeModal();">
+      ${learned ? T('reviewAgain') : T('markLearned')}
+    </button>
+  `);
+}
+
+function openGrainDetail(id){
+  const g = GRAINS.find(x => x.id === id);
+  const learned = state.learned.includes(id);
+  openModal(`
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h2>${g.emoji} ${L(g.name)}</h2>
+    <div class="modal-meta">${T('grainCategory')}</div>
+    <div class="spice-detail">
+      <p><strong>${T('whatItsLike')}</strong> ${L(g.desc)}</p>
+      <p><strong>${T('origin')}</strong> ${L(g.origin)}</p>
+      <p><strong>${T('benefits')}</strong> ${L(g.benefits)}</p>
+      <p><strong>${T('commonUses')}</strong> ${L(g.uses)}</p>
+      <p><strong>${T('cookingTip')}</strong> ${L(g.tip)}</p>
+    </div>
+    <button class="btn btn-primary btn-block" onclick="learnItem('${g.id}'); closeModal();">
       ${learned ? T('reviewAgain') : T('markLearned')}
     </button>
   `);
