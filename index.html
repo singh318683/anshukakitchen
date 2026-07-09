@@ -856,18 +856,6 @@
         </div>
       </div>
 
-      <div class="diet-group learn-group" id="lgroup-chutneys">
-        <button class="diet-group-header" style="border-left-color:#c1440e" onclick="toggleLearnGroup('chutneys')">
-          <span data-i18n="chutneysTitle">Chutneys & Pickles</span>
-          <span class="diet-count" id="chutneysCount"></span>
-          <span class="diet-chevron">▾</span>
-        </button>
-        <div class="diet-group-body">
-          <p class="section-sub" data-i18n="chutneysSub">The condiments that finish nearly every Indian meal.</p>
-          <div class="card-grid" id="chutneysGrid"></div>
-        </div>
-      </div>
-
       <div class="diet-group learn-group" id="lgroup-festivals">
         <button class="diet-group-header" style="border-left-color:#d4af37" onclick="toggleLearnGroup('festivals')">
           <span data-i18n="festivalsTitle">Festival Foods</span>
@@ -877,18 +865,6 @@
         <div class="diet-group-body">
           <p class="section-sub" data-i18n="festivalsSub">What India cooks to celebrate.</p>
           <div class="card-grid" id="festivalsGrid"></div>
-        </div>
-      </div>
-
-      <div class="diet-group learn-group" id="lgroup-streetfood">
-        <button class="diet-group-header" style="border-left-color:#c9508a" onclick="toggleLearnGroup('streetfood')">
-          <span data-i18n="streetfoodTitle">Street Food Culture</span>
-          <span class="diet-count" id="streetfoodCount"></span>
-          <span class="diet-chevron">▾</span>
-        </button>
-        <div class="diet-group-body">
-          <p class="section-sub" data-i18n="streetfoodSub">The stories behind India's most iconic street snacks.</p>
-          <div class="card-grid" id="streetfoodGrid"></div>
         </div>
       </div>
 
@@ -1112,12 +1088,8 @@ const UI = {
   dairySub:{en:'Ghee, paneer, and curd — the dairy staples of Indian kitchens.',hi:'घी, पनीर और दही — भारतीय रसोई की डेयरी मुख्य सामग्री।'},
   herbsTitle:{en:'Herbs & Aromatics',hi:'जड़ी-बूटियाँ और खुशबूदार सामग्री'},
   herbsSub:{en:'The fresh leaves and aromatics that finish a dish.',hi:'ताज़ी पत्तियाँ और खुशबूदार सामग्री जो व्यंजन को पूरा करती हैं।'},
-  chutneysTitle:{en:'Chutneys & Pickles',hi:'चटनी और अचार'},
-  chutneysSub:{en:'The condiments that finish nearly every Indian meal.',hi:'ऐसे व्यंजन जो लगभग हर भारतीय भोजन को पूरा करते हैं।'},
   festivalsTitle:{en:'Festival Foods',hi:'त्योहारी भोजन'},
   festivalsSub:{en:'What India cooks to celebrate.',hi:'भारत जश्न मनाने के लिए क्या पकाता है।'},
-  streetfoodTitle:{en:'Street Food Culture',hi:'स्ट्रीट फूड संस्कृति'},
-  streetfoodSub:{en:"The stories behind India's most iconic street snacks.",hi:'भारत के सबसे मशहूर स्ट्रीट स्नैक्स की कहानियाँ।'},
   toolsTitle:{en:'Kitchen Tools & Equipment',hi:'रसोई के औज़ार और उपकरण'},
   toolsSub:{en:'The everyday tools behind Indian home cooking.',hi:'भारतीय घरेलू खाना पकाने के पीछे के रोज़ाना के औज़ार।'},
   recipesTitle:{en:'Cook Along',hi:'साथ में पकाएँ'},
@@ -1140,9 +1112,7 @@ const UI = {
   nutsCategory:{en:'Nut / Dry Fruit',hi:'मेवा / सूखा मेवा'},
   dairyCategory:{en:'Dairy',hi:'डेयरी'},
   herbsCategory:{en:'Herb / Aromatic',hi:'जड़ी-बूटी / खुशबूदार सामग्री'},
-  chutneysCategory:{en:'Chutney / Pickle',hi:'चटनी / अचार'},
   festivalsCategory:{en:'Festival Food',hi:'त्योहारी भोजन'},
-  streetfoodCategory:{en:'Street Food',hi:'स्ट्रीट फूड'},
   toolsCategory:{en:'Kitchen Tool',hi:'रसोई का औज़ार'},
   coreTechnique:{en:'Core Technique',hi:'मुख्य तकनीक'},
   homeRemedy:{en:'Morning Drink / Home Remedy',hi:'सुबह का पेय / घरेलू उपाय'},
@@ -1430,9 +1400,7 @@ const CARD_SECTIONS = [
   { key:'nuts', data:NUTS_DRYFRUITS, gridId:'nutsGrid', countId:'nutsCount', categoryKey:'nutsCategory' },
   { key:'dairy', data:DAIRY, gridId:'dairyGrid', countId:'dairyCount', categoryKey:'dairyCategory' },
   { key:'herbs', data:HERBS, gridId:'herbsGrid', countId:'herbsCount', categoryKey:'herbsCategory' },
-  { key:'chutneys', data:CHUTNEYS_PICKLES, gridId:'chutneysGrid', countId:'chutneysCount', categoryKey:'chutneysCategory' },
   { key:'festivals', data:FESTIVAL_FOODS, gridId:'festivalsGrid', countId:'festivalsCount', categoryKey:'festivalsCategory' },
-  { key:'streetfood', data:STREET_FOOD, gridId:'streetfoodGrid', countId:'streetfoodCount', categoryKey:'streetfoodCategory' },
   { key:'tools', data:KITCHEN_TOOLS, gridId:'toolsGrid', countId:'toolsCount', categoryKey:'toolsCategory' },
 ];
 
