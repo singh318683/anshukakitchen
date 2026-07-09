@@ -748,6 +748,18 @@
         </div>
       </div>
 
+      <div class="diet-group learn-group" id="lgroup-lentils">
+        <button class="diet-group-header" style="border-left-color:#8b5a2b" onclick="toggleLearnGroup('lentils')">
+          <span data-i18n="lentilsTitle">Lentils & Pulses</span>
+          <span class="diet-count" id="lentilCount"></span>
+          <span class="diet-chevron">▾</span>
+        </button>
+        <div class="diet-group-body">
+          <p class="section-sub" data-i18n="lentilsSub">The dals and beans behind India's daily protein.</p>
+          <div class="card-grid" id="lentilGrid"></div>
+        </div>
+      </div>
+
       <div class="diet-group learn-group" id="lgroup-regions">
         <button class="diet-group-header" style="border-left-color:#c1440e" onclick="toggleLearnGroup('regions')">
           <span data-i18n="regionsTitle">Regional Cuisines of India</span>
@@ -990,6 +1002,8 @@ const UI = {
   spicesSub:{en:'Tap each one to learn it.',hi:'हर एक को सीखने के लिए टैप करें।'},
   grainsTitle:{en:'Grains of India',hi:'भारत के अनाज'},
   grainsSub:{en:'The rice, wheat, and millets that anchor every Indian meal.',hi:'चावल, गेहूं और बाजरे जो हर भारतीय भोजन का आधार हैं।'},
+  lentilsTitle:{en:'Lentils & Pulses',hi:'दालें और फलियाँ'},
+  lentilsSub:{en:'The dals and beans behind India\'s daily protein.',hi:'भारत के रोज़ाना प्रोटीन के पीछे की दालें और फलियाँ।'},
   techTitle:{en:'Core Techniques',hi:'मुख्य तकनीकें'},
   techSub:{en:'The methods behind almost every Indian dish.',hi:'लगभग हर भारतीय व्यंजन के पीछे की विधियाँ।'},
   drinksTitle:{en:'Morning Drinks & Home Remedies',hi:'सुबह के पेय और घरेलू उपाय'},
@@ -1009,6 +1023,7 @@ const UI = {
   of:{en:'of',hi:'में से'},
   essentialSpice:{en:'Essential Spice',hi:'ज़रूरी मसाला'},
   grainCategory:{en:'Grain',hi:'अनाज'},
+  lentilCategory:{en:'Lentil / Pulse',hi:'दाल / फली'},
   coreTechnique:{en:'Core Technique',hi:'मुख्य तकनीक'},
   homeRemedy:{en:'Morning Drink / Home Remedy',hi:'सुबह का पेय / घरेलू उपाय'},
   howToMake:{en:'How to make it:',hi:'कैसे बनाएँ:'},
@@ -1257,6 +1272,16 @@ function renderLearn(){
     </div>`;
   }).join('');
 
+  const lentilGrid = document.getElementById('lentilGrid');
+  document.getElementById('lentilCount').textContent = LENTILS.length;
+  lentilGrid.innerHTML = LENTILS.map(l => {
+    return `<div class="item-card" onclick="openLentilDetail('${l.id}')">
+      <span class="emoji">${l.emoji}</span>
+      <h3>${L(l.name)}</h3>
+      <p>${L(l.desc)}</p>
+    </div>`;
+  }).join('');
+
   const techGrid = document.getElementById('techniqueGrid');
   techGrid.innerHTML = TECHNIQUES.map(t => {
     return `<div class="item-card" onclick="openTechDetail('${t.id}')">
@@ -1278,7 +1303,7 @@ function renderLearn(){
 }
 
 function findItem(id){
-  return SPICES.find(x => x.id === id) || GRAINS.find(x => x.id === id) || TECHNIQUES.find(x => x.id === id) || MORNING_DRINKS.find(x => x.id === id);
+  return SPICES.find(x => x.id === id) || GRAINS.find(x => x.id === id) || LENTILS.find(x => x.id === id) || TECHNIQUES.find(x => x.id === id) || MORNING_DRINKS.find(x => x.id === id);
 }
 
 function learnItem(id){
@@ -1331,6 +1356,26 @@ function openGrainDetail(id){
       <p><strong>${T('cookingTip')}</strong> ${L(g.tip)}</p>
     </div>
     <button class="btn btn-primary btn-block" onclick="learnItem('${g.id}'); closeModal();">
+      ${learned ? T('reviewAgain') : T('markLearned')}
+    </button>
+  `);
+}
+
+function openLentilDetail(id){
+  const l = LENTILS.find(x => x.id === id);
+  const learned = state.learned.includes(id);
+  openModal(`
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h2>${l.emoji} ${L(l.name)}</h2>
+    <div class="modal-meta">${T('lentilCategory')}</div>
+    <div class="spice-detail">
+      <p><strong>${T('whatItsLike')}</strong> ${L(l.desc)}</p>
+      <p><strong>${T('origin')}</strong> ${L(l.origin)}</p>
+      <p><strong>${T('benefits')}</strong> ${L(l.benefits)}</p>
+      <p><strong>${T('commonUses')}</strong> ${L(l.uses)}</p>
+      <p><strong>${T('cookingTip')}</strong> ${L(l.tip)}</p>
+    </div>
+    <button class="btn btn-primary btn-block" onclick="learnItem('${l.id}'); closeModal();">
       ${learned ? T('reviewAgain') : T('markLearned')}
     </button>
   `);
