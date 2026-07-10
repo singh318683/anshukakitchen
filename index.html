@@ -155,11 +155,43 @@ body::before{
 .cat-hero-img,.cat-hero-img-wrap{display:none !important}
 .cat-hero::before{display:none !important}
 
-/* Category "page" navigation: show one category at a time, full screen */
+/* Category folders as a compact card grid, matching the recipe card look */
+#recipeList{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:.6rem;
+}
+@media (min-width:500px){
+  #recipeList{grid-template-columns:repeat(3,1fr)}
+}
+@media (min-width:720px){
+  #recipeList{grid-template-columns:repeat(4,1fr)}
+}
+#recipeList .cat-section{margin-bottom:0 !important}
+.cat-hero{
+  flex-direction:column !important;
+  align-items:flex-start !important;
+  justify-content:center !important;
+  padding:.8rem .9rem !important;
+  border-radius:12px !important;
+  gap:.2rem !important;
+  min-height:64px;
+}
+.cat-hero-info{width:100%}
+.cat-hero-title{font-size:.88rem !important;white-space:normal !important}
+.cat-hero-count{font-size:.68rem !important}
+.cat-hero-chevron{display:none !important}
+
+/* Once a category page is open: collapse the grid back to a single full-width column */
+#recipeList.cat-page-open{display:block !important}
 #recipeList.cat-page-open .cat-section{display:none}
 #recipeList.cat-page-open .cat-section.active-page{display:block}
-#recipeList.cat-page-open .cat-hero{cursor:default;pointer-events:none}
-#recipeList.cat-page-open .cat-hero-chevron{display:none}
+#recipeList.cat-page-open .cat-hero{
+  flex-direction:row !important;
+  align-items:center !important;
+  cursor:default;
+  pointer-events:none;
+}
 .recipe-search-bar-wrap,.diff-filter-row{transition:none}
 body:has(#recipeList.cat-page-open) .recipe-search-bar-wrap,
 body:has(#recipeList.cat-page-open) .diff-filter-row{display:none}
