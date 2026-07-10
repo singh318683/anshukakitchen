@@ -130,6 +130,29 @@ body::before{
 @media (prefers-reduced-motion:reduce){
   body::before{opacity:.3}
 }
+
+/* Compact, image-free recipe cards */
+.dish-card-img{display:none !important}
+.dish-card-img-wrap{
+  aspect-ratio:auto !important;
+  height:40px !important;
+  background:linear-gradient(160deg,rgba(63,214,201,.1),rgba(232,163,63,.06)) !important;
+}
+.dish-card-emoji{font-size:1.3rem !important}
+.dish-card-name{
+  font-size:.72rem !important;
+  min-height:1.9rem !important;
+  padding:.4rem .5rem .1rem !important;
+}
+.dish-card-meta{padding:.1rem .5rem .45rem !important}
+.dish-grid-inner{grid-template-columns:repeat(3,1fr) !important;gap:.6rem !important}
+@media (min-width:500px){
+  .dish-grid-inner{grid-template-columns:repeat(5,1fr) !important}
+}
+@media (min-width:720px){
+  .dish-grid-inner{grid-template-columns:repeat(6,1fr) !important}
+}
+.cat-hero-img{display:none !important}
 </style>
 </head>
 <body>
