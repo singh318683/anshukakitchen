@@ -72,6 +72,26 @@ body::before{
 
 /* Tabs: flat, sharp, teal solid active state */
 .tabs{background:rgba(255,255,255,.03) !important;border:1px solid #1c1d2b;border-radius:10px !important}
+@media (max-width:480px){
+  .brand-row{
+    flex-direction:column !important;
+    align-items:flex-start !important;
+    gap:.7rem;
+  }
+  .lang-toggle{align-self:flex-start}
+  .brand{font-size:1.3rem !important}
+  .tabs{
+    flex-wrap:wrap !important;
+    overflow-x:visible !important;
+    border-radius:14px !important;
+  }
+  .tab-btn{
+    flex:1 1 30% !important;
+    font-size:.8rem !important;
+    padding:.5rem .4rem !important;
+  }
+}
+
 .tab-btn{border-radius:8px !important}
 .tab-btn.active{
   background:#3FD6C9 !important;
