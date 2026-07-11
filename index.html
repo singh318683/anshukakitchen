@@ -247,7 +247,19 @@ body::before{
   padding:.3rem .4rem .05rem !important;
 }
 .dish-card-meta{padding:.05rem .4rem .35rem !important;display:none !important}
-.dish-card-name{padding:.5rem .5rem .6rem !important;min-height:2.2rem !important}
+.dish-card-img-wrap{display:none !important}
+.dish-card{
+  display:flex !important;
+  align-items:center;
+  justify-content:center;
+  min-height:64px;
+}
+.dish-card-name{
+  padding:.6rem .5rem !important;
+  min-height:auto !important;
+  text-align:center;
+  width:100%;
+}
 .dish-grid-inner{grid-template-columns:repeat(4,1fr) !important;gap:.5rem !important}
 @media (min-width:500px){
   .dish-grid-inner{grid-template-columns:repeat(6,1fr) !important}
