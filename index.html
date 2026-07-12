@@ -183,7 +183,7 @@ body::before{
   #tab-learn.active:not(.page-open){grid-template-columns:repeat(4,1fr)}
 }
 #tab-learn:not(.page-open) #learnBackBtn{display:none !important}
-#tab-learn:not(.page-open) #learnBackBtnBottom{display:none !important}
+#tab-learn:not(.page-open) 
 #tab-learn:not(.page-open) .learn-category{margin-bottom:0 !important}
 #tab-learn:not(.page-open) .learn-category>.diet-group-header{
   flex-direction:column !important;
@@ -549,7 +549,7 @@ body:has(#recipeList.supercat-open) .spin-cta{display:none}
         </div>
       </div>
 <div class="diet-group learn-group" id="lgroup-grains">
-        <button class="diet-group-header" style="border-left-color:#E8871E" onclick="toggleLearnGroup('grains')">
+        <button class="diet-group-header" onclick="toggleLearnGroup('grains')">
           <span data-i18n="grainsTitle">Grains of India</span>
           <span class="diet-count" id="grainCount"></span>
           <span class="diet-chevron">▾</span>
@@ -560,7 +560,7 @@ body:has(#recipeList.supercat-open) .spin-cta{display:none}
         </div>
       </div>
 <div class="diet-group learn-group" id="lgroup-lentils">
-        <button class="diet-group-header" style="border-left-color:#C2703D" onclick="toggleLearnGroup('lentils')">
+        <button class="diet-group-header" onclick="toggleLearnGroup('lentils')">
           <span data-i18n="lentilsTitle">Lentils & Pulses</span>
           <span class="diet-count" id="lentilCount"></span>
           <span class="diet-chevron">▾</span>
@@ -571,7 +571,7 @@ body:has(#recipeList.supercat-open) .spin-cta{display:none}
         </div>
       </div>
 <div class="diet-group learn-group" id="lgroup-vegetables">
-        <button class="diet-group-header" style="border-left-color:#2D9D3A" onclick="toggleLearnGroup('vegetables')">
+        <button class="diet-group-header" onclick="toggleLearnGroup('vegetables')">
           <span data-i18n="vegTitle">Vegetables of India</span>
           <span class="diet-count" id="vegetableCount"></span>
           <span class="diet-chevron">▾</span>
@@ -582,7 +582,7 @@ body:has(#recipeList.supercat-open) .spin-cta{display:none}
         </div>
       </div>
 <div class="diet-group learn-group" id="lgroup-nuts">
-        <button class="diet-group-header" style="border-left-color:#A85C32" onclick="toggleLearnGroup('nuts')">
+        <button class="diet-group-header" onclick="toggleLearnGroup('nuts')">
           <span data-i18n="nutsTitle">Nuts & Dry Fruits</span>
           <span class="diet-count" id="nutsCount"></span>
           <span class="diet-chevron">▾</span>
@@ -593,7 +593,7 @@ body:has(#recipeList.supercat-open) .spin-cta{display:none}
         </div>
       </div>
 <div class="diet-group learn-group" id="lgroup-dairy">
-        <button class="diet-group-header" style="border-left-color:#FFC300" onclick="toggleLearnGroup('dairy')">
+        <button class="diet-group-header" onclick="toggleLearnGroup('dairy')">
           <span data-i18n="dairyTitle">Dairy Basics</span>
           <span class="diet-count" id="dairyCount"></span>
           <span class="diet-chevron">▾</span>
@@ -604,7 +604,7 @@ body:has(#recipeList.supercat-open) .spin-cta{display:none}
         </div>
       </div>
 <div class="diet-group learn-group" id="lgroup-herbs">
-        <button class="diet-group-header" style="border-left-color:#65A30D" onclick="toggleLearnGroup('herbs')">
+        <button class="diet-group-header" onclick="toggleLearnGroup('herbs')">
           <span data-i18n="herbsTitle">Herbs & Aromatics</span>
           <span class="diet-count" id="herbsCount"></span>
           <span class="diet-chevron">▾</span>
@@ -626,7 +626,7 @@ body:has(#recipeList.supercat-open) .spin-cta{display:none}
         <div class="diet-group-body">
           <p class="section-sub">The bases and methods that turn ingredients into a finished dish.</p>
 <div class="diet-group learn-group" id="lgroup-styles">
-        <button class="diet-group-header" style="border-left-color:#D4145A" onclick="toggleLearnGroup('styles')">
+        <button class="diet-group-header" onclick="toggleLearnGroup('styles')">
           <span data-i18n="stylesTitle">Cooking Styles & Gravies</span>
           <span class="diet-count" id="styleCount"></span>
           <span class="diet-chevron">▾</span>
@@ -659,7 +659,7 @@ body:has(#recipeList.supercat-open) .spin-cta{display:none}
         <div class="diet-group-body">
           <p class="section-sub">How geography and festivals shape what lands on the plate.</p>
 <div class="diet-group learn-group" id="lgroup-regions">
-        <button class="diet-group-header" style="border-left-color:#C1121F" onclick="toggleLearnGroup('regions')">
+        <button class="diet-group-header" onclick="toggleLearnGroup('regions')">
           <span data-i18n="regionsTitle">Regional Cuisines of India</span>
           <span class="diet-count" id="regionCount"></span>
           <span class="diet-chevron">▾</span>
@@ -670,7 +670,7 @@ body:has(#recipeList.supercat-open) .spin-cta{display:none}
         </div>
       </div>
 <div class="diet-group learn-group" id="lgroup-festivals">
-        <button class="diet-group-header" style="border-left-color:#7B2CBF" onclick="toggleLearnGroup('festivals')">
+        <button class="diet-group-header" onclick="toggleLearnGroup('festivals')">
           <span data-i18n="festivalsTitle">Festival Foods</span>
           <span class="diet-count" id="festivalsCount"></span>
           <span class="diet-chevron">▾</span>
@@ -692,7 +692,7 @@ body:has(#recipeList.supercat-open) .spin-cta{display:none}
         <div class="diet-group-body">
           <p class="section-sub">Traditional empty-stomach tonics passed down in Indian homes.</p>
 <div class="diet-group learn-group" id="lgroup-drinks">
-        <button class="diet-group-header" style="border-left-color:#0E8A82" onclick="toggleLearnGroup('drinks')">
+        <button class="diet-group-header" onclick="toggleLearnGroup('drinks')">
           <span data-i18n="drinksTitle">Morning Drinks & Home Remedies</span>
           <span class="diet-count" id="drinkCount"></span>
           <span class="diet-chevron">▾</span>
@@ -714,7 +714,7 @@ body:has(#recipeList.supercat-open) .spin-cta{display:none}
         <div class="diet-group-body">
           <p class="section-sub">The everyday tools behind Indian home cooking.</p>
 <div class="diet-group learn-group" id="lgroup-tools">
-        <button class="diet-group-header" style="border-left-color:#6B3F1D" onclick="toggleLearnGroup('tools')">
+        <button class="diet-group-header" onclick="toggleLearnGroup('tools')">
           <span data-i18n="toolsTitle">Kitchen Tools & Equipment</span>
           <span class="diet-count" id="toolsCount"></span>
           <span class="diet-chevron">▾</span>
@@ -726,7 +726,7 @@ body:has(#recipeList.supercat-open) .spin-cta{display:none}
       </div>
         </div>
       </div>
-      <button id="learnBackBtnBottom" class="btn btn-ghost" style="display:none;width:100%;justify-content:center;margin-top:1.2rem" onclick="history.back()">← Back to topics</button>
+      
     </section>
 
     
