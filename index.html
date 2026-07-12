@@ -402,7 +402,7 @@ body:has(#recipeList.cat-page-open) .recipe-search-bar-wrap,
 body:has(#recipeList.cat-page-open) .diff-filter-row,
 body:has(#recipeList.supercat-open) .recipe-search-bar-wrap,
 body:has(#recipeList.supercat-open) .diff-filter-row{display:none}
-#catBackBtn{margin-bottom:.9rem;display:none}#catBackBtnBottom{margin-top:1.2rem;width:100%;justify-content:center;display:none}
+#catBackBtn{margin-bottom:.9rem;display:none}
 .spin-cta{
   width:100%;
   margin-bottom:.8rem;
@@ -748,7 +748,6 @@ body:has(#recipeList.supercat-open) .spin-cta{display:none}
       </div>
       <button id="catBackBtn" class="btn btn-ghost" style="display:none" onclick="handleRecipeBack()">← Back to categories</button>
       <div id="recipeList"></div>
-      <button id="catBackBtnBottom" class="btn btn-ghost" style="display:none" onclick="handleRecipeBack()">← Back to categories</button>
     </section>
 
     
@@ -1136,7 +1135,7 @@ function renderRecipes(){
 }
 const openDietGroups=new Set(["breakfast"]);
 let recipeActiveSuperCat=null;
-function setCatBackVisible(show){const b1=document.getElementById("catBackBtn"),b2=document.getElementById("catBackBtnBottom"),d=show?"inline-flex":"none";if(b1)b1.style.display=d;if(b2)b2.style.display=d}
+function setCatBackVisible(show){const b1=document.getElementById("catBackBtn"),d=show?"inline-flex":"none";if(b1)b1.style.display=d}
 function openSuperCat(key,push){
   if(push===undefined)push=true;
   recipeActiveSuperCat=key;
